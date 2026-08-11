@@ -1,0 +1,8 @@
+{
+  "key": "development",
+  "branch": "dev",
+  "label": "Developpement",
+  "debug": true,
+  "strict": false,
+  "required": []
+}

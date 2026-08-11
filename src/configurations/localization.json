@@ -1,0 +1,8 @@
+{
+  "locales": ["fr", "en"],
+  "defaultLocale": "fr",
+  "localePrefix": "as-needed",
+  "timeZone": "Europe/Paris",
+  "currency": "EUR",
+  "firstDayOfWeek": 1
+}

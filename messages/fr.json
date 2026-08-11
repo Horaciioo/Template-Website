@@ -1,0 +1,377 @@
+{
+  "actions": {
+    "contact": "Nous contacter",
+    "showcase": "Voir les composants",
+    "subscribeNewsletter": "S'inscrire",
+    "submit": "Envoyer",
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
+    "retry": "Réessayer",
+    "close": "Fermer",
+    "open": "Ouvrir le menu",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "search": "Rechercher",
+    "share": "Partager",
+    "scrollToTop": "Revenir en haut"
+  },
+  "routes": {
+    "home": {
+      "label": "Accueil",
+      "metaTitle": "Accueil",
+      "metaDescription": "Une base de site prête à l'emploi, pensée pour être reprise projet après projet."
+    },
+    "showcase": {
+      "label": "Composants",
+      "metaTitle": "Composants",
+      "metaDescription": "L'atlas visuel du design system : couleurs, typographies, icônes et composants."
+    },
+    "contact": {
+      "label": "Contact",
+      "metaTitle": "Contact",
+      "metaDescription": "Écrivez-nous, nous répondons sous vingt-quatre heures ouvrées."
+    },
+    "legalNotice": {
+      "label": "Mentions légales",
+      "metaTitle": "Mentions légales",
+      "metaDescription": "Éditeur, hébergeur et conditions d'utilisation du site."
+    },
+    "privacyPolicy": {
+      "label": "Confidentialité",
+      "metaTitle": "Politique de confidentialité",
+      "metaDescription": "Données collectées, finalités, durées de conservation et droits des visiteurs."
+    }
+  },
+  "navigation": {
+    "primary": "Navigation principale",
+    "language": "Changer de langue",
+    "tagline": "Une base de site générique, prête à devenir votre prochain projet.",
+    "copyright": "© {years} {name}. Tous droits réservés.",
+    "theme": {
+      "light": "Thème clair",
+      "dark": "Thème sombre",
+      "system": "Thème du système"
+    },
+    "footer": {
+      "site": "Le site",
+      "legal": "Informations légales",
+      "contact": "Contact"
+    }
+  },
+  "sections": {
+    "hero": {
+      "overline": "Base de projet",
+      "title": "Le socle générique de vos prochains sites",
+      "description": "Composants, services, thème et internationalisation sont déjà en place. Il ne reste qu'à écrire le contenu.",
+      "imageAlt": "Aperçu du design system"
+    },
+    "features": {
+      "overline": "Ce qui est déjà là",
+      "title": "Des systèmes, pas des copies",
+      "description": "Chaque brique est déclarée une seule fois puis réutilisée partout dans le projet.",
+      "items": {
+        "quality": {
+          "title": "Design system unifié",
+          "description": "Couleurs, ombres et rayons viennent d'un seul fichier de thème lu par Tailwind."
+        },
+        "speed": {
+          "title": "Mise en route immédiate",
+          "description": "Routes, métadonnées, sitemap et robots se génèrent depuis le registre de routes."
+        },
+        "support": {
+          "title": "Multilingue natif",
+          "description": "Deux langues livrées, aucune phrase écrite en dur dans un composant."
+        },
+        "security": {
+          "title": "Validation partagée",
+          "description": "Les mêmes règles valident le formulaire côté visiteur et côté serveur."
+        },
+        "flexibility": {
+          "title": "Sections réutilisables",
+          "description": "Neuf sections génériques se composent librement pour former une page."
+        },
+        "transparency": {
+          "title": "Conventions écrites",
+          "description": "Nommage, structure et registres sont documentés dans le dossier structure."
+        }
+      }
+    },
+    "stats": {
+      "title": "Le socle en chiffres",
+      "description": "Les valeurs ci-dessous ne sont que des exemples de formatage.",
+      "items": {
+        "clients": { "label": "Composants livrés" },
+        "projects": { "label": "Fichiers déclaratifs" },
+        "satisfaction": { "label": "Couverture des textes" },
+        "experience": { "label": "Services centraux" }
+      }
+    },
+    "gallery": {
+      "overline": "Galerie",
+      "title": "Un rendu média cohérent",
+      "items": {
+        "item1": "Visuel de démonstration numéro un",
+        "item2": "Visuel de démonstration numéro deux",
+        "item3": "Visuel de démonstration numéro trois",
+        "item4": "Visuel de démonstration numéro quatre",
+        "item5": "Visuel de démonstration numéro cinq",
+        "item6": "Visuel de démonstration numéro six"
+      }
+    },
+    "pricing": {
+      "overline": "Offres",
+      "title": "Trois formules d'exemple",
+      "description": "Les montants sont stockés en centimes et mis en forme par le service de formatage.",
+      "featured": "Recommandé",
+      "periods": {
+        "once": "une fois",
+        "month": "par mois",
+        "year": "par an"
+      },
+      "included": {
+        "scope": "Cadrage et arborescence",
+        "revisions": "Deux séries de retours",
+        "delivery": "Mise en ligne accompagnée",
+        "support": "Trois mois de suivi",
+        "training": "Formation à la prise en main"
+      },
+      "items": {
+        "starter": {
+          "name": "Essentiel",
+          "description": "Une page, les sections principales et la mise en ligne."
+        },
+        "standard": {
+          "name": "Complet",
+          "description": "Plusieurs pages, formulaire de contact et suivi après livraison."
+        },
+        "premium": {
+          "name": "Sur mesure",
+          "description": "Design dédié, contenus rédigés et formation de l'équipe."
+        }
+      }
+    },
+    "testimonials": {
+      "overline": "Retours",
+      "title": "Ce qu'en disent les équipes",
+      "items": {
+        "first": {
+          "quote": "Le projet démarre déjà structuré, on écrit du contenu au lieu de recâbler une base.",
+          "author": "Camille Rivière",
+          "role": "Direction artistique"
+        },
+        "second": {
+          "quote": "Changer le thème revient à modifier un fichier, tout le site suit sans exception.",
+          "author": "Noah Berthier",
+          "role": "Développement front"
+        },
+        "third": {
+          "quote": "Les conventions écrites évitent les débats de nommage à chaque nouveau projet.",
+          "author": "Inès Fontaine",
+          "role": "Gestion de projet"
+        }
+      }
+    },
+    "faq": {
+      "overline": "Questions",
+      "title": "Les points souvent demandés",
+      "items": {
+        "delay": {
+          "question": "Que faut-il modifier pour démarrer un projet ?",
+          "answer": "Les fichiers du dossier configurations, les traductions et les visuels du dossier public. Le reste du code est prévu pour rester tel quel."
+        },
+        "price": {
+          "question": "Comment ajouter une page ?",
+          "answer": "Une entrée dans le registre de routes, un dossier correspondant sous app et un bloc de traductions. La navigation, le sitemap et les métadonnées suivent seuls."
+        },
+        "process": {
+          "question": "Comment ajouter un formulaire ?",
+          "answer": "Une déclaration dans le registre de formulaires et un bloc de traductions. Le rendu, la validation et l'envoi passent par les briques existantes."
+        },
+        "support": {
+          "question": "Comment changer la charte graphique ?",
+          "answer": "La palette, les rayons et les ombres vivent dans le fichier de thème. Tailwind lit ce même fichier, aucune couleur n'est écrite dans un composant."
+        },
+        "cancel": {
+          "question": "Comment ajouter une langue ?",
+          "answer": "Ajouter le code de langue dans la localisation et créer le fichier de messages correspondant. Le routage et le sélecteur s'adaptent automatiquement."
+        }
+      }
+    },
+    "callToAction": {
+      "title": "Prêt à démarrer un nouveau projet ?",
+      "description": "Clonez le dépôt, changez les configurations et écrivez votre contenu."
+    },
+    "contact": {
+      "overline": "Écrivez-nous",
+      "title": "Parlons de votre projet",
+      "description": "Décrivez votre besoin en quelques lignes, nous revenons vers vous rapidement.",
+      "channels": {
+        "email": "Adresse e-mail",
+        "phone": "Téléphone",
+        "address": "Adresse"
+      }
+    }
+  },
+  "forms": {
+    "contact": {
+      "success": "Message envoyé, nous revenons vers vous très vite.",
+      "fields": {
+        "fullName": {
+          "label": "Nom complet",
+          "placeholder": "Camille Rivière"
+        },
+        "email": {
+          "label": "Adresse e-mail",
+          "placeholder": "camille@exemple.fr"
+        },
+        "phone": {
+          "label": "Téléphone",
+          "placeholder": "+33 6 00 00 00 00",
+          "hint": "Facultatif, seulement si vous préférez un appel."
+        },
+        "subject": {
+          "label": "Sujet",
+          "placeholder": "Choisissez un sujet",
+          "options": {
+            "information": "Demande d'information",
+            "quote": "Demande de devis",
+            "partnership": "Partenariat",
+            "other": "Autre sujet"
+          }
+        },
+        "message": {
+          "label": "Message",
+          "placeholder": "Décrivez votre projet en quelques lignes.",
+          "hint": "Vingt caractères minimum."
+        },
+        "consent": {
+          "label": "Consentement",
+          "choice": "J'accepte que mes informations soient utilisées pour me recontacter."
+        }
+      }
+    },
+    "newsletter": {
+      "success": "Inscription enregistrée, merci.",
+      "fields": {
+        "email": {
+          "label": "Adresse e-mail",
+          "placeholder": "camille@exemple.fr"
+        }
+      }
+    }
+  },
+  "validation": {
+    "required": "Ce champ est obligatoire.",
+    "minLength": "Au moins {count} caractères sont attendus.",
+    "maxLength": "Ce champ ne peut pas dépasser {count} caractères.",
+    "min": "La valeur minimale est {count}.",
+    "max": "La valeur maximale est {count}.",
+    "pattern": "Le format saisi n'est pas valide.",
+    "mismatch": "Les deux valeurs ne correspondent pas."
+  },
+  "errors": {
+    "badRequest": "La demande n'a pas pu être traitée.",
+    "unauthorized": "Une authentification est nécessaire.",
+    "forbidden": "Cet accès n'est pas autorisé.",
+    "notFound": "Cette page n'existe pas.",
+    "notFoundHint": "Le lien est peut-être ancien ou mal recopié.",
+    "conflict": "Cette action entre en conflit avec un état existant.",
+    "unprocessable": "Certaines informations sont incomplètes.",
+    "tooManyRequests": "Trop de demandes envoyées, réessayez dans un instant.",
+    "serverError": "Le serveur a rencontré un problème.",
+    "network": "La connexion au serveur a échoué.",
+    "timeout": "Le serveur a mis trop de temps à répondre.",
+    "unknown": "Une erreur inattendue s'est produite.",
+    "retryHint": "Relancez l'affichage, l'incident est peut-être passager."
+  },
+  "feedback": {
+    "loading": "Chargement en cours",
+    "saved": "Modification enregistrée.",
+    "pagination": "Page {page} sur {totalPages}, {total} résultats",
+    "empty": {
+      "title": "Aucun résultat",
+      "description": "Élargissez la recherche ou retirez un filtre pour voir davantage d'éléments."
+    }
+  },
+  "showcase": {
+    "title": "Atlas du design system",
+    "description": "Chaque bloc lit directement les registres du projet, ce qui est affiché ici est donc exactement ce qui existe dans le code.",
+    "sample": "Portez ce vieux whisky au juge blond qui fume.",
+    "columns": {
+      "label": "Libellé",
+      "value": "Valeur"
+    },
+    "descriptions": {
+      "buttons": "Les variantes viennent du registre, en ajouter une la fait apparaître ici sans modifier cette page.",
+      "forms": "Ce formulaire est rendu depuis sa seule déclaration, aucun champ n'est écrit en markup."
+    },
+    "blocks": {
+      "palette": "Palette et tokens",
+      "typography": "Échelle typographique",
+      "icons": "Registre d'icônes",
+      "buttons": "Actions",
+      "badges": "Étiquettes",
+      "alerts": "Messages",
+      "data": "Données",
+      "overlays": "Couches flottantes",
+      "modal": "Fenêtre modale",
+      "drawer": "Panneau latéral",
+      "tooltip": "Infobulle",
+      "notification": "Notification",
+      "navigation": "Navigation",
+      "collections": "Collections",
+      "placeholders": "États d'attente",
+      "forms": "Formulaires"
+    }
+  },
+  "legal": {
+    "legalNotice": {
+      "sections": {
+        "publisher": {
+          "title": "Éditeur du site",
+          "body": "Le site est édité par {legalName}, immatriculée sous le numéro {registration}, dont le siège est situé {address}. Le directeur de la publication est {publisherName}, joignable à l'adresse {publisherEmail}."
+        },
+        "hosting": {
+          "title": "Hébergement",
+          "body": "Le site est hébergé par {hostingName}, {hostingAddress}."
+        },
+        "property": {
+          "title": "Propriété intellectuelle",
+          "body": "L'ensemble des contenus présents sur le site, textes, visuels et code, reste la propriété de {legalName}, sauf mention contraire. Toute reproduction sans autorisation écrite est interdite."
+        },
+        "liability": {
+          "title": "Responsabilité",
+          "body": "Les informations publiées sont fournies à titre indicatif et peuvent évoluer. Pour toute question, écrivez à {email}."
+        }
+      }
+    },
+    "privacyPolicy": {
+      "sections": {
+        "collection": {
+          "title": "Données collectées",
+          "body": "Seules les informations transmises volontairement par le formulaire de contact sont collectées : nom, adresse e-mail, téléphone facultatif et message."
+        },
+        "purpose": {
+          "title": "Finalité du traitement",
+          "body": "Ces informations servent uniquement à répondre à la demande envoyée à {legalName}. Elles ne sont ni revendues ni transmises à des tiers à des fins commerciales."
+        },
+        "retention": {
+          "title": "Durée de conservation",
+          "body": "Les messages sont conservés le temps nécessaire au traitement de la demande, puis supprimés au plus tard au bout de trente-six mois."
+        },
+        "rights": {
+          "title": "Vos droits",
+          "body": "Vous disposez d'un droit d'accès, de rectification et de suppression de vos données. Pour l'exercer, écrivez à {email}."
+        },
+        "cookies": {
+          "title": "Cookies",
+          "body": "Le site n'utilise aucun cookie publicitaire. Seule la préférence de thème est conservée dans le stockage local du navigateur."
+        },
+        "contact": {
+          "title": "Contact",
+          "body": "Pour toute question relative à ces données, contactez {legalName} à l'adresse {email} ou par téléphone au {phone}."
+        }
+      }
+    }
+  }
+}

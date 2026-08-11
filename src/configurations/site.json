@@ -1,0 +1,11 @@
+{
+  "name": "Template Website",
+  "shortName": "Template",
+  "domain": "example.com",
+  "launchYear": 2026,
+  "themeColor": "#4f46e5",
+  "logo": {
+    "symbol": "TW",
+    "image": null
+  }
+}

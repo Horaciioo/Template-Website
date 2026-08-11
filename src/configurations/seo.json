@@ -1,0 +1,14 @@
+{
+  "titleTemplate": "%s — Template Website",
+  "defaultImage": "/images/open-graph.png",
+  "twitterHandle": null,
+  "type": "website",
+  "robots": {
+    "index": true,
+    "follow": true
+  },
+  "verification": {
+    "google": null,
+    "bing": null
+  }
+}

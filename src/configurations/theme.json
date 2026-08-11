@@ -1,0 +1,82 @@
+{
+  "defaultMode": "system",
+  "colors": {
+    "light": {
+      "background": "255 255 255",
+      "surface": "248 250 252",
+      "surface-strong": "241 245 249",
+      "border": "226 232 240",
+      "border-strong": "203 213 225",
+      "foreground": "15 23 42",
+      "foreground-muted": "100 116 139",
+      "foreground-subtle": "148 163 184",
+      "primary": "79 70 229",
+      "primary-hover": "67 56 202",
+      "primary-soft": "238 242 255",
+      "primary-foreground": "255 255 255",
+      "accent": "219 39 119",
+      "accent-soft": "253 242 248",
+      "accent-foreground": "255 255 255",
+      "success": "22 163 74",
+      "success-soft": "240 253 244",
+      "warning": "217 119 6",
+      "warning-soft": "255 251 235",
+      "danger": "220 38 38",
+      "danger-soft": "254 242 242",
+      "info": "2 132 199",
+      "info-soft": "240 249 255",
+      "overlay": "15 23 42"
+    },
+    "dark": {
+      "background": "9 12 22",
+      "surface": "17 22 36",
+      "surface-strong": "26 33 51",
+      "border": "38 47 68",
+      "border-strong": "56 68 94",
+      "foreground": "233 238 247",
+      "foreground-muted": "155 168 191",
+      "foreground-subtle": "113 127 152",
+      "primary": "129 122 255",
+      "primary-hover": "150 144 255",
+      "primary-soft": "31 33 66",
+      "primary-foreground": "12 14 28",
+      "accent": "244 114 182",
+      "accent-soft": "58 26 45",
+      "accent-foreground": "22 10 18",
+      "success": "74 200 122",
+      "success-soft": "16 41 29",
+      "warning": "245 175 66",
+      "warning-soft": "48 34 12",
+      "danger": "248 113 113",
+      "danger-soft": "51 22 24",
+      "info": "56 176 234",
+      "info-soft": "12 38 54",
+      "overlay": "2 4 10"
+    }
+  },
+  "radii": {
+    "xs": "0.25rem",
+    "sm": "0.375rem",
+    "md": "0.625rem",
+    "lg": "0.875rem",
+    "xl": "1.25rem",
+    "pill": "9999px"
+  },
+  "shadows": {
+    "xs": "0 1px 2px 0 rgb(var(--color-overlay) / 0.05)",
+    "sm": "0 1px 3px 0 rgb(var(--color-overlay) / 0.08), 0 1px 2px -1px rgb(var(--color-overlay) / 0.06)",
+    "md": "0 8px 24px -12px rgb(var(--color-overlay) / 0.25)",
+    "lg": "0 24px 48px -24px rgb(var(--color-overlay) / 0.35)",
+    "focus": "0 0 0 3px rgb(var(--color-primary) / 0.25)"
+  },
+  "durations": {
+    "fast": "120ms",
+    "base": "200ms",
+    "slow": "360ms"
+  },
+  "layout": {
+    "container": "80rem",
+    "prose": "42rem",
+    "header": "4rem"
+  }
+}

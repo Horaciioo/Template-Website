@@ -1,0 +1,8 @@
+{
+  "key": "staging",
+  "branch": "staging",
+  "label": "Recette",
+  "debug": true,
+  "strict": false,
+  "required": []
+}

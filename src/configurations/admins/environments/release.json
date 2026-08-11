@@ -1,0 +1,8 @@
+{
+  "key": "release",
+  "branch": "release",
+  "label": "Preproduction",
+  "debug": false,
+  "strict": true,
+  "required": []
+}

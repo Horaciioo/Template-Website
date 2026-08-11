@@ -1,0 +1,5 @@
+{
+  "scrollThresholdPx": 8,
+  "notificationLifetimeMs": 5000,
+  "shimmerDurationMs": 1600
+}

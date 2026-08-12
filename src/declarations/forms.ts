@@ -45,6 +45,7 @@ export const FORMS = {
   contact: {
     id: 'contact',
     submitAction: 'contact',
+    redirectRouteId: 'thankYou',
     fields: [
       {
         name: 'fullName',

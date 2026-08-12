@@ -9,11 +9,12 @@ import { Field } from '@/components/elements/forms/Field'
 import { FieldControl } from '@/components/elements/forms/FieldControl'
 import type { FormId } from '@/declarations/forms'
 import { FIELD_STYLES } from '@/declarations/ui/variants'
+import { useRouter } from '@/i18n/routing'
 import { AnalyticsService } from '@/services/AnalyticsService'
 import { FormService } from '@/services/FormService'
 import { NamingService } from '@/services/NamingService'
+import { NavigationService } from '@/services/NavigationService'
 import { FormStatuses } from '@/structures/constants'
-import type { ActionName } from '@/declarations/naming'
 import type { FieldValue } from '@/types/form'
 import { cn } from '@/utils/classnames'
 
@@ -34,6 +35,7 @@ export const FormRenderer = ({ id, className }: FormRendererProps) => {
   const t = useTranslations(NamingService.toTranslationKey('forms', id))
   const actions = useTranslations('actions')
   const validation = useTranslations('validation')
+  const router = useRouter()
   const [state, setState] = useState(() => FormService.buildInitialState(form))
 
   const change = (name: string, value: FieldValue) =>
@@ -46,7 +48,6 @@ export const FormRenderer = ({ id, className }: FormRendererProps) => {
     setState((current) => ({ ...current, status: FormStatuses.Submitting }))
 
     const next = await FormService.submit({ ...state, status: FormStatuses.Submitting }, form)
-    setState(next)
 
     AnalyticsService.track(
       next.status === FormStatuses.Succeeded ? 'formSubmitted' : 'formFailed',
@@ -54,6 +55,15 @@ export const FormRenderer = ({ id, className }: FormRendererProps) => {
         form: id,
       }
     )
+
+    // Redirect instead of inline success
+    if (next.status === FormStatuses.Succeeded && form.redirectRouteId) {
+      router.push(NavigationService.pathOf(form.redirectRouteId))
+
+      return
+    }
+
+    setState(next)
   }
 
   const optional = (key: string): string | undefined => (t.has(key) ? t(key) : undefined)
@@ -103,7 +113,7 @@ export const FormRenderer = ({ id, className }: FormRendererProps) => {
         icon="send"
         loading={state.status === FormStatuses.Submitting}
         disabled={state.status === FormStatuses.Submitting}>
-        {actions(form.submitAction as ActionName)}
+        {actions(form.submitAction)}
       </Button>
     </form>
   )

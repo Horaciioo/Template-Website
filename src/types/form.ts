@@ -1,7 +1,9 @@
 import type { FIELD_TYPES } from '@/declarations/forms'
+import type { ActionName } from '@/declarations/naming'
 import type { IconName } from '@/declarations/ui/icons'
 import type { FormStatuses } from '@/structures/constants'
 import type { Dictionary, RegistryKey, TranslationKey } from '@/types/common'
+import type { RouteId } from '@/types/navigation'
 
 /**
  * Form field type
@@ -71,14 +73,17 @@ export interface FieldDeclaration {
  * @typedef FormDeclaration
  * @property {string} id - Form translation key
  * @property {FieldDeclaration[]} fields - Form fields
- * @property {string} submitAction - Submit button action
+ * @property {ActionName} submitAction - Submit button action
+ * @property {RouteId} [redirectRouteId] - Route after success
  */
 
 export interface FormDeclaration {
   // Form translation key
   id: string
   fields: FieldDeclaration[]
-  submitAction: string
+  submitAction: ActionName
+  // Route after success
+  redirectRouteId?: RouteId
 }
 
 /**

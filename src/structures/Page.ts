@@ -13,6 +13,8 @@ export interface PageMetadataContext {
 
 export interface PageRenderContext {
   translate: Translate
+  breadcrumb?: ReactNode
+  action?: ReactNode
 }
 
 // Technical base

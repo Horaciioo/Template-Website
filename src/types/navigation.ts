@@ -1,3 +1,4 @@
+import type { ActionName } from '@/declarations/naming'
 import type { ROUTES } from '@/declarations/routes'
 import type { IconName } from '@/declarations/ui/icons'
 import type { RegistryKey } from '@/types/common'
@@ -15,6 +16,7 @@ export type RouteId = RegistryKey<typeof ROUTES>
  * @property {string} path - Route path
  * @property {IconName} [icon] - Navigation icon
  * @property {boolean} [indexable] - Sitemap indexing
+ * @property {ActionName} [ctaAction] - Label when used as a CTA target
  */
 
 export interface RouteDeclaration {
@@ -23,6 +25,8 @@ export interface RouteDeclaration {
   icon?: IconName
   // Sitemap indexing
   indexable?: boolean
+  // CTA label action
+  ctaAction?: ActionName
 }
 
 /**
@@ -53,4 +57,20 @@ export interface NavigationEntry {
 export interface BreadcrumbEntry {
   href: string
   label: string
+}
+
+/**
+ * Postal address
+ * @typedef PostalAddress
+ * @property {string} street - Street line
+ * @property {string} postalCode - Postal code
+ * @property {string} city - City
+ * @property {string} country - Country code
+ */
+
+export interface PostalAddress {
+  street: string
+  postalCode: string
+  city: string
+  country: string
 }

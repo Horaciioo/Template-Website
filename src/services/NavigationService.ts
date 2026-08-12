@@ -1,9 +1,11 @@
 import { ROUTES, SECTION_ANCHORS } from '@/declarations/routes'
+import type { ActionName } from '@/declarations/naming'
 import { NamingService } from '@/services/NamingService'
 import { Service } from '@/structures/Service'
 import type {
   BreadcrumbEntry,
   NavigationEntry,
+  PostalAddress,
   RouteDeclaration,
   RouteId,
 } from '@/types/navigation'
@@ -16,6 +18,10 @@ const declarationOf = (id: RouteId): RouteDeclaration => ROUTES[id]
 
 const isActivePath = (pathname: string, path: string): boolean =>
   path === '/' ? pathname === '/' : pathname === path || pathname.startsWith(`${path}/`)
+
+// Single-line query text
+const addressQueryOf = (address: PostalAddress): string =>
+  `${address.street}, ${address.postalCode} ${address.city}, ${address.country}`
 
 class NavigationServiceClass extends Service {
   /**
@@ -123,6 +129,22 @@ class NavigationServiceClass extends Service {
   callToActionRoute = (): RouteId => this.config.navigation.callToAction as RouteId
 
   /**
+   * CTA action name
+   * @param {RouteId} id - Route ID
+   * @return {ActionName} - Action name
+   */
+
+  ctaActionOf = (id: RouteId): ActionName => {
+    const action = declarationOf(id).ctaAction
+
+    if (action) return action
+
+    this.logger.warn('ctaActionOf', { id })
+
+    return 'submit'
+  }
+
+  /**
    * Route breadcrumb
    * @param {RouteId} id - Route ID
    * @param {Translate} translate - Translate
@@ -146,6 +168,24 @@ class NavigationServiceClass extends Service {
 
   indexableRoutes = (): RouteId[] =>
     (Object.keys(ROUTES) as RouteId[]).filter((id) => declarationOf(id).indexable !== false)
+
+  /**
+   * Keyless embed URL
+   * @param {PostalAddress} address - Location
+   * @return {string} - Embed src
+   */
+
+  mapEmbedUrlOf = (address: PostalAddress): string =>
+    `https://www.google.com/maps?q=${encodeURIComponent(addressQueryOf(address))}&output=embed`
+
+  /**
+   * Directions URL
+   * @param {PostalAddress} address - Destination
+   * @return {string} - Directions link
+   */
+
+  mapDirectionsUrlOf = (address: PostalAddress): string =>
+    `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(addressQueryOf(address))}`
 }
 
 // Route navigation entries

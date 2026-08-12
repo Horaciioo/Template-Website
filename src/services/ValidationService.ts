@@ -1,5 +1,6 @@
 import { PATTERNS, VALIDATION_RULES } from '@/declarations/validation'
 import type { PatternName } from '@/declarations/validation'
+import { Service } from '@/structures/Service'
 import type {
   FieldDeclaration,
   FieldError,
@@ -14,16 +15,15 @@ const asText = (value: FieldValue): string => (typeof value === 'string' ? value
 const isEmpty = (value: FieldValue): boolean =>
   value === null || value === undefined || value === '' || value === false
 
-// Validation engine
-export const ValidationService = {
+class ValidationServiceClass extends Service {
   /**
-   * Validate one field against its own declaration
-   * @param {FieldDeclaration} field - Field declared in declarations/forms.ts
-   * @param {FieldValue} value - Current value
-   * @return {FieldError | null} - Violated rule and its parameters, null when valid
+   * Validate field
+   * @param {FieldDeclaration} field - Field
+   * @param {FieldValue} value - Value
+   * @return {FieldError | null} - Error
    */
 
-  validateField: (field: FieldDeclaration, value: FieldValue): FieldError | null => {
+  validateField = (field: FieldDeclaration, value: FieldValue): FieldError | null => {
     if (field.required && isEmpty(value)) return { rule: VALIDATION_RULES.required }
     if (isEmpty(value)) return null
 
@@ -52,34 +52,37 @@ export const ValidationService = {
     }
 
     return null
-  },
+  }
 
   /**
-   * Validate every field of a form
-   * @param {FormDeclaration} form - Form declared in declarations/forms.ts
-   * @param {FormValues} values - Current values
-   * @return {FormErrors} - Violated rules, keyed by field name, empty when the form is valid
+   * Validate form
+   * @param {FormDeclaration} form - Form
+   * @param {FormValues} values - Values
+   * @return {FormErrors} - Errors
    */
 
-  validateForm: (form: FormDeclaration, values: FormValues): FormErrors =>
+  validateForm = (form: FormDeclaration, values: FormValues): FormErrors =>
     form.fields.reduce<FormErrors>((errors, field) => {
-      const error = ValidationService.validateField(field, values[field.name] ?? null)
+      const error = this.validateField(field, values[field.name] ?? null)
       if (error) errors[field.name] = error
 
       return errors
-    }, {}),
+    }, {})
 
   /**
-   * Build the value a form starts with, honouring the declared defaults
-   * @param {FormDeclaration} form - Form declared in declarations/forms.ts
-   * @return {FormValues} - Initial values
+   * Initial values
+   * @param {FormDeclaration} form - Form
+   * @return {FormValues} - Values
    */
 
-  buildInitialValues: (form: FormDeclaration): FormValues =>
+  buildInitialValues = (form: FormDeclaration): FormValues =>
     form.fields.reduce<FormValues>((values, field) => {
       values[field.name] =
         field.defaultValue ?? (field.type === 'checkbox' || field.type === 'switch' ? false : '')
 
       return values
-    }, {}),
-} as const
+    }, {})
+}
+
+// Validation engine
+export const ValidationService = new ValidationServiceClass('validation')

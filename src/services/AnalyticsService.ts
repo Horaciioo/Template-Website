@@ -2,15 +2,13 @@ import { track } from '@vercel/analytics'
 
 import { ANALYTICS_EVENTS } from '@/declarations/analytics'
 import type { AnalyticsEvent } from '@/declarations/analytics'
-import { EnvironmentService } from '@/services/EnvironmentService'
-import { LoggerService } from '@/services/LoggerService'
 import { NamingService } from '@/services/NamingService'
+import { Service } from '@/structures/Service'
 
 export type AnalyticsProperties = Record<string, string | number | boolean | null>
 
-// Analytics tracking
-export const AnalyticsService = {
-  events: ANALYTICS_EVENTS,
+class AnalyticsServiceClass extends Service {
+  events = ANALYTICS_EVENTS
 
   /**
    * Send a declared event
@@ -19,15 +17,18 @@ export const AnalyticsService = {
    * @return {void}
    */
 
-  track: (event: AnalyticsEvent, properties?: AnalyticsProperties): void => {
+  track = (event: AnalyticsEvent, properties?: AnalyticsProperties): void => {
     const name = NamingService.toEventName(ANALYTICS_EVENTS[event])
 
-    if (!EnvironmentService.analytics.isEnabled) {
-      LoggerService.debug('analytics.skipped', { name, properties })
+    if (!this.config.isEnabled('analytics') || !this.config.environment.analytics.enabled) {
+      this.logger.debug('skipped', { name, properties })
 
       return
     }
 
     track(name, properties)
-  },
-} as const
+  }
+}
+
+// Analytics tracking
+export const AnalyticsService = new AnalyticsServiceClass('analytics')

@@ -1,13 +1,32 @@
+import type { ReactNode } from 'react'
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 
 import { ContactSection } from '@/components/sections/ContactSection'
 import { PageHeader } from '@/components/structures/layout/PageHeader'
-import { SeoService } from '@/services/SeoService'
+import { Page } from '@/structures/Page'
+import type { PageRenderContext } from '@/structures/Page'
 
 export interface ContactPageProps {
   params: Promise<{ locale: string }>
 }
+
+class ContactPage extends Page {
+  constructor() {
+    super('contact')
+  }
+
+  render({ translate }: PageRenderContext): ReactNode {
+    return (
+      <>
+        <PageHeader title={translate('label')} description={translate('metaDescription')} />
+        <ContactSection />
+      </>
+    )
+  }
+}
+
+const page = new ContactPage()
 
 /**
  * Generate page metadata
@@ -18,11 +37,7 @@ export interface ContactPageProps {
 export const generateMetadata = async ({ params }: ContactPageProps): Promise<Metadata> => {
   const { locale } = await params
 
-  return SeoService.buildMetadata({
-    routeId: 'contact',
-    locale,
-    translate: await getTranslations(),
-  })
+  return page.metadata({ locale, translate: await getTranslations() })
 }
 
 /**
@@ -30,13 +45,6 @@ export const generateMetadata = async ({ params }: ContactPageProps): Promise<Me
  * @return {Promise<JSX.Element>} - Rendered page
  */
 
-export default async function ContactPage() {
-  const t = await getTranslations('routes.contact')
-
-  return (
-    <>
-      <PageHeader title={t('label')} description={t('metaDescription')} />
-      <ContactSection />
-    </>
-  )
+export default async function ContactPageRoute() {
+  return page.render({ translate: await getTranslations('routes.contact') })
 }

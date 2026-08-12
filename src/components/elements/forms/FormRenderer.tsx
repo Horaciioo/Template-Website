@@ -12,6 +12,7 @@ import { FIELD_STYLES } from '@/declarations/ui/variants'
 import { AnalyticsService } from '@/services/AnalyticsService'
 import { FormService } from '@/services/FormService'
 import { NamingService } from '@/services/NamingService'
+import { FormStatuses } from '@/structures/constants'
 import type { ActionName } from '@/declarations/naming'
 import type { FieldValue } from '@/types/form'
 import { cn } from '@/utils/classnames'
@@ -42,21 +43,24 @@ export const FormRenderer = ({ id, className }: FormRendererProps) => {
 
   const submit = async (event: React.FormEvent) => {
     event.preventDefault()
-    setState((current) => ({ ...current, status: 'submitting' }))
+    setState((current) => ({ ...current, status: FormStatuses.Submitting }))
 
-    const next = await FormService.submit({ ...state, status: 'submitting' }, form)
+    const next = await FormService.submit({ ...state, status: FormStatuses.Submitting }, form)
     setState(next)
 
-    AnalyticsService.track(next.status === 'succeeded' ? 'formSubmitted' : 'formFailed', {
-      form: id,
-    })
+    AnalyticsService.track(
+      next.status === FormStatuses.Succeeded ? 'formSubmitted' : 'formFailed',
+      {
+        form: id,
+      }
+    )
   }
 
   const optional = (key: string): string | undefined => (t.has(key) ? t(key) : undefined)
 
   return (
     <form noValidate onSubmit={submit} className={cn('flex flex-col gap-5', className)}>
-      {state.status === 'succeeded' && <Alert tone="success" title={t('success')} />}
+      {state.status === FormStatuses.Succeeded && <Alert tone="success" title={t('success')} />}
 
       <div className={FIELD_STYLES.grid}>
         {form.fields.map((field) => {
@@ -97,8 +101,8 @@ export const FormRenderer = ({ id, className }: FormRendererProps) => {
       <Button
         type="submit"
         icon="send"
-        loading={state.status === 'submitting'}
-        disabled={state.status === 'submitting'}>
+        loading={state.status === FormStatuses.Submitting}
+        disabled={state.status === FormStatuses.Submitting}>
         {actions(form.submitAction as ActionName)}
       </Button>
     </form>

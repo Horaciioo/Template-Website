@@ -1,4 +1,5 @@
 import { ConfigurationService } from '@/services/ConfigurationService'
+import { Service } from '@/structures/Service'
 import {
   DATE_PRESETS,
   formatDate,
@@ -33,10 +34,9 @@ export interface Formatter {
 
 const formatters = new Map<string, Formatter>()
 
-// Locale-aware formatters
-export const FormatService = {
-  presets: Object.keys(DATE_PRESETS) as DatePreset[],
-  emptyValue: EMPTY_VALUE,
+class FormatServiceClass extends Service {
+  presets = Object.keys(DATE_PRESETS) as DatePreset[]
+  emptyValue = EMPTY_VALUE
 
   /**
    * Get formatter for locale
@@ -44,7 +44,7 @@ export const FormatService = {
    * @return {Formatter} - Formatter instance
    */
 
-  for: (locale: string = defaultLocale): Formatter => {
+  for = (locale: string = defaultLocale): Formatter => {
     const existing = formatters.get(locale)
     if (existing) return existing
 
@@ -65,5 +65,8 @@ export const FormatService = {
     formatters.set(locale, created)
 
     return created
-  },
-} as const
+  }
+}
+
+// Locale-aware formatters
+export const FormatService = new FormatServiceClass('format')

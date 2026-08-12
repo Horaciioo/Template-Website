@@ -1,5 +1,6 @@
 import type { FIELD_TYPES } from '@/declarations/forms'
 import type { IconName } from '@/declarations/ui/icons'
+import type { FormStatuses } from '@/structures/constants'
 import type { Dictionary, RegistryKey, TranslationKey } from '@/types/common'
 
 /**
@@ -108,10 +109,10 @@ export type FormErrors = Dictionary<FieldError>
 
 /**
  * Form submission status
- * @typedef {'idle' | 'submitting' | 'succeeded' | 'failed'} FormStatus
+ * @typedef {(typeof FormStatuses)[Exclude<keyof typeof FormStatuses, number>]} FormStatus
  */
 
-export type FormStatus = 'idle' | 'submitting' | 'succeeded' | 'failed'
+export type FormStatus = (typeof FormStatuses)[Exclude<keyof typeof FormStatuses, number>]
 
 /**
  * Form state

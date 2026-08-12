@@ -1,6 +1,6 @@
 import { ROUTES, SECTION_ANCHORS } from '@/declarations/routes'
-import { ConfigurationService } from '@/services/ConfigurationService'
 import { NamingService } from '@/services/NamingService'
+import { Service } from '@/structures/Service'
 import type {
   BreadcrumbEntry,
   NavigationEntry,
@@ -8,146 +8,145 @@ import type {
   RouteId,
 } from '@/types/navigation'
 
-// Translate function of the active locale, passed in so this service stays usable on both sides
+// Translation function
 export type Translate = (key: string) => string
 
-// Widens the frozen registry entry back to its declaration, so the optional flags stay readable
+// Unwrap frozen registry
 const declarationOf = (id: RouteId): RouteDeclaration => ROUTES[id]
 
 const isActivePath = (pathname: string, path: string): boolean =>
   path === '/' ? pathname === '/' : pathname === path || pathname.startsWith(`${path}/`)
 
-// Route navigation entries
-export const NavigationService = {
+class NavigationServiceClass extends Service {
   /**
-   * Read the pathname of a route
-   * @param {RouteId} id - Route declared in declarations/routes.ts
-   * @return {string} - Pathname without the locale prefix
+   * Route pathname
+   * @param {RouteId} id - Route ID
+   * @return {string} - Pathname
    */
 
-  pathOf: (id: RouteId): string => declarationOf(id).path,
+  pathOf = (id: RouteId): string => declarationOf(id).path
 
   /**
-   * Read the declaration of a route, the widened shape carrying its optional flags
-   * @param {RouteId} id - Route declared in declarations/routes.ts
-   * @return {RouteDeclaration} - Path, icon and indexing flag
+   * Route declaration
+   * @param {RouteId} id - Route ID
+   * @return {RouteDeclaration} - Declaration
    */
 
-  declarationOf,
+  declarationOf = declarationOf
 
   /**
-   * Build the translation key of a route, the root of its label and of its metadata
-   * @param {RouteId} id - Route declared in declarations/routes.ts
-   * @return {string} - Dotted translation key
+   * Route key
+   * @param {RouteId} id - Route ID
+   * @return {string} - Key
    */
 
-  keyOf: (id: RouteId): string => NamingService.toTranslationKey('routes', id),
+  keyOf = (id: RouteId): string => NamingService.toTranslationKey('routes', id)
 
   /**
-   * Build the href of a section anchor of the current page
-   * @param {keyof typeof SECTION_ANCHORS} anchor - Anchor declared in declarations/routes.ts
-   * @return {string} - Hash href
+   * Anchor href
+   * @param {keyof typeof SECTION_ANCHORS} anchor - Anchor ID
+   * @return {string} - Href
    */
 
-  anchorOf: (anchor: keyof typeof SECTION_ANCHORS): string => `#${SECTION_ANCHORS[anchor]}`,
+  anchorOf = (anchor: keyof typeof SECTION_ANCHORS): string => `#${SECTION_ANCHORS[anchor]}`
 
   /**
-   * Build an e-mail link
-   * @param {string} email - Address declared in configurations/identity.json
-   * @return {string} - mailto href
+   * Email link
+   * @param {string} email - Email address
+   * @return {string} - Link
    */
 
-  mailtoOf: (email: string): string => `mailto:${email}`,
+  mailtoOf = (email: string): string => `mailto:${email}`
 
   /**
-   * Build a phone link
-   * @param {string} phone - Number declared in configurations/identity.json
-   * @return {string} - tel href
+   * Phone link
+   * @param {string} phone - Phone number
+   * @return {string} - Link
    */
 
-  telOf: (phone: string): string => `tel:${phone}`,
+  telOf = (phone: string): string => `tel:${phone}`
 
   /**
-   * Build the entries of a navigation group
-   * @param {RouteId[]} ids - Routes to render, in order
-   * @param {Object} context - Rendering context
-   * @param {string} context.pathname - Current pathname
-   * @param {Translate} context.translate - Translate function
-   * @return {NavigationEntry[]}
+   * Navigation entries
+   * @param {RouteId[]} ids - Route IDs
+   * @param {Object} context - Context
+   * @param {string} context.pathname - Pathname
+   * @param {Translate} context.translate - Translate
+   * @return {NavigationEntry[]} - Entries
    */
 
-  buildEntries: (
+  buildEntries = (
     ids: readonly RouteId[],
     context: { pathname: string; translate: Translate }
   ): NavigationEntry[] =>
     ids.map((id) => ({
       id,
       href: declarationOf(id).path,
-      label: context.translate(`${NavigationService.keyOf(id)}.label`),
+      label: context.translate(`${this.keyOf(id)}.label`),
       icon: declarationOf(id).icon,
       isActive: isActivePath(context.pathname, declarationOf(id).path),
-    })),
+    }))
 
   /**
-   * Build the header entries declared in configurations/navigation.json
-   * @param {Object} context - Rendering context
-   * @param {string} context.pathname - Current pathname, without the locale prefix
-   * @param {Translate} context.translate - Translate function of the active locale
-   * @return {NavigationEntry[]} - Header entries
+   * Header entries
+   * @param {Object} context - Context
+   * @param {string} context.pathname - Pathname
+   * @param {Translate} context.translate - Translate
+   * @return {NavigationEntry[]} - Entries
    */
 
-  headerEntries: (context: { pathname: string; translate: Translate }): NavigationEntry[] =>
-    NavigationService.buildEntries(ConfigurationService.navigation.header as RouteId[], context),
+  headerEntries = (context: { pathname: string; translate: Translate }): NavigationEntry[] =>
+    this.buildEntries(this.config.navigation.header as RouteId[], context)
 
   /**
-   * Build the footer columns declared in configurations/navigation.json
-   * @param {Object} context - Rendering context
-   * @param {string} context.pathname - Current pathname, without the locale prefix
-   * @param {Translate} context.translate - Translate function of the active locale
-   * @return {Object[]} - Columns carrying their own translation key and entries
+   * Footer columns
+   * @param {Object} context - Context
+   * @param {string} context.pathname - Pathname
+   * @param {Translate} context.translate - Translate
+   * @return {Object[]} - Columns
    */
 
-  footerColumns: (context: {
+  footerColumns = (context: {
     pathname: string
     translate: Translate
   }): { id: string; entries: NavigationEntry[] }[] =>
-    Object.entries(ConfigurationService.navigation.footer).map(([id, ids]) => ({
+    Object.entries(this.config.navigation.footer).map(([id, ids]) => ({
       id,
-      entries: NavigationService.buildEntries(ids as RouteId[], context),
-    })),
+      entries: this.buildEntries(ids as RouteId[], context),
+    }))
 
   /**
-   * Route the main call to action of the site points at
-   * @return {RouteId} - Route declared in configurations/navigation.json
+   * CTA route
+   * @return {RouteId} - Route ID
    */
 
-  callToActionRoute: (): RouteId => ConfigurationService.navigation.callToAction as RouteId,
+  callToActionRoute = (): RouteId => this.config.navigation.callToAction as RouteId
 
   /**
-   * Build the breadcrumb of a route, the home entry always opening the trail
-   * @param {RouteId} id - Current route
-   * @param {Translate} translate - Translate function of the active locale
-   * @return {BreadcrumbEntry[]} - Trail from the home page to the current route
+   * Route breadcrumb
+   * @param {RouteId} id - Route ID
+   * @param {Translate} translate - Translate
+   * @return {BreadcrumbEntry[]} - Trail
    */
 
-  breadcrumbOf: (id: RouteId, translate: Translate): BreadcrumbEntry[] => {
+  breadcrumbOf = (id: RouteId, translate: Translate): BreadcrumbEntry[] => {
     const home = {
       href: declarationOf('home').path,
-      label: translate(`${NavigationService.keyOf('home')}.label`),
+      label: translate(`${this.keyOf('home')}.label`),
     }
     if (id === 'home') return [home]
 
-    return [
-      home,
-      { href: declarationOf(id).path, label: translate(`${NavigationService.keyOf(id)}.label`) },
-    ]
-  },
+    return [home, { href: declarationOf(id).path, label: translate(`${this.keyOf(id)}.label`) }]
+  }
 
   /**
-   * Routes exposed to search engines, the source of the sitemap
-   * @return {RouteId[]} - Indexable routes
+   * Indexable routes
+   * @return {RouteId[]} - Routes
    */
 
-  indexableRoutes: (): RouteId[] =>
-    (Object.keys(ROUTES) as RouteId[]).filter((id) => declarationOf(id).indexable !== false),
-} as const
+  indexableRoutes = (): RouteId[] =>
+    (Object.keys(ROUTES) as RouteId[]).filter((id) => declarationOf(id).indexable !== false)
+}
+
+// Route navigation entries
+export const NavigationService: NavigationServiceClass = new NavigationServiceClass('navigation')

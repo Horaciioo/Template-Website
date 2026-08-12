@@ -6,7 +6,7 @@ import { createPortal } from 'react-dom'
 
 import { LAYERS } from '@/declarations/ui/tokens'
 import { OVERLAY_STYLES } from '@/declarations/ui/variants'
-import { ScrollService } from '@/services/ScrollService'
+import { Overlay } from '@/structures/Overlay'
 import { isBrowser } from '@/utils/guards'
 import { cn } from '@/utils/classnames'
 
@@ -28,17 +28,7 @@ export const OverlayShell = ({ isOpen, onClose, frameClassName, children }: Over
   useEffect(() => {
     if (!isOpen) return
 
-    const release = ScrollService.lock()
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onClose()
-    }
-
-    window.addEventListener('keydown', onKeyDown)
-
-    return () => {
-      release()
-      window.removeEventListener('keydown', onKeyDown)
-    }
+    return new Overlay(onClose).open()
   }, [isOpen, onClose])
 
   if (!isOpen || !isBrowser()) return null

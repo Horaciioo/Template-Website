@@ -36,7 +36,8 @@ export default [
         'error',
         {
           selector: 'TSEnumDeclaration',
-          message: 'Declare a const registry in src/declarations instead of a TypeScript enum.',
+          message:
+            'Declare a bidirectional registry in src/structures/constants.ts instead of a TypeScript enum.',
         },
       ],
     },

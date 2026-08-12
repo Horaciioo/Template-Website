@@ -1,6 +1,7 @@
 import { ConfigurationService } from '@/services/ConfigurationService'
 import { createStore } from '@/services/core/StoreService'
 import type { Store } from '@/services/core/StoreService'
+import { Service } from '@/structures/Service'
 import type { BreakpointName, MediaQueryName } from '@/types/viewport'
 import { isBrowser } from '@/utils/guards'
 
@@ -37,49 +38,51 @@ const orderedBreakpoints = Object.entries(breakpoints).sort(([, a], [, b]) => b 
   number,
 ][]
 
-// Viewport breakpoints
-export const ViewportService = {
+class ViewportServiceClass extends Service {
   /**
-   * Build the media query of a breakpoint
-   * @param {BreakpointName} name - Breakpoint declared in configurations/system/viewport.json
-   * @return {string} - Media query
+   * Media query
+   * @param {BreakpointName} name - Breakpoint
+   * @return {string} - Query
    */
 
-  queryOf: (name: BreakpointName): string => `(min-width: ${breakpoints[name]}px)`,
+  queryOf = (name: BreakpointName): string => `(min-width: ${breakpoints[name]}px)`
 
   /**
-   * Follow a breakpoint, true once the viewport is at least that wide
-   * @param {BreakpointName} name - Breakpoint declared in configurations/system/viewport.json
-   * @return {boolean} - Match flag, false on the server render
+   * Breakpoint match
+   * @param {BreakpointName} name - Breakpoint
+   * @return {boolean} - Match
    */
 
-  useIsAbove: (name: BreakpointName): boolean => observe(ViewportService.queryOf(name)).use(),
+  useIsAbove = (name: BreakpointName): boolean => observe(this.queryOf(name)).use()
 
   /**
-   * Follow one of the named preference queries, motion or colour scheme
-   * @param {MediaQueryName} name - Query declared in configurations/system/viewport.json
-   * @return {boolean} - Match flag, false on the server render
+   * Preference match
+   * @param {MediaQueryName} name - Query
+   * @return {boolean} - Match
    */
 
-  usePrefers: (name: MediaQueryName): boolean => observe(mediaQueries[name]).use(),
+  usePrefers = (name: MediaQueryName): boolean => observe(mediaQueries[name]).use()
 
   /**
-   * Follow an arbitrary media query, for the rare case no declared name fits
-   * @param {string} query - Media query
-   * @return {boolean} - Match flag, false on the server render
+   * Custom query
+   * @param {string} query - Query
+   * @return {boolean} - Match
    */
 
-  useMatches: (query: string): boolean => observe(query).use(),
+  useMatches = (query: string): boolean => observe(query).use()
 
   /**
-   * Resolve the widest matching breakpoint, used when a component needs the name and not a boolean
-   * @return {BreakpointName | null} - Active breakpoint, null below the smallest one
+   * Current breakpoint
+   * @return {BreakpointName | null} - Breakpoint
    */
 
-  current: (): BreakpointName | null => {
+  current = (): BreakpointName | null => {
     if (!isBrowser()) return null
     const found = orderedBreakpoints.find(([, width]) => window.innerWidth >= width)
 
     return found ? found[0] : null
-  },
-} as const
+  }
+}
+
+// Viewport breakpoints
+export const ViewportService = new ViewportServiceClass('viewport')

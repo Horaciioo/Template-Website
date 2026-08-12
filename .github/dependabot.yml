@@ -1,32 +1,31 @@
 version: 2
 
 updates:
-  - package-ecosystem: "npm"
-    directory: "/"
-    target-branch: "dev"
+  - package-ecosystem: 'npm'
+    directory: '/'
+    target-branch: 'dev'
     schedule:
-      interval: "weekly"
-      day: "monday"
+      interval: 'weekly'
+      day: 'monday'
     open-pull-requests-limit: 10
     labels:
-      - "dependencies"
+      - 'dependencies'
     groups:
       routine-updates:
         update-types:
-          - "minor"
-          - "patch"
+          - 'minor'
+          - 'patch'
     commit-message:
-      prefix: "⬆️"
+      prefix: '⬆️'
 
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    target-branch: "dev"
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    target-branch: 'dev'
     schedule:
-      interval: "weekly"
-      day: "monday"
+      interval: 'weekly'
+      day: 'monday'
     labels:
-      - "dependencies"
-      - "ci"
+      - 'dependencies'
+      - 'ci'
     commit-message:
-      prefix: "⬆️"
-
+      prefix: '⬆️'

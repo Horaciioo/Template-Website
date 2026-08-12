@@ -47,6 +47,16 @@ export const STATS: StatItem[] = [
 ]
 
 /**
+ * Response and delivery promises
+ * @type {FeatureItem[]}
+ */
+
+export const PROMISES: FeatureItem[] = [
+  { id: 'response', translationKey: 'response', icon: 'clock', tone: 'primary' },
+  { id: 'delivery', translationKey: 'delivery', icon: 'send', tone: 'accent' },
+]
+
+/**
  * Testimonials
  * @type {TestimonialItem[]}
  */

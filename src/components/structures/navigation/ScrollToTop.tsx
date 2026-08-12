@@ -9,7 +9,7 @@ import { ConfigurationService } from '@/services/ConfigurationService'
 import { ScrollService } from '@/services/ScrollService'
 import { cn } from '@/utils/classnames'
 
-// Visibility threshold, the small breakpoint since the button only helps once a page scrolls long
+// Minimum scroll threshold
 const VISIBLE_FROM = ConfigurationService.viewport.breakpoints.sm
 
 /**

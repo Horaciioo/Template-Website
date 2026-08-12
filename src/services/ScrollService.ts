@@ -1,5 +1,6 @@
 import { ConfigurationService } from '@/services/ConfigurationService'
 import { bindWindowEvent, createStore } from '@/services/core/StoreService'
+import { Service } from '@/structures/Service'
 import { isBrowser } from '@/utils/guards'
 
 export interface ScrollState {
@@ -32,33 +33,32 @@ const store = createStore<ScrollState>(initialState, {
   },
 })
 
-// Scroll position
-export const ScrollService = {
-  store,
+class ScrollServiceClass extends Service {
+  store = store
 
   /**
    * Follow the scroll position
    * @return {ScrollState} - Offset, threshold flag and direction
    */
 
-  use: (): ScrollState => store.use(),
+  use = (): ScrollState => store.use()
 
   /**
-   * Scroll back to the top of the page
+   * Scroll to top
    * @return {void}
    */
 
-  toTop: (): void => {
+  toTop = (): void => {
     if (!isBrowser()) return
     window.scrollTo({ top: 0, behavior: 'smooth' })
-  },
+  }
 
   /**
-   * Freeze the page behind an open overlay, nested overlays sharing one counter
-   * @return {() => void} - Release, the page scrolling again once every holder released
+   * Lock scroll
+   * @return {() => void} - Release
    */
 
-  lock: (): (() => void) => {
+  lock = (): (() => void) => {
     if (!isBrowser()) return () => undefined
 
     lockCount += 1
@@ -68,15 +68,15 @@ export const ScrollService = {
       lockCount = Math.max(0, lockCount - 1)
       if (lockCount === 0) document.body.style.overflow = ''
     }
-  },
+  }
 
   /**
-   * Scroll to a section anchor declared in declarations/routes.ts
-   * @param {string} anchor - Anchor id, without its hash
-   * @return {boolean} - Found flag
+   * Scroll to anchor
+   * @param {string} anchor - Anchor ID
+   * @return {boolean} - Found
    */
 
-  toAnchor: (anchor: string): boolean => {
+  toAnchor = (anchor: string): boolean => {
     if (!isBrowser()) return false
     const target = document.getElementById(anchor)
     if (!target) return false
@@ -84,5 +84,8 @@ export const ScrollService = {
     target.scrollIntoView({ behavior: 'smooth', block: 'start' })
 
     return true
-  },
-} as const
+  }
+}
+
+// Scroll position
+export const ScrollService = new ScrollServiceClass('scroll')

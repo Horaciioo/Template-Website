@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "packageManager": "yarn@4.17.1",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -12,9 +15,11 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "check:registre": "node scripts/check-registre.mjs",
-    "validate": "yarn type-check && yarn lint && yarn build && yarn check:registre"
+    "check:environment": "node scripts/check-environment.mjs",
+    "validate": "yarn type-check && yarn lint && yarn build && yarn check:registre && yarn check:environment"
   },
   "dependencies": {
+    "@next/third-parties": "^16.3.0",
     "@vercel/analytics": "^1.4.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.468.0",

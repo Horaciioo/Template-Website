@@ -1,13 +1,38 @@
+import type { ReactNode } from 'react'
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 
 import { ContactSection } from '@/components/sections/ContactSection'
 import { PageHeader } from '@/components/structures/layout/PageHeader'
-import { SeoService } from '@/services/SeoService'
+import { Breadcrumb } from '@/components/structures/navigation/Breadcrumb'
+import { NavigationService } from '@/services/NavigationService'
+import { Page } from '@/structures/Page'
+import type { PageRenderContext } from '@/structures/Page'
 
 export interface ContactPageProps {
   params: Promise<{ locale: string }>
 }
+
+class ContactPage extends Page {
+  constructor() {
+    super('contact')
+  }
+
+  render({ translate, breadcrumb }: PageRenderContext): ReactNode {
+    return (
+      <>
+        <PageHeader
+          title={translate('label')}
+          description={translate('metaDescription')}
+          breadcrumb={breadcrumb}
+        />
+        <ContactSection />
+      </>
+    )
+  }
+}
+
+const page = new ContactPage()
 
 /**
  * Generate page metadata
@@ -18,11 +43,7 @@ export interface ContactPageProps {
 export const generateMetadata = async ({ params }: ContactPageProps): Promise<Metadata> => {
   const { locale } = await params
 
-  return SeoService.buildMetadata({
-    routeId: 'contact',
-    locale,
-    translate: await getTranslations(),
-  })
+  return page.metadata({ locale, translate: await getTranslations() })
 }
 
 /**
@@ -30,13 +51,16 @@ export const generateMetadata = async ({ params }: ContactPageProps): Promise<Me
  * @return {Promise<JSX.Element>} - Rendered page
  */
 
-export default async function ContactPage() {
-  const t = await getTranslations('routes.contact')
+export default async function ContactPageRoute() {
+  const navigationTranslate = await getTranslations()
 
-  return (
-    <>
-      <PageHeader title={t('label')} description={t('metaDescription')} />
-      <ContactSection />
-    </>
-  )
+  return page.render({
+    translate: await getTranslations('routes.contact'),
+    breadcrumb: (
+      <Breadcrumb
+        entries={NavigationService.breadcrumbOf('contact', navigationTranslate)}
+        label={navigationTranslate('navigation.breadcrumb')}
+      />
+    ),
+  })
 }

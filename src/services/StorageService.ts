@@ -1,57 +1,55 @@
-import { ConfigurationService } from '@/services/ConfigurationService'
-import { LoggerService } from '@/services/LoggerService'
+import { Service } from '@/structures/Service'
 import { isBrowser } from '@/utils/guards'
 
-// Local storage
-export const StorageService = {
+class StorageServiceClass extends Service {
   /**
-   * Build the stored key of a declared name
-   * @param {string} name - Name declared in declarations/analytics.ts
-   * @return {string} - Prefixed storage key
+   * Storage key
+   * @param {string} name - Name
+   * @return {string} - Key
    */
 
-  buildKey: (name: string): string => `${ConfigurationService.storage.prefix}:${name}`,
+  buildKey = (name: string): string => `${this.config.storage.prefix}:${name}`
 
   /**
-   * Read and parse a stored value
-   * @param {string} name - Name declared in declarations/analytics.ts
-   * @return {T | null} - Stored value, null when missing or unreadable
+   * Read value
+   * @param {string} name - Name
+   * @return {T | null} - Value
    */
 
-  read: <T>(name: string): T | null => {
+  read = <T>(name: string): T | null => {
     if (!isBrowser()) return null
 
     try {
-      const raw = window.localStorage.getItem(StorageService.buildKey(name))
+      const raw = window.localStorage.getItem(this.buildKey(name))
 
       return raw === null ? null : (JSON.parse(raw) as T)
     } catch (error) {
-      LoggerService.warn('storage.read', { name, error })
+      this.logger.warn('read', { name, error })
 
       return null
     }
-  },
+  }
 
   /**
-   * Serialise and store a value
-   * @param {string} name - Name declared in declarations/analytics.ts
-   * @param {T} value - Value to store
-   * @return {boolean} - Written flag
+   * Store value
+   * @param {string} name - Name
+   * @param {T} value - Value
+   * @return {boolean} - Success
    */
 
-  write: <T>(name: string, value: T): boolean => {
+  write = <T>(name: string, value: T): boolean => {
     if (!isBrowser()) return false
 
     try {
-      window.localStorage.setItem(StorageService.buildKey(name), JSON.stringify(value))
+      window.localStorage.setItem(this.buildKey(name), JSON.stringify(value))
 
       return true
     } catch (error) {
-      LoggerService.warn('storage.write', { name, error })
+      this.logger.warn('write', { name, error })
 
       return false
     }
-  },
+  }
 
   /**
    * Drop a stored value
@@ -59,8 +57,11 @@ export const StorageService = {
    * @return {void}
    */
 
-  clear: (name: string): void => {
+  clear = (name: string): void => {
     if (!isBrowser()) return
-    window.localStorage.removeItem(StorageService.buildKey(name))
-  },
-} as const
+    window.localStorage.removeItem(this.buildKey(name))
+  }
+}
+
+// Local storage
+export const StorageService = new StorageServiceClass('storage')

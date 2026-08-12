@@ -1,0 +1,4 @@
+{
+  "enabled": "${NEXT_PUBLIC_ANALYTICS_ENABLED}",
+  "googleAnalyticsId": "${NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}"
+}

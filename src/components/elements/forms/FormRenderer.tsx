@@ -9,10 +9,12 @@ import { Field } from '@/components/elements/forms/Field'
 import { FieldControl } from '@/components/elements/forms/FieldControl'
 import type { FormId } from '@/declarations/forms'
 import { FIELD_STYLES } from '@/declarations/ui/variants'
+import { useRouter } from '@/i18n/routing'
 import { AnalyticsService } from '@/services/AnalyticsService'
 import { FormService } from '@/services/FormService'
 import { NamingService } from '@/services/NamingService'
-import type { ActionName } from '@/declarations/naming'
+import { NavigationService } from '@/services/NavigationService'
+import { FormStatuses } from '@/structures/constants'
 import type { FieldValue } from '@/types/form'
 import { cn } from '@/utils/classnames'
 
@@ -33,6 +35,7 @@ export const FormRenderer = ({ id, className }: FormRendererProps) => {
   const t = useTranslations(NamingService.toTranslationKey('forms', id))
   const actions = useTranslations('actions')
   const validation = useTranslations('validation')
+  const router = useRouter()
   const [state, setState] = useState(() => FormService.buildInitialState(form))
 
   const change = (name: string, value: FieldValue) =>
@@ -42,21 +45,32 @@ export const FormRenderer = ({ id, className }: FormRendererProps) => {
 
   const submit = async (event: React.FormEvent) => {
     event.preventDefault()
-    setState((current) => ({ ...current, status: 'submitting' }))
+    setState((current) => ({ ...current, status: FormStatuses.Submitting }))
 
-    const next = await FormService.submit({ ...state, status: 'submitting' }, form)
+    const next = await FormService.submit({ ...state, status: FormStatuses.Submitting }, form)
+
+    AnalyticsService.track(
+      next.status === FormStatuses.Succeeded ? 'formSubmitted' : 'formFailed',
+      {
+        form: id,
+      }
+    )
+
+    // Redirect instead of inline success
+    if (next.status === FormStatuses.Succeeded && form.redirectRouteId) {
+      router.push(NavigationService.pathOf(form.redirectRouteId))
+
+      return
+    }
+
     setState(next)
-
-    AnalyticsService.track(next.status === 'succeeded' ? 'formSubmitted' : 'formFailed', {
-      form: id,
-    })
   }
 
   const optional = (key: string): string | undefined => (t.has(key) ? t(key) : undefined)
 
   return (
     <form noValidate onSubmit={submit} className={cn('flex flex-col gap-5', className)}>
-      {state.status === 'succeeded' && <Alert tone="success" title={t('success')} />}
+      {state.status === FormStatuses.Succeeded && <Alert tone="success" title={t('success')} />}
 
       <div className={FIELD_STYLES.grid}>
         {form.fields.map((field) => {
@@ -97,9 +111,9 @@ export const FormRenderer = ({ id, className }: FormRendererProps) => {
       <Button
         type="submit"
         icon="send"
-        loading={state.status === 'submitting'}
-        disabled={state.status === 'submitting'}>
-        {actions(form.submitAction as ActionName)}
+        loading={state.status === FormStatuses.Submitting}
+        disabled={state.status === FormStatuses.Submitting}>
+        {actions(form.submitAction)}
       </Button>
     </form>
   )

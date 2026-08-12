@@ -14,7 +14,7 @@ import { cn } from '@/utils/classnames'
 
 export interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   icon: IconName
-  // Accessible label for screen readers
+  // Screen reader label
   label: string
   variant?: ButtonVariant
   size?: Size

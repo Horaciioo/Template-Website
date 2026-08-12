@@ -1,33 +1,53 @@
-import { ConfigurationService } from '@/services/ConfigurationService'
+import { ENVIRONMENT_REGISTRY } from '@/declarations/environments'
+import type { EnvironmentKey } from '@/types/environment'
 import { isFilledString } from '@/utils/guards'
 
-// Environment variables
-const read = (value: string | undefined, fallback = ''): string =>
-  isFilledString(value) ? value.trim() : fallback
+/**
+ * Match environment key
+ * @param {string} candidate - APP_ENV value
+ * @return {EnvironmentKey | undefined} - Matching key
+ */
 
+const keyOf = (candidate: string): EnvironmentKey | undefined => {
+  if (candidate in ENVIRONMENT_REGISTRY) return candidate as EnvironmentKey
+
+  const entries = Object.entries(ENVIRONMENT_REGISTRY) as [EnvironmentKey, { branch: string }][]
+
+  return entries.find(([, meta]) => meta.branch === candidate)?.[0]
+}
+
+/**
+ * Resolve environment
+ * @return {EnvironmentKey} - Resolved key
+ */
+
+const resolveEnvironment = (): EnvironmentKey => {
+  const explicit = process.env.APP_ENV ?? process.env.NEXT_PUBLIC_APP_ENV
+  const resolved = isFilledString(explicit) ? keyOf(explicit.trim()) : undefined
+
+  if (resolved) return resolved
+
+  // Fall back to NODE_ENV
+  return process.env.NODE_ENV === 'production' ? 'production' : 'development'
+}
+
+const current = resolveEnvironment()
+
+// Process.env reader
 export const EnvironmentService = {
-  isProduction: process.env.NODE_ENV === 'production',
-  isDevelopment: process.env.NODE_ENV === 'development',
-
-  siteUrl: read(process.env.NEXT_PUBLIC_SITE_URL, `https://${ConfigurationService.site.domain}`),
-
-  analytics: {
-    isEnabled:
-      ConfigurationService.isEnabled('analytics') &&
-      read(process.env.NEXT_PUBLIC_ANALYTICS_ENABLED) === 'true',
-  },
-
-  mail: {
-    apiKey: read(process.env.MAIL_API_KEY),
-    from: read(process.env.MAIL_FROM, ConfigurationService.identity.email),
-    to: read(process.env.MAIL_TO, ConfigurationService.identity.email),
-  },
+  current,
+  isProduction: current === 'production',
+  isDevelopment: current === 'development',
 
   /**
-   * Absolute URL builder
-   * @param {string} path - Pathname
-   * @return {string} - URL
+   * Read variable
+   * @param {string} name - Name
+   * @return {string | undefined} - Value
    */
 
-  absoluteUrl: (path: string): string => new URL(path, EnvironmentService.siteUrl).toString(),
+  read: (name: string): string | undefined => {
+    const value = process.env[name]
+
+    return isFilledString(value) ? value.trim() : undefined
+  },
 } as const

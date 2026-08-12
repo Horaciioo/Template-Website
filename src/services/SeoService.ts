@@ -1,13 +1,13 @@
 import type { Metadata } from 'next'
 
 import { ConfigurationService } from '@/services/ConfigurationService'
-import { EnvironmentService } from '@/services/EnvironmentService'
 import { I18nService } from '@/services/I18nService'
 import { NavigationService } from '@/services/NavigationService'
 import type { Translate } from '@/services/NavigationService'
+import { Service } from '@/structures/Service'
 import type { RouteId } from '@/types/navigation'
 
-const { seo, site, identity } = ConfigurationService
+const { seo, site, identity, environment } = ConfigurationService
 
 // Verification tokens
 const bingToken: string | null = seo.verification.bing
@@ -18,11 +18,7 @@ const twitterHandle: string | null = seo.twitterHandle
 const localizedPath = (locale: string, path: string): string =>
   locale === I18nService.defaultLocale ? path : `${`/${locale}`}${path === '/' ? '' : path}`
 
-/**
- * Page metadata builder
- */
-
-export const SeoService = {
+class SeoServiceClass extends Service {
   /**
    * Route metadata
    * @param {Object} input - Page context
@@ -32,7 +28,7 @@ export const SeoService = {
    * @return {Metadata} - Metadata
    */
 
-  buildMetadata: ({
+  buildMetadata = ({
     routeId,
     locale,
     translate,
@@ -45,20 +41,22 @@ export const SeoService = {
     const path = NavigationService.pathOf(routeId)
     const title = translate(`${key}.metaTitle`)
     const description = translate(`${key}.metaDescription`)
-    const canonical = EnvironmentService.absoluteUrl(localizedPath(locale, path))
+    const canonical = environment.absoluteUrl(localizedPath(locale, path))
     const isIndexable =
-      NavigationService.declarationOf(routeId).indexable !== false && seo.robots.index
+      NavigationService.declarationOf(routeId).indexable !== false &&
+      seo.robots.index &&
+      !environment.seo.noindex
 
     return {
       title,
       description,
-      metadataBase: new URL(EnvironmentService.siteUrl),
+      metadataBase: new URL(environment.site.url),
       alternates: {
         canonical,
         languages: Object.fromEntries(
           I18nService.locales.map((alternate) => [
             alternate,
-            EnvironmentService.absoluteUrl(localizedPath(alternate, path)),
+            environment.absoluteUrl(localizedPath(alternate, path)),
           ])
         ),
       },
@@ -69,7 +67,7 @@ export const SeoService = {
         title,
         description,
         url: canonical,
-        images: [EnvironmentService.absoluteUrl(seo.defaultImage)],
+        images: [environment.absoluteUrl(seo.defaultImage)],
       },
       twitter: {
         card: 'summary_large_image',
@@ -83,31 +81,31 @@ export const SeoService = {
         other: bingToken ? { 'msvalidate.01': bingToken } : undefined,
       },
     }
-  },
+  }
 
   /**
-   * Build the root title template, applied to every page title of the site
-   * @return {Metadata} - Metadata shared by the whole tree
+   * Root metadata
+   * @return {Metadata} - Metadata
    */
 
-  buildRootMetadata: (): Metadata => ({
+  buildRootMetadata = (): Metadata => ({
     title: { default: site.name, template: seo.titleTemplate },
     applicationName: site.name,
-    metadataBase: new URL(EnvironmentService.siteUrl),
-  }),
+    metadataBase: new URL(environment.site.url),
+  })
 
   /**
-   * Build the organisation structured data injected once in the layout
-   * @param {string} locale - Active locale
-   * @return {Record<string, unknown>} - JSON-LD payload
+   * Organization schema
+   * @param {string} locale - Locale
+   * @return {Record<string, unknown>} - Schema
    */
 
-  buildOrganizationSchema: (locale: string): Record<string, unknown> => ({
+  buildOrganizationSchema = (locale: string): Record<string, unknown> => ({
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: identity.legalName,
     alternateName: identity.tradeName,
-    url: EnvironmentService.absoluteUrl(localizedPath(locale, NavigationService.pathOf('home'))),
+    url: environment.absoluteUrl(localizedPath(locale, NavigationService.pathOf('home'))),
     email: identity.email,
     telephone: identity.phone,
     address: {
@@ -118,15 +116,18 @@ export const SeoService = {
       addressCountry: identity.address.country,
     },
     sameAs: ConfigurationService.socialLinks().map((link) => link.href),
-  }),
+  })
 
   /**
-   * Build the localised URL of a route, shared by the metadata, the sitemap and the switcher
-   * @param {string} locale - Target locale
-   * @param {string} path - Pathname without the locale prefix
-   * @return {string} - Absolute URL
+   * Localized URL
+   * @param {string} locale - Locale
+   * @param {string} path - Path
+   * @return {string} - URL
    */
 
-  absoluteUrlOf: (locale: string, path: string): string =>
-    EnvironmentService.absoluteUrl(localizedPath(locale, path)),
-} as const
+  absoluteUrlOf = (locale: string, path: string): string =>
+    environment.absoluteUrl(localizedPath(locale, path))
+}
+
+// Page metadata builder
+export const SeoService = new SeoServiceClass('seo')

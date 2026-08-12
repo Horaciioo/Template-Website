@@ -14,6 +14,11 @@ export const ACTIONS = [
   'subscribeNewsletter',
   'requestQuote',
   'bookAppointment',
+  'getDirections',
+  'showcase',
+  'accept',
+  'decline',
+  'manageCookies',
   'create',
   'update',
   'delete',
@@ -104,4 +109,5 @@ export const TRANSLATION_NAMESPACES = {
   formats: 'formats',
   legal: 'legal',
   showcase: 'showcase',
+  consent: 'consent',
 } as const

@@ -2,10 +2,10 @@ import { isDefined, isPlainObject } from '@/utils/guards'
 import type { Dictionary } from '@/types/common'
 
 /**
- * Read nested value by path
- * @param {unknown} source - Object to walk
- * @param {string} path - Dotted path
- * @return {unknown} - Found value
+ * Read path
+ * @param {unknown} source - Object
+ * @param {string} path - Path
+ * @return {unknown} - Value
  */
 
 export const readPath = (source: unknown, path: string): unknown =>

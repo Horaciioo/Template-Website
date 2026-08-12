@@ -1,3 +1,3 @@
 # Template Website
 
-Base réutilisable pour démarrer un site vitrine.
+Reusable base for launching a showcase website.

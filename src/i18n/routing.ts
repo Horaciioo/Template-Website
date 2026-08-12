@@ -3,11 +3,7 @@ import { defineRouting } from 'next-intl/routing'
 
 import { I18nService } from '@/services/I18nService'
 
-/**
- * i18n routing config
- * @type {Object}
- */
-
+// i18n routing config
 export const routing = defineRouting({
   locales: I18nService.locales as [string, ...string[]],
   defaultLocale: I18nService.defaultLocale,

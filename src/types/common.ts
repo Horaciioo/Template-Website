@@ -17,9 +17,9 @@ export type Maybe<T> = T | null | undefined
 export type Dictionary<T = unknown> = Record<string, T>
 
 /**
- * Type of a record value
+ * Record value
  * @typedef ValueOf
- * @template T - Record type
+ * @template T - Type
  */
 
 export type ValueOf<T> = T[keyof T]

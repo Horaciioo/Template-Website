@@ -1,13 +1,38 @@
+import type { ReactNode } from 'react'
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 
 import { LegalSection } from '@/components/sections/LegalSection'
 import { PageHeader } from '@/components/structures/layout/PageHeader'
-import { SeoService } from '@/services/SeoService'
+import { Breadcrumb } from '@/components/structures/navigation/Breadcrumb'
+import { NavigationService } from '@/services/NavigationService'
+import { Page } from '@/structures/Page'
+import type { PageRenderContext } from '@/structures/Page'
 
 export interface LegalNoticePageProps {
   params: Promise<{ locale: string }>
 }
+
+class LegalNoticePage extends Page {
+  constructor() {
+    super('legalNotice')
+  }
+
+  render({ translate, breadcrumb }: PageRenderContext): ReactNode {
+    return (
+      <>
+        <PageHeader
+          title={translate('label')}
+          description={translate('metaDescription')}
+          breadcrumb={breadcrumb}
+        />
+        <LegalSection page="legalNotice" />
+      </>
+    )
+  }
+}
+
+const page = new LegalNoticePage()
 
 /**
  * Generate page metadata
@@ -18,11 +43,7 @@ export interface LegalNoticePageProps {
 export const generateMetadata = async ({ params }: LegalNoticePageProps): Promise<Metadata> => {
   const { locale } = await params
 
-  return SeoService.buildMetadata({
-    routeId: 'legalNotice',
-    locale,
-    translate: await getTranslations(),
-  })
+  return page.metadata({ locale, translate: await getTranslations() })
 }
 
 /**
@@ -30,13 +51,16 @@ export const generateMetadata = async ({ params }: LegalNoticePageProps): Promis
  * @return {Promise<JSX.Element>} - Rendered page
  */
 
-export default async function LegalNoticePage() {
-  const t = await getTranslations('routes.legalNotice')
+export default async function LegalNoticePageRoute() {
+  const navigationTranslate = await getTranslations()
 
-  return (
-    <>
-      <PageHeader title={t('label')} description={t('metaDescription')} />
-      <LegalSection page="legalNotice" />
-    </>
-  )
+  return page.render({
+    translate: await getTranslations('routes.legalNotice'),
+    breadcrumb: (
+      <Breadcrumb
+        entries={NavigationService.breadcrumbOf('legalNotice', navigationTranslate)}
+        label={navigationTranslate('navigation.breadcrumb')}
+      />
+    ),
+  })
 }

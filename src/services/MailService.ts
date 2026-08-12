@@ -1,12 +1,10 @@
 import 'server-only'
 
-import { HTTP_STATUS } from '@/declarations/http'
-import { ConfigurationService } from '@/services/ConfigurationService'
-import { EnvironmentService } from '@/services/EnvironmentService'
-import { HttpService } from '@/services/HttpService'
-import { LoggerService } from '@/services/LoggerService'
+import { Service } from '@/structures/Service'
+import { HttpStatuses } from '@/structures/constants'
 import type { RequestResult } from '@/types/api'
 import type { FormValues } from '@/types/form'
+import { HttpService } from '@/services/HttpService'
 
 // Provider endpoint
 const PROVIDER_ENDPOINT = 'https://api.resend.com/emails'
@@ -18,9 +16,15 @@ export interface MailPayload {
   replyTo?: string
 }
 
-// Transactional mail
-export const MailService = {
-  isConfigured: (): boolean => EnvironmentService.mail.apiKey.length > 0,
+class MailServiceClass extends Service {
+  successStatus = HttpStatuses.Ok
+
+  /**
+   * Configured flag
+   * @return {boolean} - Configured
+   */
+
+  isConfigured = (): boolean => this.config.environment.mail.apiKey.length > 0
 
   /**
    * Send mail
@@ -28,9 +32,9 @@ export const MailService = {
    * @return {Promise<RequestResult<{ id: string }>>} - Result
    */
 
-  send: async (payload: MailPayload): Promise<RequestResult<{ id: string }>> => {
-    if (!MailService.isConfigured()) {
-      LoggerService.info('mail.dryRun', payload)
+  send = async (payload: MailPayload): Promise<RequestResult<{ id: string }>> => {
+    if (!this.isConfigured()) {
+      this.logger.info('dryRun', payload)
 
       return { success: true, data: { id: 'dry-run' } }
     }
@@ -38,24 +42,24 @@ export const MailService = {
     return HttpService.post<{ id: string }>(
       PROVIDER_ENDPOINT,
       {
-        from: EnvironmentService.mail.from,
-        to: EnvironmentService.mail.to,
+        from: this.config.environment.mail.from,
+        to: this.config.environment.mail.to,
         subject: payload.subject,
         html: payload.html,
         reply_to: payload.replyTo,
       },
-      { headers: { Authorization: `Bearer ${EnvironmentService.mail.apiKey}` } }
+      { headers: { Authorization: `Bearer ${this.config.environment.mail.apiKey}` } }
     )
-  },
+  }
 
   /**
-   * Render the submitted values of a form as the body of a notification mail
-   * @param {string} formId - Form declared in declarations/forms.ts
-   * @param {FormValues} values - Submitted values
-   * @return {MailPayload} - Subject and HTML body
+   * Form payload
+   * @param {string} formId - Form ID
+   * @param {FormValues} values - Values
+   * @return {MailPayload} - Payload
    */
 
-  buildFormPayload: (formId: string, values: FormValues): MailPayload => {
+  buildFormPayload = (formId: string, values: FormValues): MailPayload => {
     const rows = Object.entries(values)
       .map(
         ([name, value]) =>
@@ -64,11 +68,12 @@ export const MailService = {
       .join('')
 
     return {
-      subject: `[${ConfigurationService.site.shortName}] ${formId}`,
+      subject: `[${this.config.site.shortName}] ${formId}`,
       html: `<table>${rows}</table>`,
       replyTo: typeof values.email === 'string' ? values.email : undefined,
     }
-  },
+  }
+}
 
-  successStatus: HTTP_STATUS.ok,
-} as const
+// Transactional mail
+export const MailService = new MailServiceClass('mail')

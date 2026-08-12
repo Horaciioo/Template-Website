@@ -1,0 +1,80 @@
+name: CI
+
+on:
+  push:
+    branches: [dev, staging, release, main]
+  pull_request:
+    branches: [dev, staging, release, main]
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Resolve environment for this branch
+        id: environment
+        run: |
+          case "${{ github.head_ref || github.ref_name }}" in
+            staging) echo "app_env=staging" >> "$GITHUB_OUTPUT" ;;
+            release) echo "app_env=release" >> "$GITHUB_OUTPUT" ;;
+            main) echo "app_env=production" >> "$GITHUB_OUTPUT" ;;
+            *) echo "app_env=development" >> "$GITHUB_OUTPUT" ;;
+          esac
+
+      - name: Type-check
+        run: yarn type-check
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Format check
+        run: yarn format:check
+
+      - name: Build
+        run: yarn build
+        env:
+          APP_ENV: ${{ steps.environment.outputs.app_env }}
+
+      - name: Registry sync (guide/REGISTRE.md)
+        run: yarn check:registre
+
+      - name: Environment manifest
+        run: yarn check:environment
+        env:
+          APP_ENV: ${{ steps.environment.outputs.app_env }}
+
+  dependency-review:
+    name: Dependency review
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Review dependencies
+        uses: actions/dependency-review-action@v4

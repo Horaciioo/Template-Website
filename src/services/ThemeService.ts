@@ -2,6 +2,7 @@ import { STORAGE_KEYS } from '@/declarations/analytics'
 import { ConfigurationService } from '@/services/ConfigurationService'
 import { NamingService } from '@/services/NamingService'
 import { StorageService } from '@/services/StorageService'
+import { Service } from '@/structures/Service'
 import type { ThemeMode, ThemeScheme } from '@/types/theme'
 import { isBrowser } from '@/utils/guards'
 
@@ -16,20 +17,16 @@ const declare = (group: string, entries: Record<string, string>): string =>
     .map(([name, value]) => `${NamingService.toCssVariable(group, name)}:${value}`)
     .join(';')
 
-/**
- * Theme CSS variables
- */
-
-export const ThemeService = {
-  modes: ['light', 'dark', 'system'] as ThemeMode[],
-  defaultMode: defaultMode as ThemeMode,
+class ThemeServiceClass extends Service {
+  modes = ['light', 'dark', 'system'] as ThemeMode[]
+  defaultMode = defaultMode as ThemeMode
 
   /**
-   * Build the stylesheet injected in the document head, the only source of the theme variables
-   * @return {string} - CSS text
+   * Theme stylesheet
+   * @return {string} - CSS
    */
 
-  buildStyleSheet: (): string => {
+  buildStyleSheet = (): string => {
     const base = [
       declare('color', colors.light),
       declare('radius', radii),
@@ -44,64 +41,64 @@ export const ThemeService = {
       `:root[${THEME_ATTRIBUTE}="dark"]{${dark}}`,
       `@media(prefers-color-scheme:dark){:root:not([${THEME_ATTRIBUTE}="light"]){${dark}}}`,
     ].join('')
-  },
+  }
 
   /**
    * Boot script for theme
    * @return {string} - Script code
    */
 
-  buildBootScript: (): string => {
+  buildBootScript = (): string => {
     const key = StorageService.buildKey(STORAGE_KEYS.themeMode)
 
     return `try{var m=JSON.parse(localStorage.getItem('${key}'))||'${defaultMode}';var d=m==='dark'||(m==='system'&&matchMedia('${darkScheme}').matches);document.documentElement.setAttribute('${THEME_ATTRIBUTE}',d?'dark':'light')}catch(e){}`
-  },
+  }
 
   /**
-   * Resolve the scheme actually painted, `system` following the operating system
-   * @param {ThemeMode} mode - Selected mode
-   * @return {ThemeScheme} - Painted scheme
+   * Resolve scheme
+   * @param {ThemeMode} mode - Mode
+   * @return {ThemeScheme} - Scheme
    */
 
-  resolveScheme: (mode: ThemeMode): ThemeScheme => {
+  resolveScheme = (mode: ThemeMode): ThemeScheme => {
     if (mode !== 'system') return mode
     if (!isBrowser()) return 'light'
 
     return window.matchMedia(darkScheme).matches ? 'dark' : 'light'
-  },
+  }
 
   /**
-   * Read the mode remembered by the browser
-   * @return {ThemeMode} - Stored mode, the configured default when nothing is stored
+   * Read mode
+   * @return {ThemeMode} - Mode
    */
 
-  readMode: (): ThemeMode => {
+  readMode = (): ThemeMode => {
     const stored = StorageService.read<ThemeMode>(STORAGE_KEYS.themeMode)
 
-    return stored && ThemeService.modes.includes(stored) ? stored : (defaultMode as ThemeMode)
-  },
+    return stored && this.modes.includes(stored) ? stored : (defaultMode as ThemeMode)
+  }
 
   /**
-   * Paint a mode and remember it
-   * @param {ThemeMode} mode - Mode chosen by the visitor
+   * Select mode
+   * @param {ThemeMode} mode - Mode
    * @return {void}
    */
 
-  select: (mode: ThemeMode): void => {
+  select = (mode: ThemeMode): void => {
     StorageService.write(STORAGE_KEYS.themeMode, mode)
-    ThemeService.apply(mode)
-  },
+    this.apply(mode)
+  }
 
   /**
-   * Write the resolved scheme on the document, the single place the attribute is set
-   * @param {ThemeMode} mode - Selected mode
+   * Apply scheme
+   * @param {ThemeMode} mode - Mode
    * @return {void}
    */
 
-  apply: (mode: ThemeMode): void => {
+  apply = (mode: ThemeMode): void => {
     if (!isBrowser()) return
-    document.documentElement.setAttribute(THEME_ATTRIBUTE, ThemeService.resolveScheme(mode))
-  },
+    document.documentElement.setAttribute(THEME_ATTRIBUTE, this.resolveScheme(mode))
+  }
 
   /**
    * Follow the operating system preference while the visitor stays on `system`
@@ -109,12 +106,15 @@ export const ThemeService = {
    * @return {() => void} - Teardown
    */
 
-  watchSystem: (onChange: () => void): (() => void) => {
+  watchSystem = (onChange: () => void): (() => void) => {
     if (!isBrowser()) return () => undefined
 
     const media = window.matchMedia(darkScheme)
     media.addEventListener('change', onChange)
 
     return () => media.removeEventListener('change', onChange)
-  },
-} as const
+  }
+}
+
+// Theme CSS variables
+export const ThemeService = new ThemeServiceClass('theme')

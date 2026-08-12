@@ -66,14 +66,14 @@ export const ICON_BUTTON_SIZES: Record<Size, string> = {
 }
 
 /**
- * Icon size of a button carrying an icon, shared by Button and ActionLink
+ * Action icon size
  * @type {Record<Size, 'xs' | 'sm' | 'md'>}
  */
 
 export const ACTION_ICON_SIZES: Record<Size, 'xs' | 'sm' | 'md'> = { sm: 'xs', md: 'sm', lg: 'md' }
 
 /**
- * Icon size of an icon-only button
+ * Icon button size
  * @type {Record<Size, 'sm' | 'md'>}
  */
 
@@ -539,6 +539,28 @@ export const buttonClass = ({
  */
 
 export const SCROLL_TO_TOP_STYLES = {
-  button: `fixed bottom-6 right-6 shadow-md ${TRANSITION_ALL}`,
+  // Clears the sticky action bar on mobile
+  button: `fixed bottom-20 right-6 shadow-md md:bottom-6 ${TRANSITION_ALL}`,
   hidden: 'pointer-events-none translate-y-3 opacity-0',
+} as const
+
+/**
+ * Sticky action bar styles
+ * @type {Object}
+ */
+
+export const STICKY_ACTION_BAR_STYLES = {
+  frame:
+    'fixed inset-x-0 bottom-0 border-t border-border bg-background/95 p-3 backdrop-blur pb-[max(0.75rem,env(safe-area-inset-bottom))] md:hidden',
+} as const
+
+/**
+ * Consent banner styles
+ * @type {Object}
+ */
+
+export const CONSENT_BANNER_STYLES = {
+  // Clears the sticky action bar on mobile
+  frame:
+    'fixed inset-x-0 bottom-0 border-t border-border bg-background/95 backdrop-blur pb-[max(0.75rem,env(safe-area-inset-bottom))]',
 } as const

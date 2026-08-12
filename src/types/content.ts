@@ -1,8 +1,6 @@
 import type { IconName } from '@/declarations/ui/icons'
 import type { Identifiable, Tone, TranslationKey } from '@/types/common'
 
-// Message keys, not sentences
-
 /**
  * Media item
  * @typedef MediaItem

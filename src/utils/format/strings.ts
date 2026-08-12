@@ -103,10 +103,10 @@ export interface TextSegment {
 }
 
 /**
- * Template segments highlighting injected values
- * @param {string} template - Template text
- * @param {Record<string, string | number | null | undefined>} variables - Injection values
- * @return {TextSegment[]} - Segmented array
+ * Interpolate segments
+ * @param {string} template - Template
+ * @param {Record<string, string | number | null | undefined>} variables - Variables
+ * @return {TextSegment[]} - Segments
  */
 
 export const interpolateSegments = (

@@ -1,7 +1,4 @@
-/**
- * Number formatting context
- */
-
+// Number formatting context
 export interface NumberFormatting {
   locale: string
   currency: string

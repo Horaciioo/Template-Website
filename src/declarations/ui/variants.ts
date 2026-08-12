@@ -66,14 +66,14 @@ export const ICON_BUTTON_SIZES: Record<Size, string> = {
 }
 
 /**
- * Icon size of a button carrying an icon, shared by Button and ActionLink
+ * Action icon size
  * @type {Record<Size, 'xs' | 'sm' | 'md'>}
  */
 
 export const ACTION_ICON_SIZES: Record<Size, 'xs' | 'sm' | 'md'> = { sm: 'xs', md: 'sm', lg: 'md' }
 
 /**
- * Icon size of an icon-only button
+ * Icon button size
  * @type {Record<Size, 'sm' | 'md'>}
  */
 

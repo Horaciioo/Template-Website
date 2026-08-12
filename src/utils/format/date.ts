@@ -19,10 +19,7 @@ export const HOUR_IN_MS = 3_600_000
 
 export const MINUTE_IN_MS = 60_000
 
-/**
- * Locale and timezone context
- */
-
+// Locale and timezone context
 export interface DateFormatting {
   locale: string
   timeZone: string

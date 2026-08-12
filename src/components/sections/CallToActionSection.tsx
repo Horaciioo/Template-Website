@@ -44,7 +44,7 @@ export const CallToActionSection = ({ route, className }: CallToActionSectionPro
             size="lg"
             icon="arrowRight"
             iconPosition="right">
-            {actions(target)}
+            {actions(NavigationService.ctaActionOf(target))}
           </ActionLink>
         </div>
       </Container>

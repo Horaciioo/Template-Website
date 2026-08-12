@@ -55,11 +55,11 @@ export const HeroSection = ({
             <Text appearance="lead">{t('description')}</Text>
             <div className="flex flex-wrap gap-3 pt-2">
               <ActionLink route={primary} size="lg" icon="arrowRight" iconPosition="right">
-                {actions(primary)}
+                {actions(NavigationService.ctaActionOf(primary))}
               </ActionLink>
               {secondaryRoute && (
                 <ActionLink route={secondaryRoute} variant="secondary" size="lg">
-                  {actions(secondaryRoute)}
+                  {actions(NavigationService.ctaActionOf(secondaryRoute))}
                 </ActionLink>
               )}
             </div>

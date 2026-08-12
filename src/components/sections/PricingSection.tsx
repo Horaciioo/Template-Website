@@ -81,7 +81,7 @@ export const PricingSection = ({ items = PRICING }: PricingSectionProps) => {
                 variant={item.featured ? 'primary' : 'secondary'}
                 fullWidth
                 className="mt-auto">
-                {actions(route)}
+                {actions(NavigationService.ctaActionOf(route))}
               </ActionLink>
             </Card>
           )

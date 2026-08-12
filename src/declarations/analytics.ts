@@ -47,7 +47,6 @@ export type LogLevel = keyof typeof LOG_LEVELS
 export const STORAGE_KEYS = {
   themeMode: 'theme-mode',
   consent: 'consent',
-  dismissed: 'dismissed',
 } as const
 
 /**

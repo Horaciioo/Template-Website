@@ -3,9 +3,10 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
-import { Analytics } from '@vercel/analytics/react'
 
+import { AnalyticsGate } from '@/components/layout/AnalyticsGate'
 import { SiteLayout } from '@/components/layout/SiteLayout'
+import { ConsentBanner } from '@/components/structures/feedback/ConsentBanner'
 import { FONT_VARIABLES } from '@/declarations/ui/fonts'
 import { ConfigurationService } from '@/services/ConfigurationService'
 import { I18nService } from '@/services/I18nService'
@@ -13,6 +14,9 @@ import { SeoService } from '@/services/SeoService'
 import { ThemeService } from '@/services/ThemeService'
 
 import '@/styles/globals.css'
+
+const hasAnalytics =
+  ConfigurationService.isEnabled('analytics') && ConfigurationService.environment.analytics.enabled
 
 export interface LocaleLayoutProps {
   children: ReactNode
@@ -59,9 +63,9 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
       <body>
         <NextIntlClientProvider messages={messages}>
           <SiteLayout>{children}</SiteLayout>
+          {hasAnalytics && <ConsentBanner />}
         </NextIntlClientProvider>
-        {ConfigurationService.isEnabled('analytics') &&
-          ConfigurationService.environment.analytics.enabled && <Analytics />}
+        {hasAnalytics && <AnalyticsGate />}
       </body>
     </html>
   )

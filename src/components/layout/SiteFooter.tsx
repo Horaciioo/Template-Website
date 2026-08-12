@@ -10,9 +10,12 @@ import type { IconName } from '@/declarations/ui/icons'
 import { FOOTER_STYLES } from '@/declarations/ui/variants'
 import { Link, usePathname } from '@/i18n/routing'
 import { ConfigurationService } from '@/services/ConfigurationService'
+import { ConsentService } from '@/services/ConsentService'
 import { NavigationService } from '@/services/NavigationService'
 
 const { identity } = ConfigurationService
+const hasAnalytics =
+  ConfigurationService.isEnabled('analytics') && ConfigurationService.environment.analytics.enabled
 
 /**
  * Site footer
@@ -23,6 +26,7 @@ export const SiteFooter = () => {
   const pathname = usePathname()
   const t = useTranslations()
   const navigation = useTranslations('navigation')
+  const actions = useTranslations('actions')
   const columns = NavigationService.footerColumns({ pathname, translate: t })
   const socials = ConfigurationService.socialLinks()
 
@@ -89,6 +93,11 @@ export const SiteFooter = () => {
               name: ConfigurationService.site.name,
             })}
           </Text>
+          {hasAnalytics && (
+            <button type="button" onClick={ConsentService.reset} className={FOOTER_STYLES.link}>
+              {actions('manageCookies')}
+            </button>
+          )}
         </div>
       </Container>
     </footer>

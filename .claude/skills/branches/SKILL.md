@@ -28,7 +28,7 @@ Chaque flèche est une décision distincte (fin de développement, validation de
 
 ## Après chaque merge, resynchroniser la branche source
 
-Quand une PR `dev → staging` (ou `staging → release`, `release → main`) est mergée sur GitHub, la branche source locale ne récupère pas automatiquement ce merge. Si le développement continue directement sur cette branche locale sans la resynchroniser, elle repart d'un point *antérieur* au merge : elle recrée des fichiers déjà passés en aval, avec un contenu qui diverge peu à peu. Résultat quelques semaines plus tard : des dizaines de conflits "add/add" au moment de repromouvoir, sur des fichiers qui existent des deux côtés avec un historique différent.
+Quand une PR `dev → staging` (ou `staging → release`, `release → main`) est mergée sur GitHub, la branche source locale ne récupère pas automatiquement ce merge. Si le développement continue directement sur cette branche locale sans la resynchroniser, elle repart d'un point _antérieur_ au merge : elle recrée des fichiers déjà passés en aval, avec un contenu qui diverge peu à peu. Résultat quelques semaines plus tard : des dizaines de conflits "add/add" au moment de repromouvoir, sur des fichiers qui existent des deux côtés avec un historique différent.
 
 Après toute PR mergée, avant de continuer à travailler :
 

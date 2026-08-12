@@ -49,10 +49,13 @@ export interface SiteEnvironmentConfig {
  * Resolved "analytics" subject
  * @typedef AnalyticsEnvironmentConfig
  * @property {boolean} enabled - Tracking activation
+ * @property {string} googleAnalyticsId - GA4 measurement ID
  */
 
 export interface AnalyticsEnvironmentConfig {
   enabled: boolean
+  // GA4 measurement ID
+  googleAnalyticsId: string
 }
 
 /**

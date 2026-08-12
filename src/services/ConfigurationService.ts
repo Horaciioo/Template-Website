@@ -74,12 +74,13 @@ const ANALYTICS_DEFAULTS: Record<EnvironmentKey, AnalyticsEnvironmentConfig> = {
   production: analyticsProductionDefaults,
 }
 
-const ANALYTICS_TEMPLATES: Record<EnvironmentKey, { enabled: string }> = {
-  development: analyticsDevelopmentTemplate,
-  staging: analyticsStagingTemplate,
-  release: analyticsReleaseTemplate,
-  production: analyticsProductionTemplate,
-}
+const ANALYTICS_TEMPLATES: Record<EnvironmentKey, { enabled: string; googleAnalyticsId: string }> =
+  {
+    development: analyticsDevelopmentTemplate,
+    staging: analyticsStagingTemplate,
+    release: analyticsReleaseTemplate,
+    production: analyticsProductionTemplate,
+  }
 
 const MAIL_DEFAULTS: Record<EnvironmentKey, MailEnvironmentConfig> = {
   development: mailDevelopmentDefaults,
@@ -192,6 +193,12 @@ const readAnalyticsConfig = (env: EnvironmentKey): AnalyticsEnvironmentConfig =>
 
   return {
     enabled: readField('analytics', 'enabled', defaults.enabled, resolveTemplate(template.enabled)),
+    googleAnalyticsId: readField(
+      'analytics',
+      'googleAnalyticsId',
+      defaults.googleAnalyticsId,
+      resolveTemplate(template.googleAnalyticsId)
+    ),
   }
 }
 

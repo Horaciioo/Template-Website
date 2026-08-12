@@ -4,6 +4,8 @@ import { getTranslations } from 'next-intl/server'
 
 import { LegalSection } from '@/components/sections/LegalSection'
 import { PageHeader } from '@/components/structures/layout/PageHeader'
+import { Breadcrumb } from '@/components/structures/navigation/Breadcrumb'
+import { NavigationService } from '@/services/NavigationService'
 import { Page } from '@/structures/Page'
 import type { PageRenderContext } from '@/structures/Page'
 
@@ -16,10 +18,14 @@ class PrivacyPolicyPage extends Page {
     super('privacyPolicy')
   }
 
-  render({ translate }: PageRenderContext): ReactNode {
+  render({ translate, breadcrumb }: PageRenderContext): ReactNode {
     return (
       <>
-        <PageHeader title={translate('label')} description={translate('metaDescription')} />
+        <PageHeader
+          title={translate('label')}
+          description={translate('metaDescription')}
+          breadcrumb={breadcrumb}
+        />
         <LegalSection page="privacyPolicy" />
       </>
     )
@@ -46,5 +52,15 @@ export const generateMetadata = async ({ params }: PrivacyPolicyPageProps): Prom
  */
 
 export default async function PrivacyPolicyPageRoute() {
-  return page.render({ translate: await getTranslations('routes.privacyPolicy') })
+  const navigationTranslate = await getTranslations()
+
+  return page.render({
+    translate: await getTranslations('routes.privacyPolicy'),
+    breadcrumb: (
+      <Breadcrumb
+        entries={NavigationService.breadcrumbOf('privacyPolicy', navigationTranslate)}
+        label={navigationTranslate('navigation.breadcrumb')}
+      />
+    ),
+  })
 }

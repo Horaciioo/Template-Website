@@ -4,6 +4,8 @@ import { getTranslations } from 'next-intl/server'
 
 import { ContactSection } from '@/components/sections/ContactSection'
 import { PageHeader } from '@/components/structures/layout/PageHeader'
+import { Breadcrumb } from '@/components/structures/navigation/Breadcrumb'
+import { NavigationService } from '@/services/NavigationService'
 import { Page } from '@/structures/Page'
 import type { PageRenderContext } from '@/structures/Page'
 
@@ -16,10 +18,14 @@ class ContactPage extends Page {
     super('contact')
   }
 
-  render({ translate }: PageRenderContext): ReactNode {
+  render({ translate, breadcrumb }: PageRenderContext): ReactNode {
     return (
       <>
-        <PageHeader title={translate('label')} description={translate('metaDescription')} />
+        <PageHeader
+          title={translate('label')}
+          description={translate('metaDescription')}
+          breadcrumb={breadcrumb}
+        />
         <ContactSection />
       </>
     )
@@ -46,5 +52,15 @@ export const generateMetadata = async ({ params }: ContactPageProps): Promise<Me
  */
 
 export default async function ContactPageRoute() {
-  return page.render({ translate: await getTranslations('routes.contact') })
+  const navigationTranslate = await getTranslations()
+
+  return page.render({
+    translate: await getTranslations('routes.contact'),
+    breadcrumb: (
+      <Breadcrumb
+        entries={NavigationService.breadcrumbOf('contact', navigationTranslate)}
+        label={navigationTranslate('navigation.breadcrumb')}
+      />
+    ),
+  })
 }

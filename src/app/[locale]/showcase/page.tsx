@@ -5,7 +5,9 @@ import { getTranslations } from 'next-intl/server'
 import { ShowcaseCatalog } from '@/components/showcase/ShowcaseCatalog'
 import { Container } from '@/components/structures/layout/Container'
 import { PageHeader } from '@/components/structures/layout/PageHeader'
+import { Breadcrumb } from '@/components/structures/navigation/Breadcrumb'
 import { SECTION_SPACING } from '@/declarations/ui/tokens'
+import { NavigationService } from '@/services/NavigationService'
 import { Page } from '@/structures/Page'
 import type { PageRenderContext } from '@/structures/Page'
 
@@ -18,10 +20,14 @@ class ShowcasePage extends Page {
     super('showcase')
   }
 
-  render({ translate }: PageRenderContext): ReactNode {
+  render({ translate, breadcrumb }: PageRenderContext): ReactNode {
     return (
       <>
-        <PageHeader title={translate('title')} description={translate('description')} />
+        <PageHeader
+          title={translate('title')}
+          description={translate('description')}
+          breadcrumb={breadcrumb}
+        />
         <div className={SECTION_SPACING.sm}>
           <Container>
             <ShowcaseCatalog />
@@ -52,5 +58,15 @@ export const generateMetadata = async ({ params }: ShowcasePageProps): Promise<M
  */
 
 export default async function ShowcasePageRoute() {
-  return page.render({ translate: await getTranslations('showcase') })
+  const navigationTranslate = await getTranslations()
+
+  return page.render({
+    translate: await getTranslations('showcase'),
+    breadcrumb: (
+      <Breadcrumb
+        entries={NavigationService.breadcrumbOf('showcase', navigationTranslate)}
+        label={navigationTranslate('navigation.breadcrumb')}
+      />
+    ),
+  })
 }

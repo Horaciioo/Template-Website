@@ -4,12 +4,16 @@ import { SiteFooter } from '@/components/layout/SiteFooter'
 import { SiteHeader } from '@/components/layout/SiteHeader'
 import { NotificationRegion } from '@/components/structures/feedback/NotificationRegion'
 import { ScrollToTop } from '@/components/structures/navigation/ScrollToTop'
+import { StickyActionBar } from '@/components/structures/navigation/StickyActionBar'
 import { LAYOUT } from '@/declarations/ui/variants'
 import { ConfigurationService } from '@/services/ConfigurationService'
+import { cn } from '@/utils/classnames'
 
 export interface SiteLayoutProps {
   children: ReactNode
 }
+
+const hasStickyActionBar = ConfigurationService.isEnabled('stickyActionBar')
 
 /**
  * Site layout
@@ -20,9 +24,10 @@ export interface SiteLayoutProps {
 export const SiteLayout = ({ children }: SiteLayoutProps) => (
   <div className={LAYOUT.page}>
     <SiteHeader />
-    <main className={LAYOUT.main}>{children}</main>
+    <main className={cn(LAYOUT.main, hasStickyActionBar && 'pb-20 md:pb-0')}>{children}</main>
     <SiteFooter />
     {ConfigurationService.isEnabled('scrollToTop') && <ScrollToTop />}
     {ConfigurationService.isEnabled('notifications') && <NotificationRegion />}
+    {hasStickyActionBar && <StickyActionBar />}
   </div>
 )

@@ -4,5 +4,7 @@
   "scrollToTop": true,
   "notifications": true,
   "analytics": false,
-  "contactForm": true
+  "contactForm": true,
+  "stickyActionBar": true,
+  "locationMap": true
 }

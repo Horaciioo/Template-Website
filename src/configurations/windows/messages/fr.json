@@ -13,7 +13,11 @@
     "previous": "Précédent",
     "search": "Rechercher",
     "share": "Partager",
-    "scrollToTop": "Revenir en haut"
+    "scrollToTop": "Revenir en haut",
+    "getDirections": "Itinéraire",
+    "accept": "Accepter",
+    "decline": "Refuser",
+    "manageCookies": "Préférences cookies"
   },
   "routes": {
     "home": {
@@ -31,6 +35,11 @@
       "metaTitle": "Contact",
       "metaDescription": "Écrivez-nous, nous répondons sous vingt-quatre heures ouvrées."
     },
+    "thankYou": {
+      "label": "Merci",
+      "metaTitle": "Merci",
+      "metaDescription": "Votre message est bien arrivé, nous revenons vers vous très vite."
+    },
     "legalNotice": {
       "label": "Mentions légales",
       "metaTitle": "Mentions légales",
@@ -45,6 +54,7 @@
   "navigation": {
     "primary": "Navigation principale",
     "language": "Changer de langue",
+    "breadcrumb": "Fil d'Ariane",
     "tagline": "Une base de site générique, prête à devenir votre prochain projet.",
     "copyright": "© {years} {name}. Tous droits réservés.",
     "theme": {
@@ -209,6 +219,13 @@
         "email": "Adresse e-mail",
         "phone": "Téléphone",
         "address": "Adresse"
+      },
+      "promises": {
+        "response": { "label": "Réponse sous 24h ouvrées" },
+        "delivery": { "label": "Livraison sous 5 jours" }
+      },
+      "map": {
+        "title": "Carte de localisation"
       }
     }
   },
@@ -293,6 +310,11 @@
       "description": "Élargissez la recherche ou retirez un filtre pour voir davantage d'éléments."
     }
   },
+  "consent": {
+    "title": "Nous respectons votre vie privée",
+    "description": "Ce site utilise des cookies de mesure d'audience pour comprendre sa fréquentation. Vous pouvez les accepter ou les refuser, et changer d'avis à tout moment.",
+    "privacyLink": "Lire la politique de confidentialité"
+  },
   "showcase": {
     "title": "Atlas du design system",
     "description": "Chaque bloc lit directement les registres du projet, ce qui est affiché ici est donc exactement ce qui existe dans le code.",
@@ -365,7 +387,7 @@
         },
         "cookies": {
           "title": "Cookies",
-          "body": "Le site n'utilise aucun cookie publicitaire. Seule la préférence de thème est conservée dans le stockage local du navigateur."
+          "body": "Le site conserve la préférence de thème dans le stockage local du navigateur. Si la mesure d'audience est activée, des cookies de mesure d'audience ne sont déposés qu'après votre consentement, donné via le bandeau affiché en bas de page. Vous pouvez changer d'avis à tout moment depuis le lien « Préférences cookies » du pied de page."
         },
         "contact": {
           "title": "Contact",

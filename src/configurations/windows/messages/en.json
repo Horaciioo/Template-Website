@@ -13,7 +13,11 @@
     "previous": "Previous",
     "search": "Search",
     "share": "Share",
-    "scrollToTop": "Back to top"
+    "scrollToTop": "Back to top",
+    "getDirections": "Get directions",
+    "accept": "Accept",
+    "decline": "Decline",
+    "manageCookies": "Cookie preferences"
   },
   "routes": {
     "home": {
@@ -31,6 +35,11 @@
       "metaTitle": "Contact",
       "metaDescription": "Write to us, we answer within one working day."
     },
+    "thankYou": {
+      "label": "Thank you",
+      "metaTitle": "Thank you",
+      "metaDescription": "Your message is on its way to us, we will come back to you shortly."
+    },
     "legalNotice": {
       "label": "Legal notice",
       "metaTitle": "Legal notice",
@@ -45,6 +54,7 @@
   "navigation": {
     "primary": "Main navigation",
     "language": "Change language",
+    "breadcrumb": "Breadcrumb",
     "tagline": "A generic website base, ready to become your next project.",
     "copyright": "© {years} {name}. All rights reserved.",
     "theme": {
@@ -209,6 +219,13 @@
         "email": "Email address",
         "phone": "Phone",
         "address": "Address"
+      },
+      "promises": {
+        "response": { "label": "We reply within 1 business day" },
+        "delivery": { "label": "Delivery within 5 days" }
+      },
+      "map": {
+        "title": "Location map"
       }
     }
   },
@@ -293,6 +310,11 @@
       "description": "Widen the search or remove a filter to see more items."
     }
   },
+  "consent": {
+    "title": "We respect your privacy",
+    "description": "This website uses audience-measurement cookies to understand how it is used. You can accept or decline them, and change your mind at any time.",
+    "privacyLink": "Read the privacy policy"
+  },
   "showcase": {
     "title": "Design system atlas",
     "description": "Every block reads the registries of the project directly, so what is shown here is exactly what exists in the code.",
@@ -365,7 +387,7 @@
         },
         "cookies": {
           "title": "Cookies",
-          "body": "This website uses no advertising cookie. Only the theme preference is kept in the local storage of the browser."
+          "body": "The website keeps the theme preference in the local storage of the browser. When audience measurement is enabled, analytics cookies are only set after you give consent through the banner shown at the bottom of the page. You can change your mind at any time from the \"Cookie preferences\" link in the footer."
         },
         "contact": {
           "title": "Contact",

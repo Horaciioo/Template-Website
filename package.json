@@ -12,7 +12,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "check:registre": "node scripts/check-registre.mjs",
-    "validate": "yarn type-check && yarn lint && yarn build && yarn check:registre"
+    "check:environment": "node scripts/check-environment.mjs",
+    "validate": "yarn type-check && yarn lint && yarn build && yarn check:registre && yarn check:environment"
   },
   "dependencies": {
     "@vercel/analytics": "^1.4.1",

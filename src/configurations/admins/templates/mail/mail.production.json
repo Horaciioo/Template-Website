@@ -1,0 +1,5 @@
+{
+  "apiKey": "${MAIL_API_KEY}",
+  "from": "${MAIL_FROM}",
+  "to": "${MAIL_TO}"
+}

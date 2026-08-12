@@ -1,0 +1,3 @@
+{
+  "enabled": "${NEXT_PUBLIC_ANALYTICS_ENABLED}"
+}

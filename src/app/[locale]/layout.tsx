@@ -7,7 +7,7 @@ import { Analytics } from '@vercel/analytics/react'
 
 import { SiteLayout } from '@/components/layout/SiteLayout'
 import { FONT_VARIABLES } from '@/declarations/ui/fonts'
-import { EnvironmentService } from '@/services/EnvironmentService'
+import { ConfigurationService } from '@/services/ConfigurationService'
 import { I18nService } from '@/services/I18nService'
 import { SeoService } from '@/services/SeoService'
 import { ThemeService } from '@/services/ThemeService'
@@ -20,8 +20,8 @@ export interface LocaleLayoutProps {
 }
 
 /**
- * Generate static params for all supported locales
- * @return {Array<{ locale: string }>} - Static params
+ * Static params
+ * @return {Array<{ locale: string }>} - Params
  */
 
 export const generateStaticParams = () => I18nService.locales.map((locale) => ({ locale }))
@@ -60,7 +60,8 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
         <NextIntlClientProvider messages={messages}>
           <SiteLayout>{children}</SiteLayout>
         </NextIntlClientProvider>
-        {EnvironmentService.analytics.isEnabled && <Analytics />}
+        {ConfigurationService.isEnabled('analytics') &&
+          ConfigurationService.environment.analytics.enabled && <Analytics />}
       </body>
     </html>
   )

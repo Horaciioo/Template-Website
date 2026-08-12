@@ -1,7 +1,6 @@
 import type { MetadataRoute } from 'next'
 
 import { ConfigurationService } from '@/services/ConfigurationService'
-import { EnvironmentService } from '@/services/EnvironmentService'
 
 /**
  * Robots metadata
@@ -9,10 +8,11 @@ import { EnvironmentService } from '@/services/EnvironmentService'
  */
 
 export default function robots(): MetadataRoute.Robots {
-  const { index } = ConfigurationService.seo.robots
+  const { environment, seo } = ConfigurationService
+  const index = seo.robots.index && !environment.seo.noindex
 
   return {
     rules: { userAgent: '*', [index ? 'allow' : 'disallow']: '/' },
-    sitemap: EnvironmentService.absoluteUrl('/sitemap.xml'),
+    sitemap: environment.absoluteUrl('/sitemap.xml'),
   }
 }

@@ -49,7 +49,7 @@ export const Modal = ({
         aria-labelledby={titleId}
         className={cn(OVERLAY_STYLES.panel, OVERLAY_STYLES.panelSizes[size], className)}>
         <div className={OVERLAY_STYLES.header}>
-          <Heading level={2} appearance={3} id={titleId}>
+          <Heading level={2} id={titleId}>
             {title}
           </Heading>
           <IconButton icon="close" label={closeLabel} size="sm" onClick={onClose} />

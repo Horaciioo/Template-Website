@@ -54,6 +54,8 @@ export const Tabs = ({ entries, name, defaultId, className }: TabsProps) => {
       </div>
       {active && (
         <div
+          // Remount replays fade-in
+          key={active.id}
           role="tabpanel"
           id={NamingService.toDomId(name, active.id, 'panel')}
           aria-labelledby={NamingService.toDomId(name, active.id, 'tab')}

@@ -555,12 +555,20 @@ export const STICKY_ACTION_BAR_STYLES = {
 } as const
 
 /**
- * Consent banner styles
+ * Consent trigger and dialog styles
  * @type {Object}
  */
 
-export const CONSENT_BANNER_STYLES = {
-  // Clears the sticky action bar on mobile
-  frame:
-    'fixed inset-x-0 bottom-0 border-t border-border bg-background/95 backdrop-blur pb-[max(0.75rem,env(safe-area-inset-bottom))]',
+export const CONSENT_STYLES = {
+  // Bottom-left, clear of ScrollToTop and the sticky action bar which both sit bottom-right
+  trigger: `fixed bottom-24 left-5 flex h-14 w-14 items-center justify-center rounded-pill border border-border bg-surface shadow-md sm:bottom-8 sm:left-8 ${TRANSITION_ALL} ${FOCUS_RING} hover:scale-105`,
+  triggerImage: 'h-full w-full object-contain drop-shadow-sm',
+  body: 'flex flex-col gap-6',
+  categories: 'flex flex-col divide-y divide-border border-y border-border',
+  category: 'flex items-center gap-4 py-4',
+  categoryIcon: `flex h-10 w-10 shrink-0 items-center justify-center rounded-pill ${TONE_SOFT.primary}`,
+  categoryBody: 'flex flex-1 flex-col gap-1',
+  categoryLabel: 'text-sm font-medium text-foreground',
+  lock: 'text-xs uppercase tracking-wide text-primary',
 } as const
+

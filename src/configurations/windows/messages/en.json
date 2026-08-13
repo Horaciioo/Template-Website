@@ -312,8 +312,24 @@
   },
   "consent": {
     "title": "We respect your privacy",
-    "description": "This website uses audience-measurement cookies to understand how it is used. You can accept or decline them, and change your mind at any time.",
-    "privacyLink": "Read the privacy policy"
+    "description": "This site uses audience measurement cookies to understand its traffic. Choose what you accept, and change your mind at any time.",
+    "privacyLink": "Read the privacy policy",
+    "required": "Always on",
+    "actions": {
+      "declineAll": "Decline all",
+      "saveChoices": "Save my choices",
+      "acceptAll": "Accept all"
+    },
+    "categories": {
+      "necessary": {
+        "label": "Necessary cookies",
+        "description": "Required for the site to work: language, theme and the choice saved here. They cannot be turned off."
+      },
+      "analytics": {
+        "label": "Audience measurement",
+        "description": "Anonymous traffic statistics, to understand which pages are useful. Nothing is stored without your agreement."
+      }
+    }
   },
   "showcase": {
     "title": "Design system atlas",

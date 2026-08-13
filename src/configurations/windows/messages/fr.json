@@ -312,8 +312,24 @@
   },
   "consent": {
     "title": "Nous respectons votre vie privée",
-    "description": "Ce site utilise des cookies de mesure d'audience pour comprendre sa fréquentation. Vous pouvez les accepter ou les refuser, et changer d'avis à tout moment.",
-    "privacyLink": "Lire la politique de confidentialité"
+    "description": "Ce site utilise des cookies de mesure d'audience pour comprendre sa fréquentation. Choisissez ce que vous acceptez, et changez d'avis à tout moment.",
+    "privacyLink": "Lire la politique de confidentialité",
+    "required": "Toujours actif",
+    "actions": {
+      "declineAll": "Tout refuser",
+      "saveChoices": "Enregistrer mes choix",
+      "acceptAll": "Tout accepter"
+    },
+    "categories": {
+      "necessary": {
+        "label": "Cookies nécessaires",
+        "description": "Indispensables au fonctionnement du site : langue, thème et choix enregistré ici. Ils ne peuvent pas être désactivés."
+      },
+      "analytics": {
+        "label": "Mesure d'audience",
+        "description": "Statistiques de fréquentation anonymes, pour comprendre quelles pages sont utiles. Rien n'est déposé sans votre accord."
+      }
+    }
   },
   "showcase": {
     "title": "Atlas du design system",

@@ -12,10 +12,10 @@ import { ConsentService } from '@/services/ConsentService'
  */
 
 export const AnalyticsGate = () => {
-  const status = ConsentService.use()
+  const { preferences } = ConsentService.use()
   const { googleAnalyticsId } = ConfigurationService.environment.analytics
 
-  if (status !== 'granted') return null
+  if (!preferences.analytics) return null
 
   return (
     <>

@@ -529,6 +529,16 @@ export const LAYOUT = {
 } as const
 
 /**
+ * Procedural page backdrop styles
+ * @type {Object}
+ */
+
+export const TEXTURE_BACKDROP_STYLES = {
+  frame: 'texture-frame',
+  grain: 'texture-grain',
+} as const
+
+/**
  * Button class generator
  * @param {Object} [options] - Requested appearance
  * @param {ButtonVariant} [options.variant] - Variant declared above

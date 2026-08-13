@@ -434,6 +434,19 @@ export const NAVIGATION_STYLES = {
 } as const
 
 /**
+ * Language switcher styles
+ * @type {Object}
+ */
+
+export const LANGUAGE_SWITCHER_STYLES = {
+  frame: `relative inline-flex items-center gap-2 rounded-md border border-border bg-surface/50 pl-2.5 pr-7 ${TRANSITION} hover:border-border-strong`,
+  flag: 'text-base leading-none',
+  // Transparent native control, the frame around it carries the styling
+  select: `cursor-pointer appearance-none bg-transparent py-2 text-sm text-foreground-muted ${FOCUS_RING} hover:text-foreground`,
+  indicator: 'pointer-events-none absolute right-2.5 text-foreground-subtle',
+} as const
+
+/**
  * Footer styles
  * @type {Object}
  */

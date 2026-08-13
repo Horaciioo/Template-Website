@@ -1,5 +1,6 @@
 {
   "locales": ["fr", "en"],
+  "regions": { "fr": "FR", "en": "GB" },
   "defaultLocale": "fr",
   "localePrefix": "as-needed",
   "timeZone": "Europe/Paris",

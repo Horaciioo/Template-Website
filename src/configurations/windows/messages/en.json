@@ -160,6 +160,19 @@
         }
       }
     },
+    "booking": {
+      "title": "Book an appointment",
+      "description": "The calendar only shows slots that are still free. Once confirmed, the appointment is set.",
+      "pickDate": "Start by choosing a date in the calendar.",
+      "noSlot": "Nothing left that day. Try another one.",
+      "contactPrompt": "Got a question? Contact us",
+      "success": {
+        "title": "Appointment confirmed",
+        "description": "See you on {date} at {slot}. You will receive a confirmation by email."
+      },
+      "failure": "The booking failed, the slot may have just been taken. Please try again.",
+      "disabled": "Online booking is not enabled yet, please contact us directly."
+    },
     "testimonials": {
       "overline": "Feedback",
       "title": "What the teams say",
@@ -273,6 +286,27 @@
         "email": {
           "label": "Email address",
           "placeholder": "camille@example.com"
+        }
+      }
+    },
+    "bookAppointment": {
+      "fields": {
+        "fullName": {
+          "label": "Full name",
+          "placeholder": "Camille Rivière"
+        },
+        "email": {
+          "label": "Email address",
+          "placeholder": "camille@example.com"
+        },
+        "phone": {
+          "label": "Phone",
+          "placeholder": "+1 555 000 0000"
+        },
+        "note": {
+          "label": "Message",
+          "placeholder": "Anything to add?",
+          "hint": "Optional."
         }
       }
     }

@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 
+import { BookingSection } from '@/components/sections/BookingSection'
 import { CallToActionSection } from '@/components/sections/CallToActionSection'
 import { FaqSection } from '@/components/sections/FaqSection'
 import { FeatureSection } from '@/components/sections/FeatureSection'
@@ -10,6 +11,7 @@ import { HeroSection } from '@/components/sections/HeroSection'
 import { PricingSection } from '@/components/sections/PricingSection'
 import { StatsSection } from '@/components/sections/StatsSection'
 import { TestimonialSection } from '@/components/sections/TestimonialSection'
+import { ConfigurationService } from '@/services/ConfigurationService'
 import { Page } from '@/structures/Page'
 
 export interface HomePageProps {
@@ -29,6 +31,7 @@ class HomePage extends Page {
         <FeatureSection />
         <GallerySection />
         <PricingSection />
+        {ConfigurationService.isEnabled('appointmentBooking') && <BookingSection />}
         <TestimonialSection />
         <FaqSection />
         <CallToActionSection />

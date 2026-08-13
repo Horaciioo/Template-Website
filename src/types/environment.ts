@@ -81,3 +81,17 @@ export interface MailEnvironmentConfig {
 export interface SeoEnvironmentConfig {
   noindex: boolean
 }
+
+/**
+ * Resolved "calendar" subject
+ * @typedef CalendarEnvironmentConfig
+ * @property {string} calendarId - Target Google calendar
+ * @property {string} clientEmail - Service account address
+ * @property {string} privateKey - Service account key
+ */
+
+export interface CalendarEnvironmentConfig {
+  calendarId: string
+  clientEmail: string
+  privateKey: string
+}

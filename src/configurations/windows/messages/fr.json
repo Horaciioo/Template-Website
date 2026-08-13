@@ -160,6 +160,19 @@
         }
       }
     },
+    "booking": {
+      "title": "Prendre rendez-vous",
+      "description": "Le calendrier n'affiche que les créneaux encore libres. Une fois validé, le rendez-vous est confirmé.",
+      "pickDate": "Choisissez d'abord une date dans le calendrier.",
+      "noSlot": "Plus aucun créneau libre ce jour-là. Essayez un autre jour.",
+      "contactPrompt": "Une question ? Contactez-nous",
+      "success": {
+        "title": "Rendez-vous confirmé",
+        "description": "Rendez-vous le {date} à {slot}. Vous recevrez une confirmation par e-mail."
+      },
+      "failure": "La réservation a échoué, le créneau vient peut-être d'être pris. Réessayez.",
+      "disabled": "La prise de rendez-vous en ligne n'est pas activée pour le moment, contactez-nous directement."
+    },
     "testimonials": {
       "overline": "Retours",
       "title": "Ce qu'en disent les équipes",
@@ -273,6 +286,27 @@
         "email": {
           "label": "Adresse e-mail",
           "placeholder": "camille@exemple.fr"
+        }
+      }
+    },
+    "bookAppointment": {
+      "fields": {
+        "fullName": {
+          "label": "Nom complet",
+          "placeholder": "Camille Rivière"
+        },
+        "email": {
+          "label": "Adresse e-mail",
+          "placeholder": "camille@exemple.fr"
+        },
+        "phone": {
+          "label": "Téléphone",
+          "placeholder": "+33 6 00 00 00 00"
+        },
+        "note": {
+          "label": "Message",
+          "placeholder": "Une précision à ajouter ?",
+          "hint": "Facultatif."
         }
       }
     }

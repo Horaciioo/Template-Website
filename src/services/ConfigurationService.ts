@@ -12,6 +12,15 @@ import analyticsProductionTemplate from '@/configurations/admins/templates/analy
 import analyticsReleaseTemplate from '@/configurations/admins/templates/analytics/analytics.release.json'
 import analyticsStagingTemplate from '@/configurations/admins/templates/analytics/analytics.staging.json'
 
+import calendarDevelopmentDefaults from '@/configurations/admins/defaults/calendar/calendar.development.json'
+import calendarProductionDefaults from '@/configurations/admins/defaults/calendar/calendar.production.json'
+import calendarReleaseDefaults from '@/configurations/admins/defaults/calendar/calendar.release.json'
+import calendarStagingDefaults from '@/configurations/admins/defaults/calendar/calendar.staging.json'
+import calendarDevelopmentTemplate from '@/configurations/admins/templates/calendar/calendar.development.json'
+import calendarProductionTemplate from '@/configurations/admins/templates/calendar/calendar.production.json'
+import calendarReleaseTemplate from '@/configurations/admins/templates/calendar/calendar.release.json'
+import calendarStagingTemplate from '@/configurations/admins/templates/calendar/calendar.staging.json'
+
 import mailDevelopmentDefaults from '@/configurations/admins/defaults/mail/mail.development.json'
 import mailProductionDefaults from '@/configurations/admins/defaults/mail/mail.production.json'
 import mailReleaseDefaults from '@/configurations/admins/defaults/mail/mail.release.json'
@@ -35,6 +44,7 @@ import siteProductionTemplate from '@/configurations/admins/templates/site/site.
 import siteReleaseTemplate from '@/configurations/admins/templates/site/site.release.json'
 import siteStagingTemplate from '@/configurations/admins/templates/site/site.staging.json'
 
+import booking from '@/configurations/booking.json'
 import features from '@/configurations/features.json'
 import identity from '@/configurations/identity.json'
 import localization from '@/configurations/localization.json'
@@ -54,6 +64,7 @@ import { LoggerService } from '@/services/LoggerService'
 import type { PricingItem } from '@/types/content'
 import type {
   AnalyticsEnvironmentConfig,
+  CalendarEnvironmentConfig,
   EnvironmentKey,
   EnvironmentManifest,
   MailEnvironmentConfig,
@@ -83,6 +94,23 @@ const ANALYTICS_TEMPLATES: Record<EnvironmentKey, { enabled: string; googleAnaly
     release: analyticsReleaseTemplate,
     production: analyticsProductionTemplate,
   }
+
+const CALENDAR_DEFAULTS: Record<EnvironmentKey, CalendarEnvironmentConfig> = {
+  development: calendarDevelopmentDefaults,
+  staging: calendarStagingDefaults,
+  release: calendarReleaseDefaults,
+  production: calendarProductionDefaults,
+}
+
+const CALENDAR_TEMPLATES: Record<
+  EnvironmentKey,
+  { calendarId: string; clientEmail: string; privateKey: string }
+> = {
+  development: calendarDevelopmentTemplate,
+  staging: calendarStagingTemplate,
+  release: calendarReleaseTemplate,
+  production: calendarProductionTemplate,
+}
 
 const MAIL_DEFAULTS: Record<EnvironmentKey, MailEnvironmentConfig> = {
   development: mailDevelopmentDefaults,
@@ -224,6 +252,33 @@ const readSeoConfig = (env: EnvironmentKey): SeoEnvironmentConfig => {
   return { noindex: readField('seo', 'noindex', defaults.noindex, defaults.noindex) }
 }
 
+const readCalendarConfig = (env: EnvironmentKey): CalendarEnvironmentConfig => {
+  const defaults = CALENDAR_DEFAULTS[env]
+  const template = CALENDAR_TEMPLATES[env]
+
+  return {
+    calendarId: readField(
+      'calendar',
+      'calendarId',
+      defaults.calendarId,
+      resolveTemplate(template.calendarId)
+    ),
+    clientEmail: readField(
+      'calendar',
+      'clientEmail',
+      defaults.clientEmail,
+      resolveTemplate(template.clientEmail)
+    ),
+    // Escaped newlines survive an environment variable
+    privateKey: readField(
+      'calendar',
+      'privateKey',
+      defaults.privateKey,
+      resolveTemplate(template.privateKey)
+    ).replace(/\\n/g, '\n'),
+  }
+}
+
 const currentEnvironment = EnvironmentService.current
 const siteEnvironment = readSiteConfig(currentEnvironment)
 
@@ -242,6 +297,7 @@ export const ConfigurationService = {
   storage: storageSettings,
   validation,
   timings,
+  booking,
   pricing: pricing as PricingItem[],
 
   // Environment values
@@ -252,6 +308,7 @@ export const ConfigurationService = {
     analytics: readAnalyticsConfig(currentEnvironment),
     mail: readMailConfig(currentEnvironment),
     seo: readSeoConfig(currentEnvironment),
+    calendar: readCalendarConfig(currentEnvironment),
 
     /**
      * Absolute URL builder

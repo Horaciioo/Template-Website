@@ -1,0 +1,5 @@
+{
+  "calendarId": "${GOOGLE_CALENDAR_ID}",
+  "clientEmail": "${GOOGLE_CALENDAR_CLIENT_EMAIL}",
+  "privateKey": "${GOOGLE_CALENDAR_PRIVATE_KEY}"
+}

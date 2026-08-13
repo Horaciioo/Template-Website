@@ -15,7 +15,7 @@ const ENVIRONMENT_REGISTRY = {
   production: { branch: 'main' },
 }
 
-const CONFIG_SUBJECTS = ['site', 'analytics', 'mail', 'seo']
+const CONFIG_SUBJECTS = ['site', 'analytics', 'mail', 'seo', 'calendar']
 const MANIFEST_BY_KEY = {
   development: 'dev',
   staging: 'staging',

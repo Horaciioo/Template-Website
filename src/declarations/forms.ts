@@ -117,6 +117,45 @@ export const FORMS = {
       },
     ],
   },
+  bookAppointment: {
+    id: 'bookAppointment',
+    submitAction: 'bookAppointment',
+    fields: [
+      {
+        name: 'fullName',
+        type: 'text',
+        required: true,
+        minLength: LIMITS.name.min,
+        maxLength: LIMITS.name.max,
+        icon: 'user',
+        autoComplete: 'name',
+      },
+      {
+        name: 'email',
+        type: 'email',
+        required: true,
+        pattern: 'email',
+        maxLength: LIMITS.email.max,
+        icon: 'mail',
+        autoComplete: 'email',
+      },
+      {
+        name: 'phone',
+        type: 'phone',
+        required: true,
+        pattern: 'phone',
+        maxLength: LIMITS.phone.max,
+        icon: 'phone',
+        autoComplete: 'tel',
+      },
+      {
+        name: 'note',
+        type: 'textarea',
+        maxLength: LIMITS.message.max,
+        wide: true,
+      },
+    ],
+  },
 } as const satisfies Record<string, FormDeclaration>
 
 /**

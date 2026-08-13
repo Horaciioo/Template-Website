@@ -585,3 +585,30 @@ export const CONSENT_STYLES = {
   lock: 'text-xs uppercase tracking-wide text-primary',
 } as const
 
+/**
+ * Appointment booking styles
+ * @type {Object}
+ */
+
+export const BOOKING_STYLES = {
+  // Capped width, so the calendar stays compact next to the wider slot grid
+  frame: 'grid items-start gap-12 lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)]',
+  calendar: 'flex flex-col gap-5',
+  panel: `${SURFACES.card} p-5 sm:p-7`,
+  monthBar: 'flex items-center justify-between gap-3 pb-6',
+  monthLabel: 'font-display text-lg font-medium capitalize tracking-tight text-foreground',
+  weekdays: 'grid grid-cols-7 gap-1 pb-3',
+  weekday:
+    'py-1 text-center text-[0.5625rem] font-medium uppercase tracking-[0.2em] text-foreground-subtle',
+  days: 'grid grid-cols-7 gap-1',
+  day: `flex aspect-square items-center justify-center rounded-sm text-sm tabular-nums text-foreground ${TRANSITION_ALL} ${FOCUS_RING} hover:bg-primary/20`,
+  dayClosed: 'cursor-not-allowed text-foreground-subtle/35 hover:bg-transparent',
+  daySelected: 'bg-primary text-primary-foreground hover:bg-primary',
+  dayToday: 'ring-1 ring-inset ring-primary/50',
+  // Fewer, larger cells - a schedule grid, not a dense keypad
+  slots: 'grid grid-cols-2 gap-3 sm:grid-cols-3',
+  slot: `rounded-md border border-border py-3.5 text-sm font-medium tabular-nums text-foreground ${TRANSITION_ALL} ${FOCUS_RING} hover:border-primary hover:text-primary`,
+  slotSelected: 'border-primary bg-primary text-primary-foreground hover:text-primary-foreground',
+  summary:
+    'border-b border-border pb-4 font-display text-lg font-medium capitalize text-foreground',
+} as const

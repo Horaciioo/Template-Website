@@ -6,5 +6,6 @@
   "analytics": false,
   "contactForm": true,
   "stickyActionBar": true,
-  "locationMap": true
+  "locationMap": true,
+  "appointmentBooking": false
 }

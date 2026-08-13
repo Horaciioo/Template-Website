@@ -173,6 +173,27 @@
       "failure": "The booking failed, the slot may have just been taken. Please try again.",
       "disabled": "Online booking is not enabled yet, please contact us directly."
     },
+    "comparisons": {
+      "title": "Before / after",
+      "description": "A sample result, shown as a pair. Swap in your own pictures once they are ready.",
+      "before": "Before",
+      "after": "After",
+      "position": "{position} of {total}",
+      "items": {
+        "first": {
+          "title": "First example",
+          "description": "Describe the starting point and the result here.",
+          "beforeAlt": "Placeholder picture, before",
+          "afterAlt": "Placeholder picture, after"
+        },
+        "second": {
+          "title": "Second example",
+          "description": "A second case, to show the result holds up.",
+          "beforeAlt": "Placeholder picture, before",
+          "afterAlt": "Placeholder picture, after"
+        }
+      }
+    },
     "testimonials": {
       "overline": "Feedback",
       "title": "What the teams say",

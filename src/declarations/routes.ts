@@ -26,6 +26,7 @@ export const SECTION_ANCHORS = {
   gallery: 'gallery',
   pricing: 'pricing',
   booking: 'booking',
+  comparisons: 'comparisons',
   testimonials: 'testimonials',
   faq: 'faq',
   callToAction: 'call-to-action',

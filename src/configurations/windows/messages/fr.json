@@ -173,6 +173,27 @@
       "failure": "La réservation a échoué, le créneau vient peut-être d'être pris. Réessayez.",
       "disabled": "La prise de rendez-vous en ligne n'est pas activée pour le moment, contactez-nous directement."
     },
+    "comparisons": {
+      "title": "Avant / après",
+      "description": "Un exemple de résultat, présenté par paire. Remplacez les visuels par les vôtres quand ils sont prêts.",
+      "before": "Avant",
+      "after": "Après",
+      "position": "{position} sur {total}",
+      "items": {
+        "first": {
+          "title": "Premier exemple",
+          "description": "Décrivez ici le point de départ et le résultat obtenu.",
+          "beforeAlt": "Visuel de démonstration, avant",
+          "afterAlt": "Visuel de démonstration, après"
+        },
+        "second": {
+          "title": "Second exemple",
+          "description": "Un deuxième cas, pour montrer que le résultat se répète.",
+          "beforeAlt": "Visuel de démonstration, avant",
+          "afterAlt": "Visuel de démonstration, après"
+        }
+      }
+    },
     "testimonials": {
       "overline": "Retours",
       "title": "Ce qu'en disent les équipes",

@@ -22,6 +22,8 @@ export interface PictureProps extends Styleable {
   // Alternative text
   alt: string
   ratio?: AspectRatio
+  // Stretch to the parent instead of holding a ratio
+  stretch?: boolean
   priority?: boolean
   // Image widths
   sizes?: string
@@ -37,6 +39,7 @@ export const Picture = ({
   src,
   alt,
   ratio = 'landscape',
+  stretch = false,
   priority = false,
   sizes = `(max-width: ${md}px) 100vw, 33vw`,
   className,
@@ -44,7 +47,7 @@ export const Picture = ({
   <div
     className={cn(
       'relative w-full overflow-hidden bg-surface-strong',
-      ASPECT_RATIOS[ratio],
+      stretch ? 'h-full' : ASPECT_RATIOS[ratio],
       className
     )}>
     <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className="object-cover" />

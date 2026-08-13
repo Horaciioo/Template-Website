@@ -4,6 +4,7 @@ import { getTranslations } from 'next-intl/server'
 
 import { BookingSection } from '@/components/sections/BookingSection'
 import { CallToActionSection } from '@/components/sections/CallToActionSection'
+import { ComparisonSection } from '@/components/sections/ComparisonSection'
 import { FaqSection } from '@/components/sections/FaqSection'
 import { FeatureSection } from '@/components/sections/FeatureSection'
 import { GallerySection } from '@/components/sections/GallerySection'
@@ -30,6 +31,7 @@ class HomePage extends Page {
         <StatsSection />
         <FeatureSection />
         <GallerySection />
+        <ComparisonSection />
         <PricingSection />
         {ConfigurationService.isEnabled('appointmentBooking') && <BookingSection />}
         <TestimonialSection />

@@ -612,3 +612,37 @@ export const BOOKING_STYLES = {
   summary:
     'border-b border-border pb-4 font-display text-lg font-medium capitalize text-foreground',
 } as const
+
+/**
+ * Before/after comparison carousel styles
+ * @type {Object}
+ */
+
+export const COMPARISON_STYLES = {
+  frame: 'flex flex-col gap-8',
+  viewportWrapper: 'relative',
+  // Padding shows a sliver of the next pair, so the eye anticipates it
+  viewport:
+    'flex snap-x snap-mandatory scroll-smooth overflow-x-auto px-[7%] [scrollbar-width:none] sm:px-[18%] [&::-webkit-scrollbar]:hidden',
+  slide: 'w-[86%] shrink-0 snap-center px-1.5 sm:w-[64%]',
+  card: `mx-auto max-w-4xl ${SURFACES.glass} p-6 sm:p-10 ${TRANSITION_ALL}`,
+  // Only the centred pair reads at full scale
+  cardActive: 'scale-100 opacity-100',
+  cardInactive: 'scale-[0.94] opacity-55',
+  pair: 'grid gap-5 sm:grid-cols-2 sm:gap-8',
+  panel:
+    'relative flex aspect-[3/4] items-center justify-center overflow-hidden rounded-lg border border-border bg-surface-strong',
+  panelLabel:
+    'absolute left-5 top-5 text-[0.5625rem] font-medium uppercase tracking-[0.3em] text-foreground-subtle',
+  caption: 'mt-8 flex flex-col gap-3 border-t border-border pt-7',
+  captionTitle: 'font-display text-xl font-medium text-foreground',
+  controls: 'flex items-center justify-between gap-6',
+  dots: 'flex flex-1 items-center gap-2.5',
+  dot: `h-px flex-1 bg-border-strong ${TRANSITION_ALL} ${FOCUS_RING} rounded-pill hover:bg-primary/60`,
+  dotActive: 'h-0.5 bg-primary',
+  counter: 'text-[0.625rem] uppercase tracking-[0.28em] tabular-nums text-foreground-subtle',
+  // Floats over the pair itself, not in the control row below
+  arrow: `${SURFACES.glass} absolute top-1/2 z-10 -translate-y-1/2 rounded-pill text-primary hover:text-primary-hover ${TRANSITION_ALL}`,
+  arrowLeft: 'left-2 sm:left-4',
+  arrowRight: 'right-2 sm:right-4',
+} as const

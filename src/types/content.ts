@@ -50,6 +50,20 @@ export interface StatItem extends Identifiable {
 }
 
 /**
+ * Declared picture, intrinsic size included
+ * @typedef ImageAsset
+ * @property {string} src - Public path
+ * @property {number} width - Intrinsic width
+ * @property {number} height - Intrinsic height
+ */
+
+export interface ImageAsset {
+  src: string
+  width: number
+  height: number
+}
+
+/**
  * Testimonial item
  * @typedef TestimonialItem
  * @property {TranslationKey} translationKey - Quote key
@@ -71,6 +85,20 @@ export interface TestimonialItem extends Identifiable {
 
 export interface FaqItem extends Identifiable {
   translationKey: TranslationKey
+}
+
+/**
+ * Before and after pair
+ * @typedef ComparisonItem
+ * @property {TranslationKey} translationKey - Caption key
+ * @property {ImageAsset} before - Starting picture
+ * @property {ImageAsset} after - Finished picture
+ */
+
+export interface ComparisonItem extends Identifiable {
+  translationKey: TranslationKey
+  before: ImageAsset
+  after: ImageAsset
 }
 
 /**

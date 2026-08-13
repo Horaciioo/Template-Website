@@ -1,4 +1,11 @@
-import type { FaqItem, FeatureItem, MediaItem, StatItem, TestimonialItem } from '@/types/content'
+import type {
+  ComparisonItem,
+  FaqItem,
+  FeatureItem,
+  MediaItem,
+  StatItem,
+  TestimonialItem,
+} from '@/types/content'
 
 /**
  * Placeholder image
@@ -71,6 +78,26 @@ export const FAQ: FaqItem[] = [
   { id: 'process', translationKey: 'process' },
   { id: 'support', translationKey: 'support' },
   { id: 'cancel', translationKey: 'cancel' },
+]
+
+/**
+ * Before and after pairs
+ * @type {ComparisonItem[]}
+ */
+
+export const COMPARISONS: ComparisonItem[] = [
+  {
+    id: 'first',
+    translationKey: 'first',
+    before: { src: PLACEHOLDER_IMAGE, width: 800, height: 600 },
+    after: { src: PLACEHOLDER_IMAGE, width: 800, height: 600 },
+  },
+  {
+    id: 'second',
+    translationKey: 'second',
+    before: { src: PLACEHOLDER_IMAGE, width: 800, height: 600 },
+    after: { src: PLACEHOLDER_IMAGE, width: 800, height: 600 },
+  },
 ]
 
 /**

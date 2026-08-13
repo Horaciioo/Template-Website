@@ -67,6 +67,7 @@
     "sm": "0 1px 3px 0 rgb(var(--color-overlay) / 0.08), 0 1px 2px -1px rgb(var(--color-overlay) / 0.06)",
     "md": "0 8px 24px -12px rgb(var(--color-overlay) / 0.25)",
     "lg": "0 24px 48px -24px rgb(var(--color-overlay) / 0.35)",
+    "glass": "inset 0 1px 0 rgb(var(--color-background) / 0.4), 0 20px 48px -24px rgb(var(--color-overlay) / 0.18)",
     "focus": "0 0 0 3px rgb(var(--color-primary) / 0.25)"
   },
   "durations": {
@@ -76,6 +77,7 @@
   },
   "layout": {
     "container": "80rem",
+    "wide": "96rem",
     "prose": "42rem",
     "header": "4rem"
   }

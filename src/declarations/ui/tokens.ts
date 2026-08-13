@@ -30,6 +30,21 @@ export const TRANSITION_ALL = 'transition-all duration-base ease-out'
 export const DISABLED = 'disabled:pointer-events-none disabled:opacity-50'
 
 /**
+ * Animated underline, grows from the left on hover
+ * @type {string}
+ */
+
+export const UNDERLINE =
+  'relative after:absolute after:inset-x-0 after:h-px after:origin-left after:scale-x-0 after:bg-primary after:transition-transform after:duration-base hover:after:scale-x-100'
+
+/**
+ * Underline held open
+ * @type {string}
+ */
+
+export const UNDERLINE_ACTIVE = 'after:scale-x-100'
+
+/**
  * Tone and size order
  * @type {Tone[]}
  */
@@ -62,6 +77,7 @@ export const SURFACES = {
   raised: 'bg-background border border-border rounded-lg shadow-sm',
   inset: 'bg-surface-strong rounded-md',
   outline: 'border border-border rounded-lg',
+  glass: 'surface-glass rounded-lg',
   ghost: 'bg-transparent',
 } as const
 
@@ -193,6 +209,7 @@ export const CONTAINER_WIDTHS = {
   prose: 'max-w-prose',
   narrow: 'max-w-3xl',
   default: 'max-w-container',
+  wide: 'max-w-wide',
   full: 'max-w-none',
 } as const
 
@@ -213,4 +230,24 @@ export const LAYERS = {
   dropdown: 'z-40',
   overlay: 'z-50',
   toast: 'z-[60]',
+} as const
+
+/**
+ * Scroll-driven reveal classes
+ * @type {Object}
+ */
+
+export const MOTION = {
+  reveal: 'reveal',
+  revealSoft: 'reveal-soft',
+  revealWipe: 'reveal-wipe',
+  revealLeft: 'reveal-left',
+  revealRight: 'reveal-right',
+  revealZoom: 'reveal-zoom',
+  revealStagger: 'reveal-stagger',
+  // Photographs surface slowly, over the whole travel
+  revealPicture: 'reveal-picture',
+  // Endless horizontal travel, paused while the viewport is hovered
+  marquee: 'marquee-track animate-marquee',
+  marqueeViewport: 'marquee',
 } as const

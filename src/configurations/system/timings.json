@@ -1,5 +1,9 @@
 {
   "scrollThresholdPx": 8,
   "notificationLifetimeMs": 5000,
-  "shimmerDurationMs": 1600
+  "shimmerDurationMs": 1600,
+  "shineDurationMs": 5200,
+  "driftDurationMs": 9000,
+  "marqueeDurationMs": 64000,
+  "carouselIntervalMs": 6000
 }

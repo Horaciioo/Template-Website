@@ -29,10 +29,7 @@ export const NavigationList = ({
 
   return (
     <ul
-      className={cn(
-        isVertical ? NAVIGATION_STYLES.mobileList : 'flex items-center gap-1',
-        className
-      )}>
+      className={cn(isVertical ? NAVIGATION_STYLES.mobileList : NAVIGATION_STYLES.list, className)}>
       {entries.map((entry) => (
         <li key={entry.id}>
           <Link

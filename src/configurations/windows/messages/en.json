@@ -160,6 +160,40 @@
         }
       }
     },
+    "booking": {
+      "title": "Book an appointment",
+      "description": "The calendar only shows slots that are still free. Once confirmed, the appointment is set.",
+      "pickDate": "Start by choosing a date in the calendar.",
+      "noSlot": "Nothing left that day. Try another one.",
+      "contactPrompt": "Got a question? Contact us",
+      "success": {
+        "title": "Appointment confirmed",
+        "description": "See you on {date} at {slot}. You will receive a confirmation by email."
+      },
+      "failure": "The booking failed, the slot may have just been taken. Please try again.",
+      "disabled": "Online booking is not enabled yet, please contact us directly."
+    },
+    "comparisons": {
+      "title": "Before / after",
+      "description": "A sample result, shown as a pair. Swap in your own pictures once they are ready.",
+      "before": "Before",
+      "after": "After",
+      "position": "{position} of {total}",
+      "items": {
+        "first": {
+          "title": "First example",
+          "description": "Describe the starting point and the result here.",
+          "beforeAlt": "Placeholder picture, before",
+          "afterAlt": "Placeholder picture, after"
+        },
+        "second": {
+          "title": "Second example",
+          "description": "A second case, to show the result holds up.",
+          "beforeAlt": "Placeholder picture, before",
+          "afterAlt": "Placeholder picture, after"
+        }
+      }
+    },
     "testimonials": {
       "overline": "Feedback",
       "title": "What the teams say",
@@ -275,6 +309,27 @@
           "placeholder": "camille@example.com"
         }
       }
+    },
+    "bookAppointment": {
+      "fields": {
+        "fullName": {
+          "label": "Full name",
+          "placeholder": "Camille Rivière"
+        },
+        "email": {
+          "label": "Email address",
+          "placeholder": "camille@example.com"
+        },
+        "phone": {
+          "label": "Phone",
+          "placeholder": "+1 555 000 0000"
+        },
+        "note": {
+          "label": "Message",
+          "placeholder": "Anything to add?",
+          "hint": "Optional."
+        }
+      }
     }
   },
   "validation": {
@@ -312,8 +367,24 @@
   },
   "consent": {
     "title": "We respect your privacy",
-    "description": "This website uses audience-measurement cookies to understand how it is used. You can accept or decline them, and change your mind at any time.",
-    "privacyLink": "Read the privacy policy"
+    "description": "This site uses audience measurement cookies to understand its traffic. Choose what you accept, and change your mind at any time.",
+    "privacyLink": "Read the privacy policy",
+    "required": "Always on",
+    "actions": {
+      "declineAll": "Decline all",
+      "saveChoices": "Save my choices",
+      "acceptAll": "Accept all"
+    },
+    "categories": {
+      "necessary": {
+        "label": "Necessary cookies",
+        "description": "Required for the site to work: language, theme and the choice saved here. They cannot be turned off."
+      },
+      "analytics": {
+        "label": "Audience measurement",
+        "description": "Anonymous traffic statistics, to understand which pages are useful. Nothing is stored without your agreement."
+      }
+    }
   },
   "showcase": {
     "title": "Design system atlas",

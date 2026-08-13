@@ -434,6 +434,19 @@ export const NAVIGATION_STYLES = {
 } as const
 
 /**
+ * Language switcher styles
+ * @type {Object}
+ */
+
+export const LANGUAGE_SWITCHER_STYLES = {
+  frame: `relative inline-flex items-center gap-2 rounded-md border border-border bg-surface/50 pl-2.5 pr-7 ${TRANSITION} hover:border-border-strong`,
+  flag: 'text-base leading-none',
+  // Transparent native control, the frame around it carries the styling
+  select: `cursor-pointer appearance-none bg-transparent py-2 text-sm text-foreground-muted ${FOCUS_RING} hover:text-foreground`,
+  indicator: 'pointer-events-none absolute right-2.5 text-foreground-subtle',
+} as const
+
+/**
  * Footer styles
  * @type {Object}
  */
@@ -516,6 +529,16 @@ export const LAYOUT = {
 } as const
 
 /**
+ * Procedural page backdrop styles
+ * @type {Object}
+ */
+
+export const TEXTURE_BACKDROP_STYLES = {
+  frame: 'texture-frame',
+  grain: 'texture-grain',
+} as const
+
+/**
  * Button class generator
  * @param {Object} [options] - Requested appearance
  * @param {ButtonVariant} [options.variant] - Variant declared above
@@ -555,12 +578,81 @@ export const STICKY_ACTION_BAR_STYLES = {
 } as const
 
 /**
- * Consent banner styles
+ * Consent trigger and dialog styles
  * @type {Object}
  */
 
-export const CONSENT_BANNER_STYLES = {
-  // Clears the sticky action bar on mobile
-  frame:
-    'fixed inset-x-0 bottom-0 border-t border-border bg-background/95 backdrop-blur pb-[max(0.75rem,env(safe-area-inset-bottom))]',
+export const CONSENT_STYLES = {
+  // Bottom-left, clear of ScrollToTop and the sticky action bar which both sit bottom-right
+  trigger: `fixed bottom-24 left-5 flex h-14 w-14 items-center justify-center rounded-pill border border-border bg-surface shadow-md sm:bottom-8 sm:left-8 ${TRANSITION_ALL} ${FOCUS_RING} hover:scale-105`,
+  triggerImage: 'h-full w-full object-contain drop-shadow-sm',
+  body: 'flex flex-col gap-6',
+  categories: 'flex flex-col divide-y divide-border border-y border-border',
+  category: 'flex items-center gap-4 py-4',
+  categoryIcon: `flex h-10 w-10 shrink-0 items-center justify-center rounded-pill ${TONE_SOFT.primary}`,
+  categoryBody: 'flex flex-1 flex-col gap-1',
+  categoryLabel: 'text-sm font-medium text-foreground',
+  lock: 'text-xs uppercase tracking-wide text-primary',
+} as const
+
+/**
+ * Appointment booking styles
+ * @type {Object}
+ */
+
+export const BOOKING_STYLES = {
+  // Capped width, so the calendar stays compact next to the wider slot grid
+  frame: 'grid items-start gap-12 lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)]',
+  calendar: 'flex flex-col gap-5',
+  panel: `${SURFACES.card} p-5 sm:p-7`,
+  monthBar: 'flex items-center justify-between gap-3 pb-6',
+  monthLabel: 'font-display text-lg font-medium capitalize tracking-tight text-foreground',
+  weekdays: 'grid grid-cols-7 gap-1 pb-3',
+  weekday:
+    'py-1 text-center text-[0.5625rem] font-medium uppercase tracking-[0.2em] text-foreground-subtle',
+  days: 'grid grid-cols-7 gap-1',
+  day: `flex aspect-square items-center justify-center rounded-sm text-sm tabular-nums text-foreground ${TRANSITION_ALL} ${FOCUS_RING} hover:bg-primary/20`,
+  dayClosed: 'cursor-not-allowed text-foreground-subtle/35 hover:bg-transparent',
+  daySelected: 'bg-primary text-primary-foreground hover:bg-primary',
+  dayToday: 'ring-1 ring-inset ring-primary/50',
+  // Fewer, larger cells - a schedule grid, not a dense keypad
+  slots: 'grid grid-cols-2 gap-3 sm:grid-cols-3',
+  slot: `rounded-md border border-border py-3.5 text-sm font-medium tabular-nums text-foreground ${TRANSITION_ALL} ${FOCUS_RING} hover:border-primary hover:text-primary`,
+  slotSelected: 'border-primary bg-primary text-primary-foreground hover:text-primary-foreground',
+  summary:
+    'border-b border-border pb-4 font-display text-lg font-medium capitalize text-foreground',
+} as const
+
+/**
+ * Before/after comparison carousel styles
+ * @type {Object}
+ */
+
+export const COMPARISON_STYLES = {
+  frame: 'flex flex-col gap-8',
+  viewportWrapper: 'relative',
+  // Padding shows a sliver of the next pair, so the eye anticipates it
+  viewport:
+    'flex snap-x snap-mandatory scroll-smooth overflow-x-auto px-[7%] [scrollbar-width:none] sm:px-[18%] [&::-webkit-scrollbar]:hidden',
+  slide: 'w-[86%] shrink-0 snap-center px-1.5 sm:w-[64%]',
+  card: `mx-auto max-w-4xl ${SURFACES.glass} p-6 sm:p-10 ${TRANSITION_ALL}`,
+  // Only the centred pair reads at full scale
+  cardActive: 'scale-100 opacity-100',
+  cardInactive: 'scale-[0.94] opacity-55',
+  pair: 'grid gap-5 sm:grid-cols-2 sm:gap-8',
+  panel:
+    'relative flex aspect-[3/4] items-center justify-center overflow-hidden rounded-lg border border-border bg-surface-strong',
+  panelLabel:
+    'absolute left-5 top-5 text-[0.5625rem] font-medium uppercase tracking-[0.3em] text-foreground-subtle',
+  caption: 'mt-8 flex flex-col gap-3 border-t border-border pt-7',
+  captionTitle: 'font-display text-xl font-medium text-foreground',
+  controls: 'flex items-center justify-between gap-6',
+  dots: 'flex flex-1 items-center gap-2.5',
+  dot: `h-px flex-1 bg-border-strong ${TRANSITION_ALL} ${FOCUS_RING} rounded-pill hover:bg-primary/60`,
+  dotActive: 'h-0.5 bg-primary',
+  counter: 'text-[0.625rem] uppercase tracking-[0.28em] tabular-nums text-foreground-subtle',
+  // Floats over the pair itself, not in the control row below
+  arrow: `${SURFACES.glass} absolute top-1/2 z-10 -translate-y-1/2 rounded-pill text-primary hover:text-primary-hover ${TRANSITION_ALL}`,
+  arrowLeft: 'left-2 sm:left-4',
+  arrowRight: 'right-2 sm:right-4',
 } as const

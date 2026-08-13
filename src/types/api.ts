@@ -54,7 +54,8 @@ export interface Paginated<T> {
  * @typedef RequestOptions
  * @property {HttpMethod} [method] - HTTP method
  * @property {Dictionary} [query] - Query parameters
- * @property {unknown} [body] - Request body
+ * @property {unknown} [body] - JSON request body
+ * @property {Record<string, string>} [form] - Form encoded body
  * @property {Record<string, string>} [headers] - HTTP headers
  * @property {AbortSignal} [signal] - Abort signal
  * @property {number} [timeout] - Request timeout
@@ -65,6 +66,8 @@ export interface RequestOptions {
   // Query parameters
   query?: Dictionary<string | number | boolean | null | undefined>
   body?: unknown
+  // Form encoded body
+  form?: Record<string, string>
   headers?: Record<string, string>
   signal?: AbortSignal
   // Request timeout

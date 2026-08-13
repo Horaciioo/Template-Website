@@ -1,3 +1,5 @@
+import type { ConsentCategoryDeclaration } from '@/types/consent'
+
 /**
  * Analytics event IDs
  * @type {Object}
@@ -38,6 +40,23 @@ export const LOG_LEVELS = {
  */
 
 export type LogLevel = keyof typeof LOG_LEVELS
+
+/**
+ * Cookie categories
+ * @type {Record<string, ConsentCategoryDeclaration>}
+ */
+
+export const CONSENT_CATEGORIES = {
+  necessary: { isRequired: true },
+  analytics: { isRequired: false, feature: 'analytics' },
+} as const satisfies Record<string, ConsentCategoryDeclaration>
+
+/**
+ * Cookie category name
+ * @typedef {keyof typeof CONSENT_CATEGORIES} ConsentCategory
+ */
+
+export type ConsentCategory = keyof typeof CONSENT_CATEGORIES
 
 /**
  * Storage key names

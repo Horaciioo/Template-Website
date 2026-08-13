@@ -160,6 +160,40 @@
         }
       }
     },
+    "booking": {
+      "title": "Prendre rendez-vous",
+      "description": "Le calendrier n'affiche que les créneaux encore libres. Une fois validé, le rendez-vous est confirmé.",
+      "pickDate": "Choisissez d'abord une date dans le calendrier.",
+      "noSlot": "Plus aucun créneau libre ce jour-là. Essayez un autre jour.",
+      "contactPrompt": "Une question ? Contactez-nous",
+      "success": {
+        "title": "Rendez-vous confirmé",
+        "description": "Rendez-vous le {date} à {slot}. Vous recevrez une confirmation par e-mail."
+      },
+      "failure": "La réservation a échoué, le créneau vient peut-être d'être pris. Réessayez.",
+      "disabled": "La prise de rendez-vous en ligne n'est pas activée pour le moment, contactez-nous directement."
+    },
+    "comparisons": {
+      "title": "Avant / après",
+      "description": "Un exemple de résultat, présenté par paire. Remplacez les visuels par les vôtres quand ils sont prêts.",
+      "before": "Avant",
+      "after": "Après",
+      "position": "{position} sur {total}",
+      "items": {
+        "first": {
+          "title": "Premier exemple",
+          "description": "Décrivez ici le point de départ et le résultat obtenu.",
+          "beforeAlt": "Visuel de démonstration, avant",
+          "afterAlt": "Visuel de démonstration, après"
+        },
+        "second": {
+          "title": "Second exemple",
+          "description": "Un deuxième cas, pour montrer que le résultat se répète.",
+          "beforeAlt": "Visuel de démonstration, avant",
+          "afterAlt": "Visuel de démonstration, après"
+        }
+      }
+    },
     "testimonials": {
       "overline": "Retours",
       "title": "Ce qu'en disent les équipes",
@@ -275,6 +309,27 @@
           "placeholder": "camille@exemple.fr"
         }
       }
+    },
+    "bookAppointment": {
+      "fields": {
+        "fullName": {
+          "label": "Nom complet",
+          "placeholder": "Camille Rivière"
+        },
+        "email": {
+          "label": "Adresse e-mail",
+          "placeholder": "camille@exemple.fr"
+        },
+        "phone": {
+          "label": "Téléphone",
+          "placeholder": "+33 6 00 00 00 00"
+        },
+        "note": {
+          "label": "Message",
+          "placeholder": "Une précision à ajouter ?",
+          "hint": "Facultatif."
+        }
+      }
     }
   },
   "validation": {
@@ -312,8 +367,24 @@
   },
   "consent": {
     "title": "Nous respectons votre vie privée",
-    "description": "Ce site utilise des cookies de mesure d'audience pour comprendre sa fréquentation. Vous pouvez les accepter ou les refuser, et changer d'avis à tout moment.",
-    "privacyLink": "Lire la politique de confidentialité"
+    "description": "Ce site utilise des cookies de mesure d'audience pour comprendre sa fréquentation. Choisissez ce que vous acceptez, et changez d'avis à tout moment.",
+    "privacyLink": "Lire la politique de confidentialité",
+    "required": "Toujours actif",
+    "actions": {
+      "declineAll": "Tout refuser",
+      "saveChoices": "Enregistrer mes choix",
+      "acceptAll": "Tout accepter"
+    },
+    "categories": {
+      "necessary": {
+        "label": "Cookies nécessaires",
+        "description": "Indispensables au fonctionnement du site : langue, thème et choix enregistré ici. Ils ne peuvent pas être désactivés."
+      },
+      "analytics": {
+        "label": "Mesure d'audience",
+        "description": "Statistiques de fréquentation anonymes, pour comprendre quelles pages sont utiles. Rien n'est déposé sans votre accord."
+      }
+    }
   },
   "showcase": {
     "title": "Atlas du design system",

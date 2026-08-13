@@ -1,8 +1,8 @@
 import type {
+  ComparisonItem,
   FaqItem,
   FeatureItem,
   MediaItem,
-  PricingItem,
   StatItem,
   TestimonialItem,
 } from '@/types/content'
@@ -81,32 +81,22 @@ export const FAQ: FaqItem[] = [
 ]
 
 /**
- * Pricing plans
- * @type {PricingItem[]}
+ * Before and after pairs
+ * @type {ComparisonItem[]}
  */
 
-export const PRICING: PricingItem[] = [
+export const COMPARISONS: ComparisonItem[] = [
   {
-    id: 'starter',
-    translationKey: 'starter',
-    amountCents: 49000,
-    period: 'once',
-    includedKeys: ['scope', 'revisions', 'delivery'],
+    id: 'first',
+    translationKey: 'first',
+    before: { src: PLACEHOLDER_IMAGE, width: 800, height: 600 },
+    after: { src: PLACEHOLDER_IMAGE, width: 800, height: 600 },
   },
   {
-    id: 'standard',
-    translationKey: 'standard',
-    amountCents: 129000,
-    period: 'once',
-    featured: true,
-    includedKeys: ['scope', 'revisions', 'delivery', 'support'],
-  },
-  {
-    id: 'premium',
-    translationKey: 'premium',
-    amountCents: 249000,
-    period: 'once',
-    includedKeys: ['scope', 'revisions', 'delivery', 'support', 'training'],
+    id: 'second',
+    translationKey: 'second',
+    before: { src: PLACEHOLDER_IMAGE, width: 800, height: 600 },
+    after: { src: PLACEHOLDER_IMAGE, width: 800, height: 600 },
   },
 ]
 

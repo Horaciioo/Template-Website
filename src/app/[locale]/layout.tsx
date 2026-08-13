@@ -6,7 +6,7 @@ import { getMessages } from 'next-intl/server'
 
 import { AnalyticsGate } from '@/components/layout/AnalyticsGate'
 import { SiteLayout } from '@/components/layout/SiteLayout'
-import { ConsentBanner } from '@/components/structures/feedback/ConsentBanner'
+import { ConsentManager } from '@/components/structures/feedback/ConsentManager'
 import { FONT_VARIABLES } from '@/declarations/ui/fonts'
 import { ConfigurationService } from '@/services/ConfigurationService'
 import { I18nService } from '@/services/I18nService'
@@ -63,7 +63,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
       <body>
         <NextIntlClientProvider messages={messages}>
           <SiteLayout>{children}</SiteLayout>
-          {hasAnalytics && <ConsentBanner />}
+          <ConsentManager />
         </NextIntlClientProvider>
         {hasAnalytics && <AnalyticsGate />}
       </body>

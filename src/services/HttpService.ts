@@ -9,6 +9,10 @@ import { HttpStatuses } from '@/structures/constants'
 import type { RequestOptions, RequestResult } from '@/types/api'
 import { compact } from '@/utils/object'
 
+// Body encodings
+const JSON_CONTENT_TYPE = 'application/json'
+const FORM_CONTENT_TYPE = 'application/x-www-form-urlencoded'
+
 const buildUrl = (path: string, query: RequestOptions['query']): string => {
   if (!query) return path
   const search = new URLSearchParams(
@@ -43,6 +47,7 @@ class HttpServiceClass extends Service {
       method = HTTP_METHODS.get,
       query,
       body,
+      form,
       headers,
       signal,
       timeout = this.config.http.requestTimeoutMs,
@@ -52,15 +57,20 @@ class HttpServiceClass extends Service {
 
     signal?.addEventListener('abort', () => controller.abort())
 
+    // Form encoding wins, some providers refuse JSON on their token endpoints
+    const payload = form ? new URLSearchParams(form).toString() : body
+    const contentType = form ? FORM_CONTENT_TYPE : JSON_CONTENT_TYPE
+
     try {
       const response = await fetch(buildUrl(path, query), {
         method,
         signal: controller.signal,
         headers: {
-          ...(body === undefined ? {} : { 'Content-Type': 'application/json' }),
+          ...(payload === undefined ? {} : { 'Content-Type': contentType }),
           ...headers,
         },
-        body: body === undefined ? undefined : JSON.stringify(body),
+        body:
+          payload === undefined || form ? (payload as string | undefined) : JSON.stringify(body),
       })
 
       if (!response.ok) {

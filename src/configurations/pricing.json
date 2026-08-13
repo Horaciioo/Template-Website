@@ -1,0 +1,24 @@
+[
+  {
+    "id": "starter",
+    "translationKey": "starter",
+    "amountCents": 49000,
+    "period": "once",
+    "includedKeys": ["scope", "revisions", "delivery"]
+  },
+  {
+    "id": "standard",
+    "translationKey": "standard",
+    "amountCents": 129000,
+    "period": "once",
+    "featured": true,
+    "includedKeys": ["scope", "revisions", "delivery", "support"]
+  },
+  {
+    "id": "premium",
+    "translationKey": "premium",
+    "amountCents": 249000,
+    "period": "once",
+    "includedKeys": ["scope", "revisions", "delivery", "support", "training"]
+  }
+]

@@ -9,7 +9,7 @@ import { Text } from '@/components/elements/typography/Text'
 import { Card } from '@/components/structures/layout/Card'
 import { Grid } from '@/components/structures/layout/Grid'
 import { Section } from '@/components/structures/layout/Section'
-import { PRICING } from '@/declarations/content'
+import { ConfigurationService } from '@/services/ConfigurationService'
 import { FormatService } from '@/services/FormatService'
 import { NavigationService } from '@/services/NavigationService'
 import type { PricingItem } from '@/types/content'
@@ -25,7 +25,7 @@ export interface PricingSectionProps {
  * @return {JSX.Element} - Rendered section
  */
 
-export const PricingSection = ({ items = PRICING }: PricingSectionProps) => {
+export const PricingSection = ({ items = ConfigurationService.pricing }: PricingSectionProps) => {
   const t = useTranslations('sections.pricing')
   const actions = useTranslations('actions')
   const format = FormatService.for(useLocale())

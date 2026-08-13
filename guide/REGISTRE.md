@@ -39,10 +39,19 @@ Une entrée par système livré avec le template. Pour chacun : les fichiers qui
 | **Drapeau**       | `features.json → languageSwitcher`                                |
 
 **Variables** — `I18nService.locales`, `defaultLocale`, `localePrefix`, `isSupported()`, `resolve()`,
-`alternatesOf()`, `loadMessages()`.
+`alternatesOf()`, `flagOf(locale)`, `languageNameOf(locale)`, `loadMessages()`.
 **Règle** — un composant importe `Link`, `usePathname`, `useRouter` depuis `@/i18n/routing`, jamais depuis `next/link` ni `next/navigation`.
 
-**Ajouter une langue** : le code dans `localization.json → locales`, puis `messages/<code>.json`. Le routage, le sélecteur, le sitemap et les balises `alternate` suivent seuls.
+**Sélecteur** — `LanguageSwitcher` rend un `<select>` natif plutôt qu'un lien par langue alternative,
+pour passer à l'échelle au-delà de deux langues. `flagOf()` calcule l'emoji drapeau à partir d'un code
+région ISO (`localization.json → regions`, mapping locale → région) ; `languageNameOf()` lit le nom
+natif de la langue via `Intl.DisplayNames`. Changer de langue appelle `router.replace(pathname,
+{ locale })` de `@/i18n/routing`, donc reste sur la même route. Styles dans `LANGUAGE_SWITCHER_STYLES`
+(voir §15).
+
+**Ajouter une langue** : le code dans `localization.json → locales`, son code région dans `regions`,
+puis `messages/<code>.json`. Le routage, le sélecteur, le sitemap et les balises `alternate` suivent
+seuls.
 
 ---
 
@@ -169,6 +178,9 @@ si le champ est un `input`, une entrée dans `FIELD_INPUT_TYPES`.
 **Règle** — `HttpService` est le seul module autorisé à appeler `fetch`. Il ne lève jamais : il rend
 `{ success: false, error }`, l'erreur portant une clé sous `errors.`.
 **Délai** — `requestTimeoutMs`, quinze secondes, déclaré dans `configurations/system/http.json`.
+**Corps `form`-encodé** — `RequestOptions.form` (`Record<string, string>`) bascule le `Content-Type`
+sur `application/x-www-form-urlencoded` au lieu du JSON par défaut de `body`. Nécessaire pour un
+endpoint OAuth/token classique (`CalendarService`, voir §37, en est le premier consommateur).
 
 ---
 
@@ -282,19 +294,32 @@ depuis des composants client. C'est pourquoi `ThemeService`, lu par le layout se
 | **Fusion de classes** | `src/utils/classnames.ts` (`cn`)  |
 
 **Registres partagés** — `TONES`, `SIZES`, `TONE_TEXT`, `TONE_SOFT`, `TONE_SOLID`, `TONE_BORDER`,
-`SURFACES`, `GRID_COLUMNS`, `CONTAINER_WIDTHS`, `SECTION_SPACING`, `GAPS`, `ALIGNMENTS`, `LAYERS`,
-`FOCUS_RING`, `TRANSITION`, `DISABLED`.
+`SURFACES` (dont `glass`, un fond glassmorphism qui s'appuie sur `.surface-glass` dans `globals.css`
+et `theme.json → shadows.glass`), `GRID_COLUMNS`, `CONTAINER_WIDTHS` (dont `wide`, `max-w-wide`, pour
+un contenu plus large que `default`), `SECTION_SPACING`, `GAPS`, `ALIGNMENTS`, `LAYERS`, `FOCUS_RING`,
+`TRANSITION`, `DISABLED`, `UNDERLINE`/`UNDERLINE_ACTIVE` (soulignement animé au survol, `scale-x` sur
+pseudo-élément `after`), `MOTION` (voir §35).
 **Variantes par composant** — `BUTTON_*`, `BADGE_*`, `TEXT_STYLES`, `HEADING_STYLES`, `FIELD_STYLES`,
 `SKELETON_*`, `EMPTY_STATE_STYLES`, `ALERT_STYLES`, `OVERLAY_STYLES`, `DRAWER_STYLES`,
 `ACCORDION_STYLES`, `TABS_STYLES`, `TABLE_STYLES`, `NAVIGATION_STYLES`, `FOOTER_STYLES`,
 `CARD_STYLES`, `STAT_STYLES`, `TOAST_STYLES`, `LAYOUT`, `ACTION_ICON_SIZES`,
-`ICON_BUTTON_ICON_SIZES`, `AVATAR_PIXELS`.
+`ICON_BUTTON_ICON_SIZES`, `AVATAR_PIXELS`, `LANGUAGE_SWITCHER_STYLES`, `CONSENT_STYLES` (§33),
+`BOOKING_STYLES` (§37), `COMPARISON_STYLES` (§19), `TEXTURE_BACKDROP_STYLES` (§36).
 **Aide** — `buttonClass({ variant, size, fullWidth })`, partagée par `Button` et `ActionLink`.
 
 **Ajouter une variante de bouton** : une entrée dans `BUTTON_VARIANTS`. Elle apparaît dans l'atlas,
 elle est utilisable par `Button` et `ActionLink`, aucun autre fichier ne change.
 
 **Ajouter une icône** : l'import et une entrée dans `ICONS`. Le composant `Icon` et l'atlas suivent.
+
+**`tailwind.config.ts`** — `height` et `minHeight` sont générés depuis `theme.json → layout`, comme
+`maxWidth` (une classe `h-<nom>`/`min-h-<nom>` par clé). Registre d'animations Tailwind : `fade-in`,
+`slide-up`, `slide-left`, `shimmer`, `rise` (entrée discrète), `shine` (bande lumineuse traversante, à combiner
+avec un `background-image` en dégradé sur l'élément qui la porte), `drift` (flottement vertical
+léger), `marquee` (défilement en boucle, voir §35). Chaque durée non triviale vient de
+`configurations/system/timings.json`
+(`shineDurationMs`, `driftDurationMs`, `marqueeDurationMs`, `carouselIntervalMs`), jamais écrite en
+dur dans `tailwind.config.ts`.
 
 ---
 
@@ -341,17 +366,35 @@ n'en réimplémentent rien.
 
 ## 19. Sections de page
 
-|                |                                                                                                                                                                                  |
-| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Composants** | `HeroSection`, `FeatureSection`, `StatsSection`, `GallerySection`, `PricingSection`, `TestimonialSection`, `FaqSection`, `CallToActionSection`, `ContactSection`, `LegalSection` |
-| **Catalogue**  | `src/declarations/content.ts`                                                                                                                                                    |
-| **Enveloppe**  | `src/components/structures/layout/Section.tsx`                                                                                                                                   |
+|                |                                                                                                                                                                                                                         |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Composants** | `HeroSection`, `FeatureSection`, `StatsSection`, `GallerySection`, `ComparisonSection`, `PricingSection`, `BookingSection`, `TestimonialSection`, `FaqSection`, `CallToActionSection`, `ContactSection`, `LegalSection` |
+| **Catalogue**  | `src/declarations/content.ts`, sauf `pricing` (voir plus bas)                                                                                                                                                           |
+| **Enveloppe**  | `src/components/structures/layout/Section.tsx`                                                                                                                                                                          |
 
 **Variables** — chaque section accepte `items` et retombe sur le catalogue du template.
-**Types** — `FeatureItem`, `StatItem`, `MediaItem`, `PricingItem`, `TestimonialItem`, `FaqItem`,
-`TimelineItem`.
+**Types** — `FeatureItem`, `StatItem`, `MediaItem`, `ImageAsset`, `ComparisonItem`, `PricingItem`,
+`TestimonialItem`, `FaqItem`, `TimelineItem`.
 **Clés i18n** — `sections.<section>.overline|title|description`, puis `sections.<section>.items.<id>.*`.
 **Ancres** — `SECTION_ANCHORS` dans `declarations/routes.ts`.
+
+**Catalogue de prix** — `PRICING` vit dans `src/configurations/pricing.json` (donnée de projet), pas
+dans `declarations/content.ts` : `ConfigurationService.pricing` l'expose, typé `PricingItem[]`.
+`PricingSection` y retombe par défaut. Toute autre liste de la page d'accueil (`FEATURES`, `STATS`,
+`GALLERY`, `COMPARISONS`, `TESTIMONIALS`, `FAQ`) reste dans `declarations/content.ts`, ce sont des
+listes structurelles de démonstration, pas une tarification.
+
+**Comparaison avant/après** — `ComparisonSection` (ancre `comparisons`) rend un carrousel de paires
+d'images comparées côte à côte : défilement tactile par `scroll-snap`, pastilles de navigation,
+défilement automatique (`timings.json → carouselIntervalMs`) mis en pause au survol/focus et coupé
+sous `prefers-reduced-motion` (écoute locale de `configurations/system/viewport.json →
+mediaQueries.reducedMotion` via `matchMedia`, l'état local n'a pas justifié un service pour un seul
+consommateur — voir §12). Catalogue `COMPARISONS`
+dans `declarations/content.ts`, type `ComparisonItem` (`before`/`after`, chacun un `ImageAsset`
+`{ src, width, height }`). `Picture` accepte une prop `stretch` pour remplir le panneau au lieu de
+tenir un ratio fixe. Styles dans `COMPARISON_STYLES` (§15). Générique par construction : le nom, les
+libellés et le contenu de démonstration ne présument d'aucun métier — un projet dérivé remplace
+`COMPARISONS` par ses propres paires (rénovation, remise en forme, immobilier...).
 
 ---
 
@@ -415,16 +458,19 @@ l'atlas. C'est ce qui garantit qu'il reste vrai.
 `APP_ENV` (clé ou nom de branche), `NEXT_PUBLIC_APP_ENV`, puis `NODE_ENV === 'production'`. Un
 déploiement qui n'a pas posé `APP_ENV` retombe donc sur `production`, l'environnement le plus strict.
 
-**Sujets de configuration** — `site`, `analytics`, `mail`, `seo`. Chacun a huit fichiers : quatre
-`admins/defaults/<sujet>/<sujet>.<environnement>.json` (valeurs de repli littérales) et quatre
+**Sujets de configuration** — `site`, `analytics`, `mail`, `seo`, `calendar`. Chacun a huit fichiers :
+quatre `admins/defaults/<sujet>/<sujet>.<environnement>.json` (valeurs de repli littérales) et quatre
 `admins/templates/<sujet>/<sujet>.<environnement>.json` (uniquement des liaisons `"${VARIABLE}"`,
 jamais une valeur en dur). `ConfigurationService.environment.<sujet>` rend la valeur résolue et
 typée ; un type d'environnement invalide journalise un avertissement et retombe sur le défaut.
 Le sujet `analytics` porte `enabled` (`NEXT_PUBLIC_ANALYTICS_ENABLED`) et `googleAnalyticsId`
-(`NEXT_PUBLIC_GOOGLE_ANALYTICS_ID`, chaîne vide par défaut sur les huit fichiers).
+(`NEXT_PUBLIC_GOOGLE_ANALYTICS_ID`, chaîne vide par défaut sur les huit fichiers). Le sujet `calendar`
+porte les identifiants Google Calendar du module de rendez-vous (§37), vides par défaut : voir
+`scripts/check-environment.mjs`, qui duplique `CONFIG_SUBJECTS` en JavaScript brut pour tourner sans
+runtime TypeScript, donc à tenir à jour à la main en même temps que `declarations/environments.ts`.
 
 **Variables** — `ConfigurationService.environment.current`, `.manifest`, `.site`, `.analytics`,
-`.mail`, `.seo`, `.absoluteUrl(path)`.
+`.mail`, `.seo`, `.calendar`, `.absoluteUrl(path)`.
 **Règle** — `EnvironmentService` est le seul module autorisé à lire `process.env` ; il expose
 `read(name)` pour toute variable nommée. `ConfigurationService` reste le seul à importer un fichier de
 `configurations/`, y compris `admins/defaults/` et `admins/templates/`.
@@ -659,31 +705,49 @@ manque.
 
 ## 33. Consentement aux cookies
 
-|                  |                                                                                                   |
-| ---------------- | ------------------------------------------------------------------------------------------------- |
-| **Type**         | `src/types/consent.ts` (`ConsentStatus`)                                                          |
-| **Service**      | `src/services/ConsentService.ts`                                                                  |
-| **Composants**   | `src/components/structures/feedback/ConsentBanner.tsx`, `src/components/layout/AnalyticsGate.tsx` |
-| **Consommé par** | `src/app/[locale]/layout.tsx`, `src/components/layout/SiteFooter.tsx`                             |
-| **Drapeau**      | `features.json → analytics` (aucun drapeau dédié, voir plus bas)                                  |
+|                  |                                                                                                              |
+| ---------------- | ------------------------------------------------------------------------------------------------------------ |
+| **Type**         | `src/types/consent.ts` (`ConsentStatus`, `ConsentCategoryDeclaration`, `ConsentPreferences`, `ConsentState`) |
+| **Déclaration**  | `src/declarations/analytics.ts` (`CONSENT_CATEGORIES`, type `ConsentCategory`)                               |
+| **Service**      | `src/services/ConsentService.ts`                                                                             |
+| **Composants**   | `src/components/structures/feedback/ConsentManager.tsx`, `src/components/layout/AnalyticsGate.tsx`           |
+| **Consommé par** | `src/app/[locale]/layout.tsx`                                                                                |
+| **Drapeau**      | `features.json → analytics` (aucun drapeau dédié, voir plus bas)                                             |
 
-**Variables** — `ConsentService.use()` (statut réactif), `grant()`, `deny()`, `reset()`. Statut
-persisté via `StorageService` sous `STORAGE_KEYS.consent`, trois valeurs : `pending`, `granted`,
-`denied`.
-**Règle** — pas de drapeau séparé : le bandeau et le blocage n'existent que si `features.json →
-analytics` est actif **et** `ConfigurationService.environment.analytics.enabled` l'est aussi. Rien à
-consentir si l'analytique est coupée pour ce projet. Un clone frais du template (`analytics: false`)
-n'affiche donc aucun bandeau.
-**Câblage** — `AnalyticsGate` (client) ne monte `<Analytics />` (Vercel) et `<GoogleAnalytics>` (GA4)
-que lorsque `ConsentService.use()` rend `'granted'` ; il remplace le montage inconditionnel qui
-existait avant dans `[locale]/layout.tsx`. `ConsentBanner` s'affiche tant que le statut reste
-`pending`, propose `actions.accept`/`actions.decline`, et pointe vers `routes.privacyPolicy` via
-`NavigationService.pathOf`.
-**Revenir sur son choix** — un bouton dans `SiteFooter` (libellé `actions.manageCookies`) appelle
-`ConsentService.reset()`, ce qui réaffiche le bandeau à l'écran suivant.
-**Clés i18n** — `consent.title|description|privacyLink`, `actions.accept|decline|manageCookies`.
+**Consentement par catégorie** — `CONSENT_CATEGORIES` déclare chaque catégorie de cookie
+(`necessary`, `analytics` à ce jour) avec `isRequired` (toujours acceptée, jamais désactivable) et un
+`feature` optionnel (nom de drapeau `features.json` qui la fait apparaître). L'état persisté est
+structuré `{ status, preferences }` (`ConsentState`), `preferences` étant un booléen par catégorie,
+et non plus un simple `'granted' | 'denied'`.
+**Variables** — `ConsentService.use()` (état réactif), `categories()` (catégories dont le drapeau est
+actif), `hasChoices()` (au moins une catégorie non obligatoire disponible), `isRequired(category)`,
+`allows(category)`, `save(preferences)`, `grant()`, `deny()`, `reset()`. État persisté via
+`StorageService` sous `STORAGE_KEYS.consent`.
+**Bulle et modale** — `ConsentManager` remplace l'ancien bandeau accepter/refuser : une bulle flottante
+persistante (bas-gauche, icône `public/cookies/cookie.png`, dégagée de `ScrollToTop` et de la barre
+d'action collante qui occupent le bas-droite) ouvre une modale de préférences avec un switch par
+catégorie (`FIELD_STYLES.switchTrack`/`switchThumb`, réutilisés tels quels). `ConsentManager` se rend
+`null` quand `hasChoices()` est faux : un clone frais du template (`analytics: false`) n'affiche donc
+aucune bulle. Monté sans condition dans `[locale]/layout.tsx`, la disponibilité se pilote entièrement
+par catégorie plutôt que par un drapeau câblé en dur dans le layout.
+**Câblage analytique** — `AnalyticsGate` (client) ne monte `<Analytics />` (Vercel) et
+`<GoogleAnalytics>` (GA4) que lorsque `ConsentService.use().preferences.analytics` est vrai.
+**Clés i18n** — `consent.title|description|privacyLink|required`,
+`consent.actions.declineAll|saveChoices|acceptAll`,
+`consent.categories.<category>.label|description`, `actions.manageCookies`.
 **Cohérence avec le texte légal** — `legal.privacyPolicy.sections.cookies` décrit exactement ce
 comportement (pas de cookie hors consentement) ; modifier l'un sans l'autre romprait cette cohérence.
+
+**Ajouter une catégorie** (point d'extension, par exemple `marketing`) :
+
+1. une entrée dans `CONSENT_CATEGORIES` (`declarations/analytics.ts`), avec son `feature` si elle doit
+   être gagée par un drapeau ;
+2. son glyphe dans `CATEGORY_ICONS` (`ConsentManager.tsx`) — la vérification de type échoue tant que ce
+   n'est pas fait ;
+3. le bloc `consent.categories.<category>.label|description` dans **chaque** fichier de `messages/`.
+
+Aucun autre fichier ne change : la modale, la persistance et le calcul du statut lisent
+`CONSENT_CATEGORIES` seuls.
 
 ---
 
@@ -711,3 +775,108 @@ le clickjacking et l'injection de balises de base. `frame-src` autorise `google.
 et `dependency-review` sur PR uniquement. L'environnement (`APP_ENV`) se déduit du nom de la branche
 ciblée par la même correspondance que `ENVIRONMENT_REGISTRY` (§23).
 **Ajouter une vérification** : une étape dans le job `validate` de `.github/workflows/ci.yml`.
+
+---
+
+## 35. Révélation au scroll
+
+|            |                                                                         |
+| ---------- | ----------------------------------------------------------------------- |
+| **Styles** | `src/styles/globals.css` (classes `reveal-*`, `@keyframes`, `.marquee`) |
+| **Jetons** | `MOTION` dans `src/declarations/ui/tokens.ts`                           |
+
+**Classes** — `reveal`, `reveal-soft`, `reveal-left`, `reveal-right`, `reveal-zoom`, `reveal-wipe`,
+`reveal-stagger`, `reveal-picture`, chacune exposée par `MOTION` (`MOTION.reveal`, `MOTION.revealSoft`,
+...) pour ne jamais écrire la classe CSS en dur dans un composant. `MOTION.marquee`/`marqueeViewport`
+exposent de la même façon `.marquee-track`/`.marquee` (bandeau défilant en boucle, voir plus bas).
+**Mécanisme** — CSS pur, piloté par `animation-timeline: view()` (`@supports` en garde) : chaque
+classe joue une animation `@keyframes` dédiée dont la progression suit le défilement de l'élément dans
+le viewport, sans `IntersectionObserver` ni JavaScript. `reveal-stagger` anime les enfants directs les
+uns après les autres via des `animation-range` décalés par `:nth-child`.
+**Repli** — un navigateur sans support de `animation-timeline: view()` ignore le bloc `@supports` :
+tout reste visible, sans état intermédiaire. `prefers-reduced-motion: reduce` coupe déjà toute
+animation par la règle générale de fin de fichier.
+**Bandeau défilant** — `.marquee`/`.marquee-track` (logos clients, avis en boucle) : masque en
+dégradé sur les bords, mis en pause au survol/focus, retombe sur `overflow-x: auto` sous
+`prefers-reduced-motion: reduce`. Anime via `animate-marquee` (Tailwind, voir §15/`tailwind.config.ts`,
+durée `timings.json → marqueeDurationMs`).
+
+**Ajouter une classe de révélation** : un `@keyframes`, l'entrée `@supports`/`prefers-reduced-motion`
+dans `globals.css`, puis son entrée dans `MOTION`. Aucun autre fichier ne change.
+
+---
+
+## 36. Fond de page texturé procédural
+
+|               |                                                                                               |
+| ------------- | --------------------------------------------------------------------------------------------- |
+| **Composant** | `src/components/layout/TexturePageBackdrop.tsx`                                               |
+| **Styles**    | `TEXTURE_BACKDROP_STYLES` (§15), classes `.texture-frame`/`.texture-grain` dans `globals.css` |
+
+**Technique** — deux calques fixes en `z-index` négatif, sous le contenu de page : `.texture-frame`
+porte l'image de fond (SVG passé en prop `src`, appliqué en `style` inline pour rester générique — le
+composant ne présume d'aucun visuel), `.texture-grain` superpose une texture de grain légère en
+`data:` URI (`feTurbulence`), sans aucune image bitmap. `main > section { position: relative }` donne
+à chaque section sa propre pile d'empilement pour qu'elle passe au-dessus des deux calques fixes.
+**Non branché par défaut** — le template ne fournit aucun visuel de fond : `TexturePageBackdrop` est un
+patron disponible, pas un élément monté dans `SiteLayout`. Un projet dérivé qui veut un fond texturé
+pose son propre SVG dans `public/images/`, l'importe dans `SiteLayout.tsx` avec
+`<TexturePageBackdrop src="/images/<fichier>.svg" />`, et ajoute `bg-transparent`/`surface-glass` (§15)
+aux surfaces qui doivent laisser transparaître le fond plutôt que le couvrir.
+
+**Utiliser le patron** : une entrée dans `SiteLayout.tsx`, un fichier SVG dans `public/images/`. Aucun
+autre fichier ne change.
+
+---
+
+## 37. Prise de rendez-vous
+
+|                   |                                                                                                                                           |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| **Services**      | `src/services/AppointmentService.ts`, `src/services/CalendarService.ts`                                                                   |
+| **Configuration** | `src/configurations/booking.json` (`slotMinutes`, `durationMinutes`, `minimumNoticeHours`, `horizonDays`), `identity.json → openingHours` |
+| **Types**         | `src/types/booking.ts`                                                                                                                    |
+| **Déclaration**   | `bookAppointment` dans `FORMS` (§5), `SECTION_ANCHORS.booking`                                                                            |
+| **Composant**     | `src/components/sections/BookingSection.tsx`, styles `BOOKING_STYLES` (§15)                                                               |
+| **Route API**     | `src/app/api/appointments/route.ts` (`GET` disponibilités, `POST` réservation)                                                            |
+| **Drapeau**       | `features.json → appointmentBooking` (`false` par défaut)                                                                                 |
+
+**Moteur de créneaux** — `AppointmentService` calcule les créneaux disponibles à partir des horaires
+d'ouverture (`identity.json → openingHours`, un jour de semaine + heure d'ouverture/fermeture), du
+fuseau horaire du projet (`localization.json → timeZone`), d'un délai de prévenance minimum
+(`minimumNoticeHours`) et d'un horizon de réservation (`horizonDays`). Variables — `today()`,
+`instantOf(date, time)`, `hoursOf(date)`, `openingSchedule()` (horaires groupés par jours consécutifs
+identiques, pour l'affichage), `isBookable(date)`, `slotsOf(date)`, `freeSlotsOf(date, busy)`,
+`monthGridOf(year, month)`, `availabilityOf(date)`, `book(request)`. Rien dans ce service n'est
+spécifique à un métier : il sert toute activité qui vend des créneaux (praticien, coach, artisan,
+photographe...), pas seulement la prise de rendez-vous d'un salon.
+**Synchronisation Google Calendar** — `CalendarService` (serveur uniquement, `import 'server-only'`)
+s'authentifie par compte de service : JWT signé avec `node:crypto` (`createSign('RSA-SHA256')`),
+échangé contre un jeton d'accès via `HttpService`'s option `form` (§8, endpoint OAuth `grant_type:
+jwt-bearer`). `busyRangesOf(from, to)` lit les plages occupées (`freeBusy`), `createEvent(event)` écrit
+l'événement à la réservation. `isConfigured()` renvoie faux tant que `calendarId`/`clientEmail`/
+`privateKey` ne sont pas tous les trois renseignés : le service reste alors en marche à vide
+(`busyRangesOf` rend `[]`, `createEvent` journalise et rend `false`), comme `MailService` (§22).
+**Sujet d'environnement** — `calendar` (§23), quatre variables : `GOOGLE_CALENDAR_ID`,
+`GOOGLE_CALENDAR_CLIENT_EMAIL`, `GOOGLE_CALENDAR_PRIVATE_KEY` (les retours à la ligne échappés `\n`
+survivent au passage par une variable d'environnement, `readCalendarConfig` les restitue).
+**Module optionnel** — `appointmentBooking` est à `false` par défaut : un clone frais du template
+n'affiche donc pas `BookingSection` (composition conditionnelle dans `[locale]/page.tsx`, voir §19).
+Le composant garde malgré tout son propre repli interne (`ConfigurationService.isEnabled(...)` rend
+une alerte « réservation fermée » plutôt que le calendrier) pour le cas où un projet dérivé le monte
+ailleurs sans reprendre ce garde-fou.
+**Formulaire** — `bookAppointment` (`declarations/forms.ts`) est volontairement minimal (`fullName`,
+`email`, `phone`, `note`) : un projet dérivé y ajoute ses propres champs (type de prestation, par
+exemple) sans toucher au moteur de créneaux ni à la route API.
+
+**Activer pour un projet dérivé** :
+
+1. `features.json → appointmentBooking: true` ;
+2. `identity.json → openingHours` avec les vrais horaires ;
+3. créer un compte de service Google Cloud, partager le calendrier avec son adresse, poser
+   `GOOGLE_CALENDAR_ID`, `GOOGLE_CALENDAR_CLIENT_EMAIL`, `GOOGLE_CALENDAR_PRIVATE_KEY` ;
+4. étendre `bookAppointment` dans `declarations/forms.ts` si le projet a besoin d'un champ
+   supplémentaire (type de prestation, nombre de personnes...).
+
+Sans l'étape 3, le module reste fonctionnel : les créneaux se calculent sur les horaires d'ouverture
+seuls, la réservation part par courriel (`MailService`) sans écrire dans un agenda partagé.

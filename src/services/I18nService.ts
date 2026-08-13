@@ -1,7 +1,10 @@
 import { ConfigurationService } from '@/services/ConfigurationService'
 import { Service } from '@/structures/Service'
 
-const { locales, defaultLocale, localePrefix } = ConfigurationService.localization
+const { locales, regions, defaultLocale, localePrefix } = ConfigurationService.localization
+
+// Offset from ASCII letters to regional indicator symbols
+const FLAG_CODE_POINT_OFFSET = 0x1f1e6 - 65
 
 // Localization service
 class I18nServiceClass extends Service {
@@ -34,6 +37,29 @@ class I18nServiceClass extends Service {
    */
 
   alternatesOf = (current: string): string[] => locales.filter((locale) => locale !== current)
+
+  /**
+   * Locale flag
+   * @param {string} locale - Locale code
+   * @return {string} - Flag emoji
+   */
+
+  flagOf = (locale: string): string =>
+    String.fromCodePoint(
+      ...Array.from(
+        (regions as Record<string, string>)[locale] ?? '',
+        (letter) => letter.charCodeAt(0) + FLAG_CODE_POINT_OFFSET
+      )
+    )
+
+  /**
+   * Locale endonym
+   * @param {string} locale - Locale code
+   * @return {string} - Language name
+   */
+
+  languageNameOf = (locale: string): string =>
+    new Intl.DisplayNames([locale], { type: 'language' }).of(locale) ?? locale
 
   /**
    * Load messages

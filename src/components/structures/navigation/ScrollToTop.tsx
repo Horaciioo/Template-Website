@@ -25,7 +25,6 @@ export const ScrollToTop = () => {
   return (
     <IconButton
       icon="arrowUp"
-      variant="secondary"
       label={t('scrollToTop')}
       aria-hidden={!isVisible}
       tabIndex={isVisible ? 0 : -1}

@@ -15,4 +15,4 @@ export const ENVIRONMENT_REGISTRY = {
  * @type {string[]}
  */
 
-export const CONFIG_SUBJECTS = ['site', 'analytics', 'mail', 'seo'] as const
+export const CONFIG_SUBJECTS = ['site', 'analytics', 'mail', 'seo', 'calendar'] as const

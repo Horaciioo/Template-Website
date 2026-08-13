@@ -1,11 +1,4 @@
-import type {
-  FaqItem,
-  FeatureItem,
-  MediaItem,
-  PricingItem,
-  StatItem,
-  TestimonialItem,
-} from '@/types/content'
+import type { FaqItem, FeatureItem, MediaItem, StatItem, TestimonialItem } from '@/types/content'
 
 /**
  * Placeholder image
@@ -78,36 +71,6 @@ export const FAQ: FaqItem[] = [
   { id: 'process', translationKey: 'process' },
   { id: 'support', translationKey: 'support' },
   { id: 'cancel', translationKey: 'cancel' },
-]
-
-/**
- * Pricing plans
- * @type {PricingItem[]}
- */
-
-export const PRICING: PricingItem[] = [
-  {
-    id: 'starter',
-    translationKey: 'starter',
-    amountCents: 49000,
-    period: 'once',
-    includedKeys: ['scope', 'revisions', 'delivery'],
-  },
-  {
-    id: 'standard',
-    translationKey: 'standard',
-    amountCents: 129000,
-    period: 'once',
-    featured: true,
-    includedKeys: ['scope', 'revisions', 'delivery', 'support'],
-  },
-  {
-    id: 'premium',
-    translationKey: 'premium',
-    amountCents: 249000,
-    period: 'once',
-    includedKeys: ['scope', 'revisions', 'delivery', 'support', 'training'],
-  },
 ]
 
 /**

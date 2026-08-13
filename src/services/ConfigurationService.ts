@@ -39,6 +39,7 @@ import features from '@/configurations/features.json'
 import identity from '@/configurations/identity.json'
 import localization from '@/configurations/localization.json'
 import navigation from '@/configurations/navigation.json'
+import pricing from '@/configurations/pricing.json'
 import seo from '@/configurations/seo.json'
 import site from '@/configurations/site.json'
 import social from '@/configurations/social.json'
@@ -50,6 +51,7 @@ import viewport from '@/configurations/system/viewport.json'
 import theme from '@/configurations/theme.json'
 import { EnvironmentService } from '@/services/EnvironmentService'
 import { LoggerService } from '@/services/LoggerService'
+import type { PricingItem } from '@/types/content'
 import type {
   AnalyticsEnvironmentConfig,
   EnvironmentKey,
@@ -240,6 +242,7 @@ export const ConfigurationService = {
   storage: storageSettings,
   validation,
   timings,
+  pricing: pricing as PricingItem[],
 
   // Environment values
   environment: {

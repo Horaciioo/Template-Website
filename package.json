@@ -23,7 +23,7 @@
     "validate": "yarn type-check && yarn lint && yarn build && yarn check:registre && yarn check:environment"
   },
   "dependencies": {
-    "@next/third-parties": "^16.3.0",
+    "@next/third-parties": "^16.3.1",
     "@vercel/analytics": "^1.4.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.468.0",
@@ -39,8 +39,8 @@
     "@types/node": "^22.10.5",
     "@types/react": "^19.0.7",
     "@types/react-dom": "^19.0.3",
-    "@typescript-eslint/eslint-plugin": "^8.20.0",
-    "@typescript-eslint/parser": "^8.20.0",
+    "@typescript-eslint/eslint-plugin": "^8.67.0",
+    "@typescript-eslint/parser": "^8.67.0",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.18.0",
     "postcss": "^8.5.26",

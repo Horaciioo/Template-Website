@@ -21,6 +21,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@eslint-community/eslint-utils@npm:4.9.1":
+  version: 4.9.1
+  resolution: "@eslint-community/eslint-utils@npm:4.9.1"
+  dependencies:
+    eslint-visitor-keys: "npm:^3.4.3"
+  peerDependencies:
+    eslint: ^6.0.0 || ^7.0.0 || >=8.0.0
+  checksum: 10c0/dc4ab5e3e364ef27e33666b11f4b86e1a6c1d7cbf16f0c6ff87b1619b3562335e9201a3d6ce806221887ff780ec9d828962a290bb910759fd40a674686503f02
+  languageName: node
+  linkType: hard
+
 "@eslint-community/eslint-utils@npm:^4.8.0, @eslint-community/eslint-utils@npm:^4.9.1":
   version: 4.10.1
   resolution: "@eslint-community/eslint-utils@npm:4.10.1"
@@ -505,12 +516,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/eslint-plugin-next@npm:^15.1.6":
-  version: 15.5.23
-  resolution: "@next/eslint-plugin-next@npm:15.5.23"
+"@next/eslint-plugin-next@npm:^16.3.1":
+  version: 16.3.1
+  resolution: "@next/eslint-plugin-next@npm:16.3.1"
   dependencies:
+    "@eslint-community/eslint-utils": "npm:4.9.1"
     fast-glob: "npm:3.3.1"
-  checksum: 10c0/33f25e6fc9d1b6fdf31be72db967d9cb1fbb2b083236448ae1654da98d8032105e9f46a10abb8264ae7c9ab67b5de87977dbdee53737508137ae932507d9623d
+  checksum: 10c0/15eec2be11b88ae9b6a9117c5a122356f59fe6ab6524e13acc9226404f19fe1caa8e7c924e240899fc82ebb94c1fdbebbe7473aa9edf05d97e757001cabc1de1
   languageName: node
   linkType: hard
 
@@ -2554,7 +2566,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "template-website@workspace:."
   dependencies:
-    "@next/eslint-plugin-next": "npm:^15.1.6"
+    "@next/eslint-plugin-next": "npm:^16.3.1"
     "@next/third-parties": "npm:^16.3.0"
     "@types/node": "npm:^22.10.5"
     "@types/react": "npm:^19.0.7"

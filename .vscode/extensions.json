@@ -1,0 +1,18 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss",
+    "yoavbls.pretty-ts-errors",
+    "usernamehw.errorlens",
+    "christian-kohler.path-intellisense",
+    "wix.vscode-import-cost",
+    "eamodio.gitlens",
+    "streetsidesoftware.code-spell-checker",
+    "mikestead.dotenv",
+    "seatonjiang.gitmoji-vscode",
+    "sonarsource.sonarlint-vscode",
+    "snyk-security.snyk-vulnerability-scanner",
+    "junsimons.flex-preview"
+  ]
+}

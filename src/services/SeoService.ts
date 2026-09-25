@@ -53,11 +53,8 @@ class SeoServiceClass extends Service {
       metadataBase: new URL(environment.site.url),
       alternates: {
         canonical,
-        languages: Object.fromEntries(
-          I18nService.locales.map((alternate) => [
-            alternate,
-            environment.absoluteUrl(localizedPath(alternate, path)),
-          ])
+        languages: I18nService.hreflangOf((alternate) =>
+          environment.absoluteUrl(localizedPath(alternate, path))
         ),
       },
       openGraph: {

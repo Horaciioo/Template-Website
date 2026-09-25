@@ -19,12 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: SeoService.absoluteUrlOf(locale, path),
       lastModified,
       alternates: {
-        languages: Object.fromEntries(
-          I18nService.locales.map((alternate) => [
-            alternate,
-            SeoService.absoluteUrlOf(alternate, path),
-          ])
-        ),
+        languages: I18nService.hreflangOf((alternate) => SeoService.absoluteUrlOf(alternate, path)),
       },
     }))
   })

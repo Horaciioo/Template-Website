@@ -31,6 +31,17 @@ class I18nServiceClass extends Service {
     typeof value === 'string' && locales.includes(value) ? value : defaultLocale
 
   /**
+   * Hreflang map
+   * @param {(locale: string) => string} urlOf - Locale URL builder
+   * @return {Record<string, string>} - Locale to URL
+   */
+
+  hreflangOf = (urlOf: (locale: string) => string): Record<string, string> => ({
+    ...Object.fromEntries(locales.map((locale) => [locale, urlOf(locale)])),
+    'x-default': urlOf(defaultLocale),
+  })
+
+  /**
    * Alternate locales
    * @param {string} current - Current locale
    * @return {string[]} - Alternatives

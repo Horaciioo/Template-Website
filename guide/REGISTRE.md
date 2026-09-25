@@ -39,7 +39,8 @@ Une entrée par système livré avec le template. Pour chacun : les fichiers qui
 | **Drapeau**       | `features.json → languageSwitcher`                                |
 
 **Variables** — `I18nService.locales`, `defaultLocale`, `localePrefix`, `isSupported()`, `resolve()`,
-`alternatesOf()`, `flagOf(locale)`, `languageNameOf(locale)`, `loadMessages()`.
+`alternatesOf()`, `hreflangOf(urlOf)` (une URL par langue plus `x-default` vers la langue par défaut,
+lue par les métadonnées et le sitemap), `flagOf(locale)`, `languageNameOf(locale)`, `loadMessages()`.
 **Règle** — un composant importe `Link`, `usePathname`, `useRouter` depuis `@/i18n/routing`, jamais depuis `next/link` ni `next/navigation`.
 
 **Sélecteur** — `LanguageSwitcher` rend un `<select>` natif plutôt qu'un lien par langue alternative,

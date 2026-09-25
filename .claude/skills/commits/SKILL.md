@@ -7,6 +7,8 @@ description: Convention de commits git obligatoire du projet. À charger AVANT d
 
 ## Le format, non négociable
 
+Le titre et la description d'une pull request suivent le skill `pull-request` (anglais, format changelog, aucune mention des vérifications ni d'attribution).
+
 Un message de commit tient sur **une seule ligne** :
 
 ```

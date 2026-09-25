@@ -365,7 +365,7 @@
         },
         "cookies": {
           "title": "Cookies",
-          "body": "This website uses no advertising cookie. Only the theme preference is kept in the local storage of the browser."
+          "body": "This website uses no advertising cookie. Your theme preference and your cookie choice are kept in the local storage of your browser. If you pick a language other than your browser's, a cookie remembers it until the browser closes. Audience measurement only loads after your consent."
         },
         "contact": {
           "title": "Contact",

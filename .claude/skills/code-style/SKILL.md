@@ -40,7 +40,7 @@ Exemples INCORRECTS → CORRECTS:
 
 Tout commentaire du dépôt est rédigé **en anglais**, commentaire de ligne comme bloc JSDoc, y compris
 la description, les `@param` et les `@return`. Le seul français du dépôt vit dans
-`messages/fr.json` et dans `guide/`.
+`src/configurations/windows/messages/fr.json` et dans `guide/`.
 
 ```ts
 // ✅ CORRECT (3 mots)

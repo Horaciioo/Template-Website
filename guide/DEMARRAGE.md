@@ -40,14 +40,14 @@ nouvelle charte.
 
 ### Étape 4 — Le contenu
 
-1. `messages/fr.json` et `messages/en.json` — tout le texte. Les deux fichiers gardent la même forme.
+1. `src/configurations/windows/messages/fr.json` et `src/configurations/windows/messages/en.json` — tout le texte. Les deux fichiers gardent la même forme.
 2. `src/declarations/content.ts` — les listes de la page d'accueil (arguments, chiffres, offres,
    témoignages, questions, galerie).
 3. `public/images/` — les visuels réels, en remplacement de `placeholder.svg`.
 
 ### Étape 5 — Les formulaires
 
-`src/declarations/forms.ts` pour la forme et les règles, `messages/` pour les libellés. La route API,
+`src/declarations/forms.ts` pour la forme et les règles, `src/configurations/windows/messages/` pour les libellés. La route API,
 la validation et l'envoi ne changent pas. Le formulaire `contact` redirige par défaut vers `/thank-you`
 (`redirectRouteId`) plutôt que d'afficher un message inline : retirer ce champ pour revenir au
 comportement inline, voir `guide/REGISTRE.md` §30.
@@ -113,7 +113,7 @@ yarn type-check && yarn lint && yarn build
 Les trois doivent être verts. Ensuite, à la main :
 
 - [ ] `/showcase` affiche la charte du projet, pas celle du template
-- [ ] les deux fichiers de `messages/` ont exactement les mêmes clés
+- [ ] les deux fichiers de `src/configurations/windows/messages/` ont exactement les mêmes clés
 - [ ] aucune phrase visible n'est écrite dans un `.tsx` — `grep -rn "[éèàù]" src/components` doit être vide
 - [ ] aucune couleur en dur — `grep -rnE "#[0-9a-fA-F]{3,6}" src/components src/declarations` doit être vide
 - [ ] `/sitemap.xml` ne liste que les routes réellement publiques

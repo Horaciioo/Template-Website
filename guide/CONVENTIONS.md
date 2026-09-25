@@ -112,7 +112,7 @@ legal.<page>.sections.<id>.title|body
 showcase.<clé>
 ```
 
-Toute clé absente d'une locale est un bug : les deux fichiers de `messages/` ont exactement la même
+Toute clé absente d'une locale est un bug : les deux fichiers de `src/configurations/windows/messages/` ont exactement la même
 forme.
 
 ## Props de composants

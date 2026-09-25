@@ -152,7 +152,7 @@ Ordre : entités, helper et constantes, commandes, services, configuration (un c
 
 Chaque commit ne porte **le contenu que d'une seule fonctionnalité**. Ne jamais mélanger dans un commit des changements qui appartiennent à des sujets différents.
 
-Exemple : les pages légales (mentions légales, politique de confidentialité) forment une fonctionnalité, elles se committent ensemble, séparément du reste. Dans ce dépôt, une fonctionnalité comprend aussi son entrée dans `guide/REGISTRE.md` et son bloc dans `messages/` : ils partent dans le même commit.
+Exemple : les pages légales (mentions légales, politique de confidentialité) forment une fonctionnalité, elles se committent ensemble, séparément du reste. Dans ce dépôt, une fonctionnalité comprend aussi son entrée dans `guide/REGISTRE.md` et son bloc dans `src/configurations/windows/messages/` : ils partent dans le même commit.
 
 Exception : si les changements sont vraiment transverses et généraux (mise à jour de dépendances, config globale du dépôt), un seul commit suffit, sans découpage artificiel.
 

@@ -23,7 +23,7 @@ le réécrit jamais, il le lit.
 
 ## Ce qu'un projet dérivé peut et ne peut pas changer
 
-Un projet issu du template modifie des **données** (`configurations/`, `declarations/`, `messages/`,
+Un projet issu du template modifie des **données** (`configurations/`, `declarations/`, `src/configurations/windows/messages/`,
 `public/images/`) et n'ajoute que rarement un fichier hors de ces dossiers. Il ne touche jamais
 `services/`, `utils/`, `components/elements/`, `components/structures/`, `structures/`, `i18n/` ni ce
 dossier `guide/` lui-même — la liste précise est dans [DEMARRAGE.md](DEMARRAGE.md) §2. Si une règle

@@ -41,7 +41,7 @@ façade qu'il traverse, jamais un import direct du JSON.
 
 Le hardcoding est banni. Une valeur qui décrit le projet — couleur, libellé, route, borne, e-mail,
 colonne, icône, seuil — se déclare **une seule fois**, dans `configurations/`, `declarations/` ou
-`messages/`, et se lit partout ailleurs.
+`src/configurations/windows/messages/`, et se lit partout ailleurs.
 
 Le DRY abusif est banni aussi. Une abstraction naît au **troisième** usage, pas au deuxième imaginé.
 Toute nouvelle abstraction se justifie techniquement et s'inscrit dans `guide/REGISTRE.md` le jour
@@ -59,18 +59,18 @@ volontairement sans état.
 
 ## Les gestes courants
 
-| Ce qu'on demande                 | Le geste, et rien de plus                                                              |
-| -------------------------------- | -------------------------------------------------------------------------------------- |
-| Ajouter une page                 | `ROUTES` + dossier sous `app/[locale]/` + bloc `routes.<id>` dans les deux `messages/` |
-| Ajouter un formulaire            | une entrée dans `FORMS` + un bloc `forms.<id>` dans les deux `messages/`               |
-| Ajouter une couleur              | une entrée dans `theme.json`, dans les deux palettes                                   |
-| Ajouter un seuil/délai du moteur | une entrée dans le fichier concerné de `configurations/system/`                        |
-| Ajouter une icône                | un import et une entrée dans `ICONS`                                                   |
-| Ajouter une variante             | une entrée dans le registre concerné de `declarations/ui/variants.ts`                  |
-| Ajouter une section de page      | un composant dans `components/sections/` qui s'appuie sur `Section`                    |
-| Ajouter du texte                 | uniquement `messages/<locale>.json`                                                    |
-| Ajouter un enum interne          | une entrée dans `structures/constants.ts`, en fin d'objet                              |
-| Ajouter un service               | étendre `structures/Service.ts`, instancier une fois, exporter le singleton            |
+| Ce qu'on demande                 | Le geste, et rien de plus                                                                                         |
+| -------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| Ajouter une page                 | `ROUTES` + dossier sous `app/[locale]/` + bloc `routes.<id>` dans les deux `src/configurations/windows/messages/` |
+| Ajouter un formulaire            | une entrée dans `FORMS` + un bloc `forms.<id>` dans les deux `src/configurations/windows/messages/`               |
+| Ajouter une couleur              | une entrée dans `theme.json`, dans les deux palettes                                                              |
+| Ajouter un seuil/délai du moteur | une entrée dans le fichier concerné de `configurations/system/`                                                   |
+| Ajouter une icône                | un import et une entrée dans `ICONS`                                                                              |
+| Ajouter une variante             | une entrée dans le registre concerné de `declarations/ui/variants.ts`                                             |
+| Ajouter une section de page      | un composant dans `components/sections/` qui s'appuie sur `Section`                                               |
+| Ajouter du texte                 | uniquement `src/configurations/windows/messages/<locale>.json`                                                    |
+| Ajouter un enum interne          | une entrée dans `structures/constants.ts`, en fin d'objet                                                         |
+| Ajouter un service               | étendre `structures/Service.ts`, instancier une fois, exporter le singleton                                       |
 
 Dans chaque cas, la navigation, le sitemap, les métadonnées, l'atlas et la validation suivent seuls.
 Si un geste demande de toucher plus de fichiers que la colonne de droite, c'est qu'on est en train de

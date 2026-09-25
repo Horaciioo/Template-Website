@@ -17,7 +17,7 @@ Si la réponse est non, la ligne n'a pas sa place ici.
   exemples neutres, elles se remplacent projet par projet.
 - **Un vocabulaire métier.** Pas de `Coach`, `Salon`, `Prestation`, `Galerie`. On écrit `Offer`,
   `Feature`, `Media`, `Testimonial`.
-- **Une phrase dans un `.tsx`.** Tout ce qu'un visiteur lit vit dans `messages/<locale>.json`.
+- **Une phrase dans un `.tsx`.** Tout ce qu'un visiteur lit vit dans `src/configurations/windows/messages/<locale>.json`.
 - **Une couleur, un rayon, une durée écrits en dur.** Ils viennent de `configurations/theme.json` via
   les variantes.
 - **Un chemin d'URL écrit à la main.** Il vient de `NavigationService.pathOf`.
@@ -50,7 +50,7 @@ pour injecter la feuille de style du thème.
 
 1. Lire `guide/REGISTRE.md` : la brique existe-t-elle déjà ?
 2. Lire le skill `conventions` : comment ça doit s'appeler ?
-3. Déclarer la donnée dans `configurations/`, `declarations/` ou `messages/`.
+3. Déclarer la donnée dans `configurations/`, `declarations/` ou `src/configurations/windows/messages/`.
 4. Écrire ou étendre le service.
 5. Écrire le composant, qui ne fait que rendre.
 6. Ajouter la brique à l'atlas si elle est visuelle, **en lisant son registre**.
@@ -79,11 +79,11 @@ Les trois doivent être verts. Puis :
 
 - [ ] aucune phrase visible dans un `.tsx`
 - [ ] aucune couleur ni URL en dur
-- [ ] les deux fichiers de `messages/` ont exactement les mêmes clés
+- [ ] les deux fichiers de `src/configurations/windows/messages/` ont exactement les mêmes clés
 - [ ] la nouveauté apparaît dans `/showcase` si elle est visuelle
 - [ ] `guide/REGISTRE.md` est à jour
 - [ ] testé en mobile d'abord, puis en thème clair **et** en thème sombre
 - [ ] skill `security` passé en revue si un tiers, un formulaire ou une route API a été touché ; une nouvelle route publique appelle `this.limit` et un nouveau formulaire garde son `HoneypotField`
-- [ ] skill `ai-tells` rejoué sur ce qui a changé : contraste mesuré (`scripts/contrast.py`), aucun `hover:opacity-*` qui pâlit, aucun tiret cadratin ni buzzword dans `messages/`, pas de fondu au scroll par défaut, pas de grain
+- [ ] skill `ai-tells` rejoué sur ce qui a changé : contraste mesuré (`scripts/contrast.py`), aucun `hover:opacity-*` qui pâlit, aucun tiret cadratin ni buzzword dans `src/configurations/windows/messages/`, pas de fondu au scroll par défaut, pas de grain
 - [ ] skill `resilience` : erreur, chargement et vide prévus, délai sur tout appel externe, bouton désactivé pendant l'envoi
 - [ ] skill `seo` si une page publique a été créée ou réécrite : une intention par page, `metaTitle` / `metaDescription` uniques, une source pour chaque chiffre

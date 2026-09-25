@@ -1,6 +1,6 @@
 ---
 name: seo
-description: Référencement d'un site vitrine Bazalthe — convertir avant d'attirer, une page à la fois, une source par affirmation, ce qui ne sert à rien (llms.txt, schema pour les IA), et la base technique du template (métadonnées, canonical, hreflang, sitemap, robots, données structurées, vitesse). À charger AVANT de créer ou réécrire une page publique, un texte de `messages/`, une route indexable, et dans la checklist de livraison. Ne s'applique pas aux dashboards, qui ne s'indexent jamais.
+description: Référencement d'un site vitrine Bazalthe — convertir avant d'attirer, une page à la fois, une source par affirmation, ce qui ne sert à rien (llms.txt, schema pour les IA), et la base technique du template (métadonnées, canonical, hreflang, sitemap, robots, données structurées, vitesse). À charger AVANT de créer ou réécrire une page publique, un texte de `src/configurations/windows/messages/`, une route indexable, et dans la checklist de livraison. Ne s'applique pas aux dashboards, qui ne s'indexent jamais.
 ---
 
 # SEO, site vitrine
@@ -27,20 +27,20 @@ Deux moitiés. La **stratégie** vient d'un article de Machina (@EXM7777, sponso
 
 ## Technique, déjà en place dans le template
 
-| Point                                   | Où                                                                                                  | À vérifier                                                                               |
-| --------------------------------------- | --------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| Titre et description par page, traduits | `SeoService.buildMetadata`, clés `metaTitle` / `metaDescription` de `messages/*.json`               | Uniques, requête principale au début du titre, 150 à 160 caractères pour la description. |
-| Gabarit de titre                        | `configurations/seo.json`, `titleTemplate`                                                          | Séparateur `\|`, jamais un tiret cadratin.                                               |
-| Canonical                               | `alternates.canonical`                                                                              | URL absolue de la langue courante.                                                       |
-| Hreflang                                | `I18nService.hreflangOf`, métadonnées et `sitemap.ts`                                               | Chaque langue plus `x-default` (langue par défaut).                                      |
-| Robots                                  | `robots.ts`, `robots` par route (`indexable: false`), `environment.seo.noindex`                     | Staging et preview en `noindex`, pages merci / légales hors index si voulu.              |
-| Sitemap                                 | `sitemap.ts`                                                                                        | Seulement les routes indexables, une entrée par langue.                                  |
-| Open Graph, Twitter                     | `SeoService.buildMetadata`, `seo.defaultImage`                                                      | Image 1200×630 réelle du client.                                                         |
-| Données structurées                     | `SeoService.buildOrganizationSchema`                                                                | Identité, adresse, téléphone exacts (identiques à la fiche Google).                      |
-| Vérification moteurs                    | `verification.google`, `msvalidate.01`                                                              | Jetons par environnement dans `configurations/admins/`.                                  |
-| Titres                                  | Un seul `h1` par page (`Heading level={1}` dans `HeroSection` ou `PageHeader`), hiérarchie continue | `grep -rn "level={1}" src`.                                                              |
-| Images                                  | `next/image`, `alt` traduit                                                                         | Aucune image sans `alt` porteur de sens.                                                 |
-| Vitesse                                 | PageSpeed ≥ 80 mobile et desktop                                                                    | Mesuré sur l'URL de production (`delivery-checklist`).                                   |
+| Point                                   | Où                                                                                                               | À vérifier                                                                               |
+| --------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| Titre et description par page, traduits | `SeoService.buildMetadata`, clés `metaTitle` / `metaDescription` de `src/configurations/windows/messages/*.json` | Uniques, requête principale au début du titre, 150 à 160 caractères pour la description. |
+| Gabarit de titre                        | `configurations/seo.json`, `titleTemplate`                                                                       | Séparateur `\|`, jamais un tiret cadratin.                                               |
+| Canonical                               | `alternates.canonical`                                                                                           | URL absolue de la langue courante.                                                       |
+| Hreflang                                | `I18nService.hreflangOf`, métadonnées et `sitemap.ts`                                                            | Chaque langue plus `x-default` (langue par défaut).                                      |
+| Robots                                  | `robots.ts`, `robots` par route (`indexable: false`), `environment.seo.noindex`                                  | Staging et preview en `noindex`, pages merci / légales hors index si voulu.              |
+| Sitemap                                 | `sitemap.ts`                                                                                                     | Seulement les routes indexables, une entrée par langue.                                  |
+| Open Graph, Twitter                     | `SeoService.buildMetadata`, `seo.defaultImage`                                                                   | Image 1200×630 réelle du client.                                                         |
+| Données structurées                     | `SeoService.buildOrganizationSchema`                                                                             | Identité, adresse, téléphone exacts (identiques à la fiche Google).                      |
+| Vérification moteurs                    | `verification.google`, `msvalidate.01`                                                                           | Jetons par environnement dans `configurations/admins/`.                                  |
+| Titres                                  | Un seul `h1` par page (`Heading level={1}` dans `HeroSection` ou `PageHeader`), hiérarchie continue              | `grep -rn "level={1}" src`.                                                              |
+| Images                                  | `next/image`, `alt` traduit                                                                                      | Aucune image sans `alt` porteur de sens.                                                 |
+| Vitesse                                 | PageSpeed ≥ 80 mobile et desktop                                                                                 | Mesuré sur l'URL de production (`delivery-checklist`).                                   |
 
 ## Vérification rapide
 

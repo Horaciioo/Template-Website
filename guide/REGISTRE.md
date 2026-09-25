@@ -35,7 +35,7 @@ Une entrée par système livré avec le template. Pour chacun : les fichiers qui
 | **Configuration** | `src/configurations/localization.json`                            |
 | **Câblage**       | `src/i18n/routing.ts`, `src/i18n/request.ts`, `src/middleware.ts` |
 | **Composants**    | `src/components/structures/navigation/LanguageSwitcher.tsx`       |
-| **Textes**        | `messages/<locale>.json`                                          |
+| **Textes**        | `src/configurations/windows/messages/<locale>.json`               |
 | **Drapeau**       | `features.json → languageSwitcher`                                |
 
 **Variables** — `I18nService.locales`, `defaultLocale`, `localePrefix`, `isSupported()`, `resolve()`,
@@ -51,7 +51,7 @@ natif de la langue via `Intl.DisplayNames`. Changer de langue appelle `router.re
 (voir §15).
 
 **Ajouter une langue** : le code dans `localization.json → locales`, son code région dans `regions`,
-puis `messages/<code>.json`. Le routage, le sélecteur, le sitemap et les balises `alternate` suivent
+puis `src/configurations/windows/messages/<code>.json`. Le routage, le sélecteur, le sitemap et les balises `alternate` suivent
 seuls.
 
 ---
@@ -82,7 +82,7 @@ ne doit jamais passer un `RouteId` brut à `useTranslations('actions')`.
 
 1. une entrée dans `ROUTES` (`path`, `icon`, `indexable` si elle doit sortir du sitemap) ;
 2. le dossier correspondant sous `src/app/[locale]/` avec son `page.tsx` ;
-3. le bloc `routes.<routeId>` dans **chaque** fichier de `messages/` ;
+3. le bloc `routes.<routeId>` dans **chaque** fichier de `src/configurations/windows/messages/` ;
 4. l'identifiant dans `navigation.json` si elle doit apparaître dans l'en-tête ou le pied de page.
 
 Le sitemap, les métadonnées, le fil d'Ariane et le libellé du lien se déduisent seuls.
@@ -121,7 +121,7 @@ Le sitemap, les métadonnées, le fil d'Ariane et le libellé du lien se déduis
 **Clés i18n** — `forms.<formId>.success`, `forms.<formId>.fields.<champ>.label|placeholder|hint|choice`,
 `forms.<formId>.fields.<champ>.options.<valeur>`, `actions.<submitAction>`.
 
-**Ajouter un formulaire** : une entrée dans `FORMS` et un bloc dans `messages/`. Le rendu, la
+**Ajouter un formulaire** : une entrée dans `FORMS` et un bloc dans `src/configurations/windows/messages/`. Le rendu, la
 validation côté visiteur, la revalidation côté serveur et l'envoi passent par l'existant. Aucune
 nouvelle route API, aucun nouveau composant. `submitAction` est typé `ActionName` (§25) : sa valeur
 doit exister dans `ACTIONS`, sinon `FORMS` échoue à la vérification de type.
@@ -677,7 +677,7 @@ Le template livre deux exemples génériques, `response` et `delivery` : un proj
 renomme les entrées selon sa promesse réelle.
 **Clés i18n** — `sections.contact.promises.<id>.label`.
 
-**Ajouter une promesse** : une entrée dans `PROMISES` et son libellé dans `messages/`. Aucun nouveau
+**Ajouter une promesse** : une entrée dans `PROMISES` et son libellé dans `src/configurations/windows/messages/`. Aucun nouveau
 composant, aucun nouveau type.
 
 ---
@@ -745,7 +745,7 @@ comportement (pas de cookie hors consentement) ; modifier l'un sans l'autre romp
    être gagée par un drapeau ;
 2. son glyphe dans `CATEGORY_ICONS` (`ConsentManager.tsx`) — la vérification de type échoue tant que ce
    n'est pas fait ;
-3. le bloc `consent.categories.<category>.label|description` dans **chaque** fichier de `messages/`.
+3. le bloc `consent.categories.<category>.label|description` dans **chaque** fichier de `src/configurations/windows/messages/`.
 
 Aucun autre fichier ne change : la modale, la persistance et le calcul du statut lisent
 `CONSENT_CATEGORIES` seuls.

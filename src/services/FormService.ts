@@ -1,4 +1,5 @@
 import { FORMS } from '@/declarations/forms'
+import { HONEYPOT_FIELD } from '@/declarations/http'
 import type { FormId } from '@/declarations/forms'
 import { HttpService } from '@/services/HttpService'
 import { ValidationService } from '@/services/ValidationService'
@@ -68,22 +69,32 @@ class FormServiceClass extends Service {
    * Submit form
    * @param {FormState} state - Current state
    * @param {FormDeclaration} form - Form declaration
+   * @param {string} [trap] - Honeypot value
    * @return {Promise<FormState>} - Result state
    */
 
-  submit = async (state: FormState, form: FormDeclaration): Promise<FormState> => {
+  submit = async (state: FormState, form: FormDeclaration, trap = ''): Promise<FormState> => {
     const errors = ValidationService.validateForm(form, state.values)
     if (Object.keys(errors).length > 0) return { ...state, errors, status: FormStatuses.Failed }
 
-    const result = await HttpService.post<{ received: boolean }>(
-      `${SUBMIT_ENDPOINT}/${form.id}`,
-      state.values
-    )
+    const result = await HttpService.post<{ received: boolean }>(`${SUBMIT_ENDPOINT}/${form.id}`, {
+      ...state.values,
+      [HONEYPOT_FIELD]: trap,
+    })
 
     if (!result.success) return { ...state, status: FormStatuses.Failed }
 
     return { ...this.buildInitialState(form), status: FormStatuses.Succeeded }
   }
+
+  /**
+   * Honeypot value
+   * @param {HTMLFormElement} element - Submitted form
+   * @return {string} - Field value
+   */
+
+  trapOf = (element: HTMLFormElement): string =>
+    String(new FormData(element).get(HONEYPOT_FIELD) ?? '')
 
   /**
    * Validate payload

@@ -173,6 +173,8 @@ export type HeadingLevel = keyof typeof HEADING_STYLES
  */
 
 export const FIELD_STYLES = {
+  // Honeypot position
+  trap: 'absolute -left-[9999px] top-auto h-px w-px overflow-hidden',
   wrapper: 'flex flex-col gap-1.5',
   label: `${TEXT_STYLES.label} flex items-center gap-1`,
   required: 'text-danger',

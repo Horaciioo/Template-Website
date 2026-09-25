@@ -31,3 +31,29 @@ export const NETWORK_ERROR_KEY = 'network'
  */
 
 export const TIMEOUT_ERROR_KEY = 'timeout'
+
+/**
+ * Honeypot field name
+ * @type {string}
+ */
+
+export const HONEYPOT_FIELD = 'company_website'
+
+/**
+ * Honeypot field label
+ * @type {string}
+ */
+
+export const HONEYPOT_LABEL = 'Website'
+
+/**
+ * Rate limit buckets
+ * @type {Record<string, string>}
+ */
+
+export const RATE_LIMIT_BUCKETS = {
+  forms: 'forms',
+  reads: 'reads',
+} as const
+
+export type RateLimitBucket = keyof typeof RATE_LIMIT_BUCKETS

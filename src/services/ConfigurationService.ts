@@ -54,6 +54,7 @@ import seo from '@/configurations/seo.json'
 import site from '@/configurations/site.json'
 import social from '@/configurations/social.json'
 import httpTimings from '@/configurations/system/http.json'
+import rateLimit from '@/configurations/system/rateLimit.json'
 import storageSettings from '@/configurations/system/storage.json'
 import timings from '@/configurations/system/timings.json'
 import validation from '@/configurations/system/validation.json'
@@ -294,6 +295,7 @@ export const ConfigurationService = {
   features,
   viewport,
   http: httpTimings,
+  rateLimit,
   storage: storageSettings,
   validation,
   timings,

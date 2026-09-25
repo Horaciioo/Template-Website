@@ -27,7 +27,15 @@ class FormRoute extends Route {
 
     if (!formId || !isDeclared(formId)) return this.fail(HttpStatuses.NotFound)
 
-    const values = (await request.json()) as FormValues
+    const blocked = this.limit(request, 'forms')
+    if (blocked) return blocked
+
+    const submitted = (await request.json()) as FormValues
+
+    // Fake robot success
+    if (this.isTrapped(submitted)) return this.respond({ received: true })
+
+    const values = this.withoutTrap(submitted)
 
     if (!FormService.isPayloadValid(formId, values)) return this.fail(HttpStatuses.Unprocessable)
 

@@ -46,6 +46,9 @@ class AppointmentRoute extends Route {
    */
 
   async availability(request: Request): Promise<NextResponse> {
+    const blocked = this.limit(request, 'reads')
+    if (blocked) return blocked
+
     const date = new URL(request.url).searchParams.get('date') ?? ''
 
     if (!parseISODate(date)) return this.fail(HttpStatuses.BadRequest)
@@ -61,7 +64,16 @@ class AppointmentRoute extends Route {
    */
 
   async handle(request: Request): Promise<NextResponse> {
-    const { date, slot, values } = (await request.json()) as AppointmentRequest
+    const blocked = this.limit(request, 'forms')
+    if (blocked) return blocked
+
+    const { date, slot, values: submitted } = (await request.json()) as AppointmentRequest
+
+    // Fake robot success
+    if (submitted && this.isTrapped(submitted))
+      return this.respond({ date, slot, isSynchronised: false })
+
+    const values = submitted ? this.withoutTrap(submitted) : submitted
 
     // Shape first, availability second
     if (!parseISODate(date) || !AppointmentService.isBookable(date)) {

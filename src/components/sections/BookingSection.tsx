@@ -10,8 +10,10 @@ import { Alert } from '@/components/elements/feedback/Alert'
 import { Spinner } from '@/components/elements/feedback/Spinner'
 import { Field } from '@/components/elements/forms/Field'
 import { FieldControl } from '@/components/elements/forms/FieldControl'
+import { HoneypotField } from '@/components/elements/forms/HoneypotField'
 import { Text } from '@/components/elements/typography/Text'
 import { Section } from '@/components/structures/layout/Section'
+import { HONEYPOT_FIELD } from '@/declarations/http'
 import { BOOKING_STYLES, FIELD_STYLES } from '@/declarations/ui/variants'
 import { AnalyticsService } from '@/services/AnalyticsService'
 import { AppointmentService } from '@/services/AppointmentService'
@@ -101,6 +103,8 @@ export const BookingSection = () => {
     event.preventDefault()
     if (!selectedDate || !selectedSlot) return
 
+    const trap = FormService.trapOf(event.currentTarget as HTMLFormElement)
+
     const errors = ValidationService.validateForm(form, state.values)
 
     if (Object.keys(errors).length > 0) {
@@ -115,7 +119,7 @@ export const BookingSection = () => {
     const result = await AppointmentService.book({
       date: selectedDate,
       slot: selectedSlot,
-      values: state.values,
+      values: { ...state.values, [HONEYPOT_FIELD]: trap },
     })
 
     AnalyticsService.track(result.success ? 'formSubmitted' : 'formFailed', { form: FORM_ID })
@@ -266,7 +270,8 @@ export const BookingSection = () => {
           {hasFailed && <Alert tone="danger" title={t('failure')} />}
 
           {selectedSlot && (
-            <form noValidate onSubmit={submit} className="flex flex-col gap-5">
+            <form noValidate onSubmit={submit} className="relative flex flex-col gap-5">
+              <HoneypotField />
               <div className={FIELD_STYLES.grid}>
                 {form.fields.map((field) => {
                   const fieldId = NamingService.toDomId(FORM_ID, field.name)

@@ -880,3 +880,30 @@ exemple) sans toucher au moteur de créneaux ni à la route API.
 
 Sans l'étape 3, le module reste fonctionnel : les créneaux se calculent sur les horaires d'ouverture
 seuls, la réservation part par courriel (`MailService`) sans écrire dans un agenda partagé.
+
+---
+
+## 38. Anti-abus des routes publiques
+
+|                   |                                                                                       |
+| ----------------- | ------------------------------------------------------------------------------------- |
+| **Service**       | `src/services/RateLimitService.ts`                                                    |
+| **Configuration** | `src/configurations/system/rateLimit.json` (`windowSeconds`, `forms`, `reads`)        |
+| **Déclaration**   | `src/declarations/http.ts` (`HONEYPOT_FIELD`, `HONEYPOT_LABEL`, `RATE_LIMIT_BUCKETS`) |
+| **Structure**     | `src/structures/Route.ts` (`limit`, `isTrapped`, `withoutTrap`)                       |
+| **Composant**     | `src/components/elements/forms/HoneypotField.tsx`                                     |
+| **Routes**        | `src/app/api/forms/[formId]/route.ts`, `src/app/api/appointments/route.ts`            |
+
+**Variables** — `RateLimitService.hit(bucket, address)` rend `{ allowed, retryAfterSeconds }`,
+`addressOf(request)` lit la première adresse de `x-forwarded-for`. `Route.limit(request, bucket)` rend
+une réponse `429` avec `Retry-After`, ou `null` quand la requête passe. `Route.isTrapped(values)` dit si
+le champ caché a été rempli, `Route.withoutTrap(values)` le retire avant validation.
+**Budgets** — `reads` pour un `GET` (disponibilités), `forms` pour un `POST` (formulaire, réservation),
+sur une fenêtre de `windowSeconds`.
+**Champ caché** — `HoneypotField` pose `HONEYPOT_FIELD` hors écran, sans tabulation ni autocomplétion.
+Un humain ne le voit pas, un robot le remplit : la route répond alors un succès factice et n'envoie rien.
+Côté client, `FormService.trapOf(form)` lit sa valeur et `submit(state, form, trap)` la transmet.
+**Limite** — le compteur vit en mémoire, par instance : il freine un script, pas une attaque
+distribuée. En production, ajouter une règle de pare-feu de la plateforme (Vercel Firewall) sur `/api/*`.
+**Protéger une nouvelle route** : `const blocked = this.limit(request, 'forms'); if (blocked) return blocked`
+en tête du handler, puis `isTrapped` / `withoutTrap` si elle reçoit un formulaire public.

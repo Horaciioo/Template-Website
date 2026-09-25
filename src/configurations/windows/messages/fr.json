@@ -458,7 +458,7 @@
         },
         "cookies": {
           "title": "Cookies",
-          "body": "Le site conserve la préférence de thème dans le stockage local du navigateur. Si la mesure d'audience est activée, des cookies de mesure d'audience ne sont déposés qu'après votre consentement, donné via le bandeau affiché en bas de page. Vous pouvez changer d'avis à tout moment depuis le lien « Préférences cookies » du pied de page."
+          "body": "Le site conserve la préférence de thème dans le stockage local du navigateur. Si vous choisissez une autre langue que celle de votre navigateur, un cookie la retient jusqu'à sa fermeture. Si la mesure d'audience est activée, des cookies de mesure d'audience ne sont déposés qu'après votre consentement, donné via le bandeau affiché en bas de page. Vous pouvez changer d'avis à tout moment depuis le lien « Préférences cookies » du pied de page."
         },
         "contact": {
           "title": "Contact",

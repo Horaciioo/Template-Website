@@ -458,7 +458,7 @@
         },
         "cookies": {
           "title": "Cookies",
-          "body": "The website keeps the theme preference in the local storage of the browser. When audience measurement is enabled, analytics cookies are only set after you give consent through the banner shown at the bottom of the page. You can change your mind at any time from the \"Cookie preferences\" link in the footer."
+          "body": "The website keeps the theme preference in the local storage of the browser. If you pick a language other than your browser's, a cookie remembers it until the browser closes. When audience measurement is enabled, analytics cookies are only set after you give consent through the banner shown at the bottom of the page. You can change your mind at any time from the \"Cookie preferences\" link in the footer."
         },
         "contact": {
           "title": "Contact",

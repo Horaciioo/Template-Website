@@ -909,3 +909,19 @@ Côté client, `FormService.trapOf(form)` lit sa valeur et `submit(state, form, 
 distribuée. En production, ajouter une règle de pare-feu de la plateforme (Vercel Firewall) sur `/api/*`.
 **Protéger une nouvelle route** : `const blocked = this.limit(request, 'forms'); if (blocked) return blocked`
 en tête du handler, puis `isTrapped` / `withoutTrap` si elle reçoit un formulaire public.
+
+---
+
+## 39. Points de rupture de l'écran
+
+|                   |                                                                           |
+| ----------------- | ------------------------------------------------------------------------- |
+| **Service**       | `src/services/ViewportService.ts`                                         |
+| **Configuration** | `src/configurations/system/viewport.json` (`breakpoints`, `mediaQueries`) |
+| **Types**         | `src/types/viewport.ts` (`BreakpointName`, `MediaQueryName`)              |
+
+**Variables** — `ViewportService.queryOf(name)`, `useIsAbove(name)`, `usePrefers(name)` : un seul
+`matchMedia` par requête, partagé entre tous les composants qui l'écoutent.
+**Règle** — aucun composant n'appelle `window.matchMedia` ni ne lit `window.innerWidth` : il passe par
+ce service. Le style responsive reste en classes Tailwind, ce service ne sert qu'à un comportement.
+**Ajouter un point de rupture** : une entrée dans `viewport.json → breakpoints`. Aucun autre fichier.

@@ -759,7 +759,8 @@ Aucun autre fichier ne change : la modale, la persistance et le calcul du statut
 | **CI**            | `.github/workflows/ci.yml`                                                    |
 
 **En-têtes posés sur toutes les routes** — `Content-Security-Policy`, `X-Content-Type-Options`,
-`X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`, `Strict-Transport-Security`.
+`X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`, `Strict-Transport-Security`,
+`Cross-Origin-Opener-Policy`.
 **CSP** — `script-src` autorise `'unsafe-inline'` : Next.js injecte ses propres scripts de reprise
 (hydratation de l'App Router) en ligne, sans nonce par défaut. Passer à un CSP par nonce demanderait de
 faire transiter un nonce généré dans `src/middleware.ts` jusqu'au rendu serveur (`next/headers`), ce

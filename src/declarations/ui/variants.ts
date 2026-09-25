@@ -37,7 +37,7 @@ export const BUTTON_VARIANTS = {
   outline: 'border border-border-strong text-foreground hover:bg-surface',
   ghost: 'text-foreground-muted hover:bg-surface-strong hover:text-foreground',
   link: 'text-primary underline-offset-4 hover:underline px-0 h-auto',
-  danger: 'bg-danger text-background hover:opacity-90',
+  danger: 'bg-danger text-background hover:brightness-90',
 } as const
 
 /**
@@ -537,7 +537,6 @@ export const LAYOUT = {
 
 export const TEXTURE_BACKDROP_STYLES = {
   frame: 'texture-frame',
-  grain: 'texture-grain',
 } as const
 
 /**

@@ -12,8 +12,9 @@ export interface TexturePageBackdropProps {
  */
 
 export const TexturePageBackdrop = ({ src }: TexturePageBackdropProps) => (
-  <div aria-hidden="true">
-    <div className={TEXTURE_BACKDROP_STYLES.frame} style={{ backgroundImage: `url(${src})` }} />
-    <div className={TEXTURE_BACKDROP_STYLES.grain} />
-  </div>
+  <div
+    aria-hidden="true"
+    className={TEXTURE_BACKDROP_STYLES.frame}
+    style={{ backgroundImage: `url(${src})` }}
+  />
 )

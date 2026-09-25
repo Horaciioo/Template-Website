@@ -94,6 +94,57 @@ Choisir l'emoji qui correspond à la nature du changement, pas au fichier touch�
 | 🚀      | Déploiement                                                 |
 | 🙈      | `.gitignore`                                                |
 | 🎉      | Démarrage d'un projet                                       |
+| ⚡️      | Performance                                                 |
+| 🧑‍💻      | Expérience développeur, interfaces et types utilitaires     |
+
+## Référence : les 20 premiers commits de terminal-bot
+
+`terminal-bot` donne le **rythme et le découpage** d'un démarrage de projet. Ses 20 premiers commits (2025-08-31 au 2025-09-02) sont de Maks (Maksen Lasmi), sauf `🎨 Added first design`, de Jérémy. C'est ce genre de commits qu'on veut : un sujet par commit, dans cet ordre.
+
+| #   | Message                                                 | Fichiers regroupés                                                                                                              |
+| --- | ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | `🎉 Beginning of the project`                           | README                                                                                                                          |
+| 2   | `📦️ Added all packages`                                 | `package.json`, lockfile, configuration Yarn                                                                                    |
+| 3   | `🔧 Added all editor configuration files`               | EditorConfig, ESLint, Prettier, jsconfig                                                                                        |
+| 4   | `🙈 Added gitignore file`                               | `.gitignore`                                                                                                                    |
+| 5   | `🚀 Added GitHub Action Deployment file`                | workflow de déploiement                                                                                                         |
+| 6   | `🎨 Added the structure`                                | socle complet : `index.js`, commande admin, components, configurations, events, handlers, managers, services, structures, utils |
+| 7   | `🗃️ Added all entities (users, cards, files, etc..)`    | entités, modèles et structures                                                                                                  |
+| 8   | `✨ Added some game commands (daily, inventory, etc..)` | commandes de la catégorie jeu                                                                                                   |
+| 9   | `✨ Updated embeds commands`                            | commandes d'embeds                                                                                                              |
+| 10  | `✨ Added cards commands`                               | commande admin d'un objet du jeu                                                                                                |
+| 11  | `✨ Added points commands`                              | commande admin de la monnaie                                                                                                    |
+| 12  | `🧑‍💻 Added interfaces for Message Formater`              | `.d.ts` d'un composant                                                                                                          |
+| 13  | `⚡️ Added booster and card services`                    | services des systèmes et branchement dans `InteractionCreate`                                                                   |
+| 14  | `🎨 Improved the structure`                             | `Command`, `constants`, `utils`                                                                                                 |
+| 15  | `✨ Added the beginning of the card system`             | premier système complet : assets, manager d'images, service, commandes retouchées                                               |
+| 16  | `♻️ Refactor code`                                      | petits ajustements d'entités                                                                                                    |
+| 17  | `🎨 Added first design`                                 | premier design des commandes (commit de Jérémy)                                                                                 |
+| 18  | `🔧 Updated some configuration templates`               | templates de configuration                                                                                                      |
+| 19  | `Merge remote-tracking branch 'origin/main'`            | merge automatique, à ne pas imiter                                                                                              |
+| 20  | `🐛 Fixed transaction type`                             | correctif d'un type de transaction                                                                                              |
+
+Ce qu'il faut en retenir :
+
+- **L'ordre est fixe** : projet, paquets, configuration de l'éditeur, gitignore, déploiement, structure, données, commandes, services, améliorations.
+- **Une famille de fichiers par commit** : toutes les entités ensemble, les commandes d'une catégorie ensemble, les services ensemble.
+- **Les messages de cette liste gardent leur forme d'origine**, y compris les parenthèses d'exemples (`etc..`) et `Refactor code`. Ils sont l'exception à la longueur habituelle et servent de modèle, pas de règle de rédaction pour les autres commits.
+- Le merge (#19) est le seul commit sans emoji : ne pas l'imiter.
+
+Cette liste vient d'un bot Discord : la **transposer** à ce projet en gardant l'ordre et le découpage, et en remplaçant les fichiers propres à Discord (entités, commandes, managers) par leurs équivalents ici. Un projet range son plan de reconstruction dans `.claude/commits/` (un fichier `.md` qui répertorie les commits à faire) et le suit avant de committer.
+
+### Découper un système (référence michou-bot)
+
+`michou-bot` construit un système en plusieurs commits, un par couche, là où `terminal-bot` en fait moins. Exemple du système coins (2025-02-13), à imiter pour chaque nouveau système :
+
+- `🗃 Created entities for coins, boosts and transactions`
+- `🧑‍💻 Added an helper for manage coins`
+- `✨ Added many drops (coins system)`
+- `✨ Added daily command`
+- `🧑‍💻 Added drop types constants`
+- `🔧 Added coins production configuration file`
+
+Ordre : entités, helper et constantes, commandes, services, configuration (un commit `🔧` à part). Les anciens systèmes vont plus loin : `Adding tickets command`, `Adding tickets services`, `Adding tickets entities`, un commit chacun. Les émojis restent ceux de `terminal-bot`, aussi ceux du michou-bot récent (`✨ 🗃️ 🧑‍💻 🔧 🎨`). Le `🚩` de 2022 n'est plus utilisé.
 
 ## Découper les commits par fonctionnalité
 

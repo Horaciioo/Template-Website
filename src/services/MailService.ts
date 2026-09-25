@@ -16,6 +16,20 @@ export interface MailPayload {
   replyTo?: string
 }
 
+/**
+ * HTML escape
+ * @param {string} text - Raw text
+ * @return {string} - Safe text
+ */
+
+const escapeHtml = (text: string): string =>
+  text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+
 class MailServiceClass extends Service {
   successStatus = HttpStatuses.Ok
 
@@ -60,10 +74,11 @@ class MailServiceClass extends Service {
    */
 
   buildFormPayload = (formId: string, values: FormValues): MailPayload => {
+    // Escape visitor input
     const rows = Object.entries(values)
       .map(
         ([name, value]) =>
-          `<tr><td><strong>${name}</strong></td><td>${String(value ?? '')}</td></tr>`
+          `<tr><td><strong>${escapeHtml(name)}</strong></td><td>${escapeHtml(String(value ?? ''))}</td></tr>`
       )
       .join('')
 

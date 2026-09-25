@@ -2,8 +2,8 @@
 
 import { useEffect } from 'react'
 
-import en from '../../messages/en.json'
-import fr from '../../messages/fr.json'
+import en from '@/configurations/windows/messages/en.json'
+import fr from '@/configurations/windows/messages/fr.json'
 import { I18nService } from '@/services/I18nService'
 import { LoggerService } from '@/services/LoggerService'
 

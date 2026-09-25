@@ -1,0 +1,5 @@
+{
+  "version": "0.2",
+  "language": "en,fr",
+  "ignorePaths": ["node_modules", ".next", ".yarn", "yarn.lock", "public", "*.svg"]
+}

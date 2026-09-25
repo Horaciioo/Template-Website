@@ -35,6 +35,8 @@ Si la réponse est non, la ligne n'a pas sa place ici.
 
 Aucune dépendance ajoutée sans besoin concret. Vérifier d'abord le skill `packages`.
 
+Voir le skill `security` avant d'ajouter un service tiers, un formulaire ou une route API — en-têtes CSP, consentement cookies et anti-abus ne sont pas couverts ici.
+
 ## 4. Composants serveur et composants client
 
 Serveur par défaut. `'use client'` uniquement pour un état, un écouteur d'événement, un portail ou un
@@ -81,3 +83,7 @@ Les trois doivent être verts. Puis :
 - [ ] la nouveauté apparaît dans `/showcase` si elle est visuelle
 - [ ] `guide/REGISTRE.md` est à jour
 - [ ] testé en mobile d'abord, puis en thème clair **et** en thème sombre
+- [ ] skill `security` passé en revue si un tiers, un formulaire ou une route API a été touché ; une nouvelle route publique appelle `this.limit` et un nouveau formulaire garde son `HoneypotField`
+- [ ] skill `ai-tells` rejoué sur ce qui a changé : contraste mesuré (`scripts/contrast.py`), aucun `hover:opacity-*` qui pâlit, aucun tiret cadratin ni buzzword dans `messages/`, pas de fondu au scroll par défaut, pas de grain
+- [ ] skill `resilience` : erreur, chargement et vide prévus, délai sur tout appel externe, bouton désactivé pendant l'envoi
+- [ ] skill `seo` si une page publique a été créée ou réécrite : une intention par page, `metaTitle` / `metaDescription` uniques, une source pour chaque chiffre

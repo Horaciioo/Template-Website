@@ -2,7 +2,6 @@ import type { ReactNode } from 'react'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
-import { getMessages } from 'next-intl/server'
 
 import { AnalyticsGate } from '@/components/layout/AnalyticsGate'
 import { SiteLayout } from '@/components/layout/SiteLayout'
@@ -46,8 +45,6 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
   const { locale } = await params
   if (!I18nService.isSupported(locale)) notFound()
 
-  const messages = await getMessages()
-
   return (
     <html lang={locale} className={FONT_VARIABLES} suppressHydrationWarning>
       <head>
@@ -61,7 +58,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
         />
       </head>
       <body>
-        <NextIntlClientProvider messages={messages}>
+        <NextIntlClientProvider>
           <SiteLayout>{children}</SiteLayout>
           <ConsentManager />
         </NextIntlClientProvider>

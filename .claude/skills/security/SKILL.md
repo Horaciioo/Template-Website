@@ -46,6 +46,7 @@ Le mail envoyé échappe chaque valeur saisie (`MailService.buildFormPayload`) :
 
 - Politique de confidentialité et mentions légales à jour, sans placeholder du template (identité de l'éditeur, hébergeur).
 - Formulaire de contact/RDV : mention du traitement des données et moyen d'exercer ses droits.
+- Cookie de langue `NEXT_LOCALE` (next-intl 4) : cookie de session, posé seulement quand le visiteur choisit une autre langue que celle de son navigateur. Fonctionnel, donc sans consentement, mais listé dans la politique cookies.
 - Aucune donnée personnelle transmise à un tiers avant consentement (couvert par `AnalyticsGate`, à revérifier si un nouveau tiers est ajouté hors analytics).
 
 ## Secrets et dépendances

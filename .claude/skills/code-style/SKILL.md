@@ -1,249 +1,15 @@
 ---
 name: code-style
-description: Règles de style et de commentaires obligatoires du dépôt. À charger AVANT d'écrire ou de modifier le moindre fichier .ts/.tsx/.css. Couvre le format des commentaires JSDoc, les séparateurs interdits, les quotes, les points-virgules, les imports, le nommage et l'interdiction du hardcoding dans les composants.
+description: Règles de style obligatoires du dépôt : quotes, points-virgules, typage strict, imports, nommage, budgets de longueur (fonction, composant, fichier), pratiques pour garder un code court sans doublon, interdiction du hardcoding. À charger AVANT d'écrire ou de modifier le moindre fichier .ts/.tsx/.css. Le format des commentaires vit dans le skill `comments`, à charger séparément.
 ---
 
 # Style de code
 
-## Commentaires, les règles dures
+## Commentaires
 
-Ces règles ont été demandées explicitement. Les enfreindre est une régression, pas un détail.
-
-### ULTRA-CONCISION: La règle absolue
-
-**Chaque commentaire (JSDoc ou ligne) doit être aussi court que humainement possible.**
-
-- **Description JSDoc principale**: **2-4 mots MAXIMUM**
-- **@param descriptions**: **2-3 mots, court et direct**
-- **@return descriptions**: **2-3 mots, court et direct**
-- **Commentaires de ligne (`//`)**: **2-4 mots MAXIMUM**
-- **Interdiction absolue**: virgules, "with", "and", explications qui allongent
-
-**La logique**: Un long commentaire signifie que tu sur-expliques. Le code dit déjà le QUOI. Si tu dois écrire un roman pour expliquer le POURQUOI, c'est que le code n'est pas assez clair. **Refactor plutôt que d'écrire trop.**
-
-Exemples INCORRECTS → CORRECTS:
-
-```ts
-// INTERDIT (7 mots) → ✅ CORRECT (3 mots)
-// Button icon size mapping  →  // Icon size map
-
-// INTERDIT (14 mots) → ✅ CORRECT (utilise // si pas de @)
-/** Handle user authentication and token refresh... →  // User authentication
-
-// INTERDIT (9 mots) → ✅ CORRECT (4 mots)
-@param path - Absolute URL or path of the same origin  →  @param path - Absolute URL or path
-```
-
-**Bloc JSDoc sur une seule ligne?** Si pas de `@param`, `@return`, ou `@type`, utilise un `//` à la place, jamais un bloc `/** */`.
-
-### Les commentaires s'écrivent en anglais
-
-Tout commentaire du dépôt est rédigé **en anglais**, commentaire de ligne comme bloc JSDoc, y compris
-la description, les `@param` et les `@return`. Le seul français du dépôt vit dans
-`src/configurations/windows/messages/fr.json` et dans `guide/`.
-
-```ts
-// ✅ CORRECT (3 mots)
-// Resize viewport
-const drawerHeight = ...
-
-// ❌ INTERDIT (français)
-// Le clavier mobile redimensionne le viewport
-const drawerHeight = ...
-```
-
-### Bloc JSDoc: Structure stricte
-
-Un bloc `/** */` est réservé aux fonctions, composants, hooks et helpers **exportés**. Il doit **toujours** contenir au moins un `@param`, `@return`, `@type`, ou `@typedef`. Jamais de bloc JSDoc sans tags. Le bloc n'est pas collé à la déclaration : une ligne vide les sépare.
-
-```ts
-// ✅ CORRECT - fonction avec params, description ultra-concise
-/**
- * Value comparison
- * @param {number | null | undefined} current - Raw value
- * @return {TrendResult} - Comparison result
- */
-
-export const compareMetric = (...) => ...
-
-// ✅ CORRECT - constante typée (exception: @type sur une ligne)
-/**
- * Tone colors
- * @type {Record<Tone, string>}
- */
-
-export const TONE_TEXT = { ... }
-
-// ❌ INTERDIT - bloc JSDoc sans tags
-/**
- * The client
- */
-export const client = ...
-
-// ✅ À utiliser à la place (ligne simple, max 2-4 mots)
-// HTTP client
-export const client = ...
-```
-
-### Les variantes de JSDoc : `@param`, `@typedef`, `@property`, `@type`
-
-Le choix du tag dépend de la réutilisation du type, pas du seul confort de lecture :
-
-- **`@param` simple** — paramètre scalaire ou déjà nommé par un type TS (`RouteId`, `FormDeclaration`,
-  ...). C'est le cas par défaut.
-- **`@param` en notation pointée** — paramètre objet, typé inline ou déstructuré, utilisé à cet unique
-  endroit. Une ligne `@param {Object} nom - Description globale` puis une ligne
-  `@param {Type} nom.champ - Description` par propriété. C'est le remplacement direct des objets
-  tassés sur une seule ligne, illisibles passé deux champs.
-
-  ```ts
-  /**
-   * Route metadata
-   * @param {Object} input - Route context
-   * @param {RouteId} input.routeId - Route ID
-   * @param {string} input.locale - Locale
-   * @return {Metadata} - Metadata
-   */
-  ```
-
-- **`@typedef` + `@property`** — réservé à une forme réutilisée par **plusieurs** fonctions exportées.
-  Dans ce cas, ne pas créer un `@typedef` qui ne vit que dans un commentaire : déclarer un vrai
-  `type` / `interface` TypeScript et référencer son nom. TypeScript porte déjà la vérité sur la forme,
-  un `@typedef` la dupliquerait sans l'appliquer. N'introduire un `@typedef` pur que si le fichier n'a
-  délibérément aucun typage TS pour cette valeur — cas rare dans ce dépôt en `strict`.
-- **`@type`** — annotation d'une constante exportée dont le type est le seul propos du commentaire.
-  Exception assumée à la règle « pas de bloc pour une ligne » : c'est une déclaration de type, pas une
-  phrase.
-
-  ```ts
-  /** @type {Record<Tone, string>} */
-  export const TONE_SOFT = { ... }
-  ```
-
-Ne pas convertir un objet en `@typedef` par réflexe : si la forme n'est utilisée qu'une fois, la
-notation pointée suffit et évite de nommer une abstraction qui n'existe nulle part ailleurs.
-
-### Quand ajouter des commentaires? Stratégie de valeur ajoutée
-
-**Ne pas sur-commenter.** Chaque commentaire doit justifier son existence.
-
-**Ajouter JSDoc sur**:
-
-- **TOUS** les exports publics (fonctions, composants, hooks, constantes)
-- **TOUS** les types/interfaces exportés
-- **TOUS** les services et helpers
-- Même si brefs: c'est une règle absolue
-- **JAMAIS avec un `//` avant ou après** - JSDoc remplace le `//` au-dessus
-
-**Ajouter un commentaire de ligne (`//`) SYSTÉMATIQUEMENT**:
-
-- **AVANT chaque bloc logique** de code (2-3 lignes ou plus) à l'intérieur d'une fonction
-- Chaque section du code a besoin d'un petit label (2-4 mots MAX)
-- C'est un label, pas une explication détaillée du QUOI (le code dit déjà quoi)
-- Les `//` ne doivent PAS être rares - ils doivent être **nombreux et partout**
-- **JAMAIS avec une JSDoc** - un export avec JSDoc n'a pas de `//` avant lui
-
-**Règle d'OR: JSDoc OU `//`, jamais les deux ensemble**:
-
-- Export public → JSDoc (`/** @param ... @return ... */`)
-- Bloc de code interne → `//` (2-4 mots, label du bloc)
-- Jamais JSDoc + `//` sur le même export
-
-**NE PAS ajouter de commentaire si**:
-
-- C'est une seule ligne très claire (ex: `return value !== null`)
-- Le nom de la fonction/variable dit déjà tout
-
-```ts
-// ❌ PAS DE COMMENTAIRE pour une fonction simple (le type suffit)
-export const isDefined = <T>(value: Maybe<T>): value is T =>
-  value !== null && value !== undefined
-
-// ✅ CORRECT: JSDoc sur export (pas de // avant lui)
-/**
- * Freeze page scroll
- * @return - Release function
- */
-
-export const freezeScroll = (): (() => void) => {
-  // Increment freeze counter
-  freezeCount++
-
-  // Return release handler
-  return () => {
-    freezeCount--
-    // Reset overflow when fully unfrozen
-    if (freezeCount === 0) document.body.style.overflow = ''
-  }
-}
-
-// ❌ JAMAIS faire ceci (JSDoc + // ensemble)
-/**
- * Freeze page scroll
- * @return - Release function
- */
-// Freeze page scroll
-export const freezeScroll = (): (() => void) => { ... }
-
-// ❌ MAUVAIS: bloc JSDoc seul sans tags (pas @param, @return, @type)
-/**
- * HTTP client singleton
- */
-export const client = ...
-
-// ✅ CORRECT: simple, 2-4 mots max
-// HTTP client
-export const client = ...
-```
-
-### Aucun séparateur décoratif, jamais
-
-`// ======`, `// ------`, `/* ***** */` et toute variante sont **bannis totalement**. Aucune exception,
-aucun fichier. Pour vérifier :
-
-```bash
-grep -rEn '^\s*(//|\s\*)\s*[=-]{4,}' src
-```
-
-Le résultat doit être vide.
-
-### Une ligne vide sous un bloc JSDoc, jamais sous un commentaire de ligne
-
-Un bloc `/** */` est toujours suivi d'une ligne vide avant la déclaration. Un commentaire `//` reste
-collé à la ligne qu'il précède.
-
-```ts
-// Correct, JSDoc suivi d'une ligne vide
-/**
- * Value comparison
- * @param {number | null | undefined} current - Current value
- * @return {TrendResult} - Comparison result
- */
-
-export const compareMetric = (...) => ...
-
-// Correct, commentaire de ligne collé à la déclaration
-// Scroll threshold before header detaches
-const SCROLLED_THRESHOLD = 8
-```
-
-Après une session d'édition, normaliser :
-
-```bash
-python3 - <<'PY'
-import pathlib, re
-for pattern in ('src/**/*.ts', 'src/**/*.tsx'):
-    for p in pathlib.Path('.').glob(pattern):
-        t = p.read_text()
-        n = re.sub(r'(\*/)\n(?!\n)(?=\s*(export|const|let|type|interface|class|function|async))', r'\1\n\n', t)
-        if n != t: p.write_text(n)
-PY
-```
-
-### Contenu attendu
-
-Court et techniquement utile. Un commentaire explique **pourquoi**, jamais **quoi** — le code dit déjà
-quoi. Pas de storytelling, pas de docblock vide généré pour faire nombre.
+Le format des commentaires (ultra-concision, anglais, structure des blocs JSDoc, choix du tag,
+règle « JSDoc OU `//`, jamais les deux », interdiction des séparateurs décoratifs) vit dans le skill
+`comments`, à charger avant d'écrire le moindre commentaire. Ne pas en dupliquer les règles ici.
 
 ## Syntaxe
 
@@ -268,6 +34,65 @@ puis relatifs. Une ligne vide entre chaque groupe.
 Le dictionnaire complet est dans le skill `conventions` et dans `guide/CONVENTIONS.md`. Résumé :
 noms métier explicites, aucune abréviation, une intention n'a qu'une orthographe. Les fichiers portent
 le nom de ce qu'ils exportent.
+
+## Un code court qui vieillit bien
+
+Le but n'est pas d'écrire moins de caractères, c'est de n'écrire que ce qui est nécessaire : chaque
+ligne de trop est une ligne à relire, à tester et à casser. Avant de rendre du travail, relire son
+propre diff avec cette question : « qu'est-ce qui peut disparaître sans rien changer au comportement ? ».
+
+### Budgets, à ne pas dépasser sans raison écrite
+
+| Élément                                                      | Budget                                                        |
+| ------------------------------------------------------------ | ------------------------------------------------------------- |
+| Fonction ou méthode                                          | 40 lignes de code, complexité 10, imbrication 3, 4 paramètres |
+| Composant React                                              | 150 lignes, dont 80 de JSX, 8 props, 8 hooks, 6 `useState`    |
+| `useEffect`                                                  | 20 lignes (au-delà, un service nommé)                         |
+| Fichier de logique                                           | 300 lignes, 15 exports                                        |
+| Fichier de pure donnée (`declarations/`, glyphes, registres) | Pas de plafond, mais une famille par fichier                  |
+
+Un budget dépassé n'est pas une faute en soi, c'est un signal : on découpe en un dossier par
+fonctionnalité (voir `architecture`) ou on écrit en commentaire de tête pourquoi ça reste d'un bloc.
+
+### Chercher avant d'écrire
+
+Avant de créer un helper, un composant, un type ou une constante, chercher s'il existe déjà : lire
+`guide/REGISTRE.md`, puis `grep -rn` sur le nom et sur l'intention (`format`, `options`, `Variant`).
+Les éléments de `components/elements/`, les services de `services/` et les registres de `declarations/`
+existent pour être réutilisés. Ne pas écrire un wrapper qui se contente de renommer ou de réexposer.
+
+### Ne pas répéter, sans abstraire à l'avance
+
+- **Règle de trois** : une répétition se tolère, la troisième se factorise. Une abstraction écrite
+  « au cas où » coûte plus qu'une répétition.
+- **Dériver, ne pas redéclarer** : types depuis les valeurs (`(typeof X)[number]`, `keyof typeof`),
+  depuis les fonctions (`Parameters`, `ReturnType`, `Awaited`), depuis d'autres types (`Pick`, `Omit`,
+  `Partial`). Une valeur calculable se calcule, elle ne se stocke pas dans un deuxième état.
+- **Une seule déclaration d'une valeur métier**, voir `architecture` (règle fondatrice).
+
+### Raccourcir sans obscurcir
+
+- **Garde précoce** : `if (!x) return` en tête plutôt que des blocs imbriqués.
+- **Table à la place d'une chaîne** : un `switch` ou une suite de `if (kind === …)` de plus de trois
+  branches devient un `Record<Kind, handler>`. La complexité retombe, ajouter un cas ne touche plus
+  la fonction centrale, TypeScript signale un cas oublié.
+- **Une fonction, une intention** : son nom remplace le commentaire. Une fonction qui valide, écrit et
+  notifie devient trois fonctions.
+- **Fonctions pures hors des composants** : un calcul de plus de 10 lignes va dans `utils/` ou dans
+  un service, testable sans React.
+- **Pas de composant en closure** : un `renderX` de plus de 20 lignes dans un composant est un
+  composant : il a son fichier et ses props.
+- **Natif récent plutôt que boucle écrite** : `Object.groupBy`, `flatMap`, `Object.fromEntries`,
+  `.at()`, `??=`, `structuredClone`, `Set` pour les appartenances.
+- **Objet à partir de 5 paramètres** ou 8 props : un paramètre nommé `{ … }`.
+
+### Rien ne reste « au cas où »
+
+- Pas de code commenté, pas d'export jamais importé, pas de paramètre inutilisé, pas de drapeau mort :
+  on supprime, l'historique git garde la trace.
+- Un composant, un helper ou un jeton créé pour une maquette abandonnée se supprime avec elle.
+- Vérification avant de rendre : chaque export ajouté est importé ailleurs
+  (`grep -rnw "nom" src | grep -v "fichier-d'origine"` ne doit pas être vide).
 
 ## Interdiction du hardcoding, vérifiable
 

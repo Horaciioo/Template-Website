@@ -29,14 +29,14 @@ Une entrée par système livré avec le template. Pour chacun : les fichiers qui
 
 ## 2. Internationalisation
 
-|                   |                                                                   |
-| ----------------- | ----------------------------------------------------------------- |
-| **Service**       | `src/services/I18nService.ts`                                     |
-| **Configuration** | `src/configurations/localization.json`                            |
-| **Câblage**       | `src/i18n/routing.ts`, `src/i18n/request.ts`, `src/middleware.ts` |
-| **Composants**    | `src/components/structures/navigation/LanguageSwitcher.tsx`       |
-| **Textes**        | `src/configurations/windows/messages/<locale>.json`               |
-| **Drapeau**       | `features.json → languageSwitcher`                                |
+|                   |                                                              |
+| ----------------- | ------------------------------------------------------------ |
+| **Service**       | `src/services/I18nService.ts`                                |
+| **Configuration** | `src/configurations/localization.json`                       |
+| **Câblage**       | `src/i18n/routing.ts`, `src/i18n/request.ts`, `src/proxy.ts` |
+| **Composants**    | `src/components/structures/navigation/LanguageSwitcher.tsx`  |
+| **Textes**        | `src/configurations/windows/messages/<locale>.json`          |
+| **Drapeau**       | `features.json → languageSwitcher`                           |
 
 **Variables** — `I18nService.locales`, `defaultLocale`, `localePrefix`, `isSupported()`, `resolve()`,
 `alternatesOf()`, `hreflangOf(urlOf)` (une URL par langue plus `x-default` vers la langue par défaut,
@@ -764,7 +764,7 @@ Aucun autre fichier ne change : la modale, la persistance et le calcul du statut
 `Cross-Origin-Opener-Policy`.
 **CSP** — `script-src` autorise `'unsafe-inline'` : Next.js injecte ses propres scripts de reprise
 (hydratation de l'App Router) en ligne, sans nonce par défaut. Passer à un CSP par nonce demanderait de
-faire transiter un nonce généré dans `src/middleware.ts` jusqu'au rendu serveur (`next/headers`), ce
+faire transiter un nonce généré dans `src/proxy.ts` jusqu'au rendu serveur (`next/headers`), ce
 que `next-intl`'s `createMiddleware` ne documente pas officiellement ; non fait ici pour ne pas
 fragiliser le routage i18n. `script-src` reste malgré tout limité aux origines déclarées (`self`,
 Google Analytics, Vercel) ; `frame-ancestors 'none'`, `object-src 'none'` et `base-uri 'self'` couvrent

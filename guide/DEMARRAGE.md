@@ -95,7 +95,7 @@ src/configurations/admins/environments/**   Manifeste par branche, pas des donn�
 src/configurations/admins/templates/**      Liaisons "${VARIABLE}", pas des données du projet
 src/services/core/StoreService.ts
 src/i18n/**
-src/middleware.ts
+src/proxy.ts
 src/app/layout.tsx             Filet racine minimal, sans contenu de projet
 src/app/not-found.tsx          Rejoue [locale]/layout.tsx et [locale]/not-found.tsx, rien à y écrire
 guide/**

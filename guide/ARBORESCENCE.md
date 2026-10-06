@@ -110,7 +110,7 @@ projet/
 │   │   ├── Route.ts                Base des routes API
 │   │   └── Overlay.ts              Base des superpositions (Modal, Drawer, Accordion, Tooltip)
 │   ├── i18n/                       routing.ts, request.ts
-│   └── middleware.ts               Obligatoirement sous src/ puisque le projet a un dossier src/
+│   └── proxy.ts                    Obligatoirement sous src/ puisque le projet a un dossier src/
 │
 ├── .prettierrc
 ├── eslint.config.mjs

@@ -3,8 +3,8 @@ import createMiddleware from 'next-intl/middleware'
 import { routing } from '@/i18n/routing'
 
 /**
- * Internationalization middleware
- * @return {Function} - Next.js middleware handler
+ * Internationalization proxy
+ * @return {Function} - Next.js proxy handler
  */
 
 export default createMiddleware(routing)

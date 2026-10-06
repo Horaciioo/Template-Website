@@ -13,7 +13,7 @@ description: Dépendances réellement installées dans le template et bibliothè
 | `react`, `react-dom`          | Rendu                                                   | —                                   |
 | `next-intl`                   | Langues, routage localisé, formatage ICU                | `I18nService`, `@/i18n/routing`     |
 | `tailwindcss`                 | Toutes les classes, la palette venant de `theme.json`   | `declarations/ui`                   |
-| `lucide-react`                | Les glyphes                                             | `ICONS`, `Icon`                     |
+| `lucide-react`                | Les glyphes (sans logos de marques depuis la 1.x)       | `ICONS`, `Icon`                     |
 | `clsx` + `tailwind-merge`     | Fusion de classes                                       | `cn()`                              |
 | `zod`                         | Schémas, pour un besoin qui dépasse `ValidationService` | —                                   |
 | `@vercel/analytics`           | Envoi d'événements                                      | `AnalyticsService`                  |
@@ -47,3 +47,13 @@ description: Dépendances réellement installées dans le template et bibliothè
    l'installer, avec la raison technique.
 
 Un package installé « au cas où » est une dette. `zustand` ne remplace pas `createStore` pour un état simple, `react-query` ne remplace pas `HttpService` pour un seul appel.
+
+## Montées de version
+
+- **Dans la même majeure** : `yarn up <paquet>@^<majeure>`, puis `yarn type-check && yarn lint && yarn build`. Épingler `next` et `@next/eslint-plugin-next` à la même version exacte.
+- **Majeures décidées à part**, chacune dans son commit :
+  - `tailwindcss` 4 (la palette est générée depuis `theme.json` par `tailwind.config.ts`, à migrer vers la configuration en CSS), qui entraîne `tailwind-merge` 3 ;
+  - `typescript` 7, tant que `typescript-eslint` ne le déclare pas supporté ;
+  - `@types/node` aligné sur la version de Node minimale du projet (`engines`), pas sur la dernière.
+- `yarn` met en quarantaine les versions trop récentes : une erreur « quarantined » se résout en visant la version précédente, pas en forçant.
+- Les logos des réseaux sociaux ne viennent plus de `lucide-react` : voir `declarations/ui/brandGlyphs.tsx`.

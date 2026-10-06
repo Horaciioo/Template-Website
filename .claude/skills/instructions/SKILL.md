@@ -25,15 +25,17 @@ Si la réponse est non, la ligne n'a pas sa place ici.
 
 ## 3. Stack
 
-- Next.js App Router, React 19, TypeScript strict
+- Next.js 16 App Router (interception des requêtes dans `src/proxy.ts`), React 19, TypeScript strict
 - Tailwind CSS 3, la palette étant générée depuis `configurations/theme.json`
 - `next-intl` pour les langues et le routage localisé
-- `lucide-react` derrière le registre `ICONS`, jamais importé directement par un composant
+- `lucide-react` derrière le registre `ICONS`, jamais importé directement par un composant ; les logos de réseaux sociaux sont des glyphes maison (`declarations/ui/brandGlyphs.tsx`), lucide 1.x n'en livre plus
 - `clsx` + `tailwind-merge` derrière `cn()`
-- `zod` disponible pour un besoin de schéma qui dépasserait `ValidationService`
+- `zod` 4, disponible pour un besoin de schéma qui dépasserait `ValidationService`
 - `@vercel/analytics`, branché uniquement si le drapeau et la variable d'environnement l'autorisent
 
 Aucune dépendance ajoutée sans besoin concret. Vérifier d'abord le skill `packages`.
+
+Les montées de version majeures (Tailwind 4, TypeScript 7) se décident à part : voir `packages`.
 
 Voir le skill `security` avant d'ajouter un service tiers, un formulaire ou une route API — en-têtes CSP, consentement cookies et anti-abus ne sont pas couverts ici.
 
@@ -57,6 +59,8 @@ pour injecter la feuille de style du thème.
 7. Écrire son entrée dans `guide/REGISTRE.md`.
 8. Mettre à jour le skill concerné si une règle a changé.
 
+Skills à charger selon la tâche : `comments` avant d'écrire un commentaire, `accessibility` avant un composant interactif, `optimization` avant une image, un composant lourd ou un script tiers, `testing` avant d'installer un outil de test, `delivery-checklist` avant toute mise en ligne.
+
 Les étapes 6, 7 et 8 ne sont pas optionnelles : une brique non recensée est réécrite au projet suivant.
 
 ## 6. Accessibilité, non négociable
@@ -69,7 +73,15 @@ Les étapes 6, 7 et 8 ne sont pas optionnelles : une brique non recensée est r�
 - Le focus reste visible : `FOCUS_RING` est appliqué par les variantes, on ne l'enlève jamais.
 - Les animations respectent `prefers-reduced-motion`, déjà géré dans `globals.css`.
 
-## 7. Checklist avant de rendre du travail
+## 7. Les to-do du projet
+
+Les to-do vivent dans `.claude/todo/`, un `.md` par sujet, avec un `README.md` d'index. Un sujet terminé se **supprime**, il ne reste pas coché ; une partie faite d'un sujet encore ouvert se retire de son fichier.
+
+## 8. Vérifier sans exagérer
+
+`yarn type-check && yarn lint && yarn build` restent non négociables. Au-delà : pas de capture d'écran ni de navigateur sans tête pour confirmer un détail que la lecture du code suffit à établir, et au plus une capture ciblée quand le changement est structurel. Si un test HTTP prouve déjà que ça marche, aucune capture en plus.
+
+## 9. Checklist avant de rendre du travail
 
 ```bash
 yarn type-check && yarn lint && yarn build
@@ -86,4 +98,6 @@ Les trois doivent être verts. Puis :
 - [ ] skill `security` passé en revue si un tiers, un formulaire ou une route API a été touché ; une nouvelle route publique appelle `this.limit` et un nouveau formulaire garde son `HoneypotField`
 - [ ] skill `ai-tells` rejoué sur ce qui a changé : contraste mesuré (`scripts/contrast.py`), aucun `hover:opacity-*` qui pâlit, aucun tiret cadratin ni buzzword dans `src/configurations/windows/messages/`, pas de fondu au scroll par défaut, pas de grain
 - [ ] skill `resilience` : erreur, chargement et vide prévus, délai sur tout appel externe, bouton désactivé pendant l'envoi
+- [ ] skill `accessibility` rejoué sur tout composant interactif ajouté ou modifié
 - [ ] skill `seo` si une page publique a été créée ou réécrite : une intention par page, `metaTitle` / `metaDescription` uniques, une source pour chaque chiffre
+- [ ] avant une mise en ligne : skill `delivery-checklist`

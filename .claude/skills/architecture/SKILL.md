@@ -106,6 +106,34 @@ Un registre dont la valeur **est** un contrat externe (verbe HTTP, attribut DOM,
 traduction, nom de branche git) reste dans `declarations/` : le renuméroter casserait ce système
 externe. `guide/REGISTRE.md` §26 documente la frontière exacte.
 
+## Un dossier par fonctionnalité, un fichier central
+
+On ne met pas toute une fonctionnalité dans un seul fichier. On crée **un dossier de la fonctionnalité**,
+avec **un fichier par responsabilité**, et **un fichier central** qui les appelle ou les réexporte. Le
+reste du code ne connaît que le central.
+
+Quand : dès qu'un fichier dépasse 300 lignes, porte plus de 15 exports, ou mélange plusieurs
+sous-concepts. Mieux vaut démarrer en dossier quand on sait que la fonctionnalité aura plusieurs facettes.
+
+```
+services/<domaine>/
+  index.ts             central : réexporte l'API publique, aucune logique
+  <Facette>Service.ts  une responsabilité par fichier, nommé d'après ce qu'il exporte
+  lookups.ts           helpers partagés entre les satellites du dossier
+```
+
+- **Le central ne contient pas de logique métier.** Il réexporte, ou il orchestre quand
+  l'enchaînement est lui-même la responsabilité. Un central de plus de 80 lignes a mal découpé.
+- **Un sens unique des dépendances** : le central importe les satellites, jamais l'inverse. Deux
+  satellites qui se parlent passent par un troisième fichier, pour éviter les cycles.
+- **Les imports venus de l'extérieur passent par le central.**
+- **Un satellite par responsabilité, pas par taille** : on coupe selon les noms du métier, jamais
+  « partie 1, partie 2 ».
+
+Le même schéma vaut pour un composant à régions (`<Composant>.tsx` qui assemble, un fichier par
+région) et pour un registre (`declarations/<domaine>/index.ts` et un fichier par famille). Les budgets
+de longueur sont dans `code-style`.
+
 ## L'atlas visuel est un test
 
 `/showcase` **lit les registres**, il ne recopie pas d'échantillons. Une couleur, une icône, un style

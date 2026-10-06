@@ -1,4 +1,3 @@
-import type { LucideIcon } from 'lucide-react'
 import {
   AlertTriangle,
   ArrowLeft,
@@ -15,17 +14,13 @@ import {
   Clock,
   Copy,
   Download,
-  Facebook,
   Filter,
-  Github,
   Globe,
   Heart,
   Home,
   Inbox,
   Info,
-  Instagram,
   Languages,
-  Linkedin,
   Loader2,
   Mail,
   MapPin,
@@ -45,14 +40,22 @@ import {
   Tag,
   Trash2,
   TrendingUp,
-  Twitter,
   Upload,
   User,
   Users,
   X,
-  Youtube,
   Zap,
 } from 'lucide-react'
+
+import {
+  FacebookGlyph,
+  GithubGlyph,
+  InstagramGlyph,
+  LinkedinGlyph,
+  XGlyph,
+  YoutubeGlyph,
+} from '@/declarations/ui/brandGlyphs'
+import type { IconComponent } from '@/declarations/ui/brandGlyphs'
 
 /**
  * Icon registry
@@ -106,13 +109,13 @@ export const ICONS = {
   themeLight: Sun,
   themeDark: Moon,
   themeSystem: Monitor,
-  instagram: Instagram,
-  linkedin: Linkedin,
-  facebook: Facebook,
-  youtube: Youtube,
-  github: Github,
-  x: Twitter,
-} as const satisfies Record<string, LucideIcon>
+  instagram: InstagramGlyph,
+  linkedin: LinkedinGlyph,
+  facebook: FacebookGlyph,
+  youtube: YoutubeGlyph,
+  github: GithubGlyph,
+  x: XGlyph,
+} as const satisfies Record<string, IconComponent>
 
 /**
  * Icon name

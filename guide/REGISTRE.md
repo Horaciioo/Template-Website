@@ -286,13 +286,16 @@ depuis des composants client. C'est pourquoi `ThemeService`, lu par le layout se
 
 ## 15. Design system
 
-|                       |                                   |
-| --------------------- | --------------------------------- |
-| **Jetons**            | `src/declarations/ui/tokens.ts`   |
-| **Variantes**         | `src/declarations/ui/variants.ts` |
-| **Icônes**            | `src/declarations/ui/icons.ts`    |
-| **Polices**           | `src/declarations/ui/fonts.ts`    |
-| **Fusion de classes** | `src/utils/classnames.ts` (`cn`)  |
+|                       |                                       |
+| --------------------- | ------------------------------------- |
+| **Jetons**            | `src/declarations/ui/tokens.ts`       |
+| **Variantes**         | `src/declarations/ui/variants.ts`     |
+| **Icônes**            | `src/declarations/ui/icons.ts`        |
+| **Logos de marques**  | `src/declarations/ui/brandGlyphs.tsx` |
+| **Polices**           | `src/declarations/ui/fonts.ts`        |
+| **Fusion de classes** | `src/utils/classnames.ts` (`cn`)      |
+
+`lucide-react` 1.x ne livre plus de logos de marques : les six réseaux sociaux de `ICONS` (`instagram`, `linkedin`, `facebook`, `youtube`, `github`, `x`) sont des glyphes à trait dessinés dans `brandGlyphs.tsx`.
 
 **Registres partagés** — `TONES`, `SIZES`, `TONE_TEXT`, `TONE_SOFT`, `TONE_SOLID`, `TONE_BORDER`,
 `SURFACES` (dont `glass`, un fond glassmorphism qui s'appuie sur `.surface-glass` dans `globals.css`

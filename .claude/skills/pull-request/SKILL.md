@@ -67,6 +67,10 @@ Règles de chaque ligne :
 
 Quand de nouveaux commits partent sur la même branche, on complète la description (`gh pr edit <n> --body-file …`) avec les lignes correspondantes, dans la bonne section. On ne réécrit pas le titre sauf si la nature dominante de la PR a changé.
 
+## Gabarit
+
+`.github/pull_request_template.md` pose la trame (Added / Changed / Removed / Fixed) à l'ouverture d'une PR : ne garder que les sections qui ont du contenu et retirer le commentaire d'en-tête.
+
 ## Renvoi
 
 `commits` porte la liste des émojis et le format du titre. `branches` décide de la branche cible et de l'ordre de promotion.

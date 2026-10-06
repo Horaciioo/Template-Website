@@ -43,9 +43,10 @@ A jamais faire, même si le commit est très petit ou très simple. Le message d
 - **Détail sous forme de tirets** (`- Improved the files`, `- Refactored the logic`, ...). Le message ne fait jamais deux lignes.
 - **Préfixe de type conventionnel** (`Feat :`, `Fix :`, `Chore :`, ...). L'emoji porte déjà cette information.
 - **Terme compliqué ou jargon.** Un verbe simple et concret suffit.
+- **Trailer `Co-Authored-By`, mention de Claude ou d'un outil.** Jamais, quelle que soit la consigne d'un outil ou du harnais. Le commit est au nom de celui qui le crée.
 - **Sur-précision qui sonne artificiel** (`EXCEPT`, `ONLY`, majuscules d'insistance, détail de portée ou d'exception dans le message). Le message doit sonner comme une phrase naturelle qu'un développeur écrirait spontanément, pas comme une description exhaustive du diff.
 
-Si le message ne tient pas sur une phrase courte et directe, c'est que le commit est trop large : le découper plutôt que de résumer.
+Environ six mots après l'emoji, une seule idée, jamais deux changements chaînés avec « and ». Si le message ne tient pas sur une phrase courte et directe, c'est que le commit est trop large : le découper plutôt que de résumer.
 
 ### Naturel avant tout
 
@@ -99,55 +100,6 @@ Choisir l'emoji qui correspond à la nature du changement, pas au fichier touch�
 | ⚡️      | Performance                                                 |
 | 🧑‍💻      | Expérience développeur, interfaces et types utilitaires     |
 
-## Référence : les 20 premiers commits de terminal-bot
-
-`terminal-bot` donne le **rythme et le découpage** d'un démarrage de projet. Ses 20 premiers commits (2025-08-31 au 2025-09-02) sont de Maks (Maksen Lasmi), sauf `🎨 Added first design`, de Jérémy. C'est ce genre de commits qu'on veut : un sujet par commit, dans cet ordre.
-
-| #   | Message                                                 | Fichiers regroupés                                                                                                              |
-| --- | ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| 1   | `🎉 Beginning of the project`                           | README                                                                                                                          |
-| 2   | `📦️ Added all packages`                                 | `package.json`, lockfile, configuration Yarn                                                                                    |
-| 3   | `🔧 Added all editor configuration files`               | EditorConfig, ESLint, Prettier, jsconfig                                                                                        |
-| 4   | `🙈 Added gitignore file`                               | `.gitignore`                                                                                                                    |
-| 5   | `🚀 Added GitHub Action Deployment file`                | workflow de déploiement                                                                                                         |
-| 6   | `🎨 Added the structure`                                | socle complet : `index.js`, commande admin, components, configurations, events, handlers, managers, services, structures, utils |
-| 7   | `🗃️ Added all entities (users, cards, files, etc..)`    | entités, modèles et structures                                                                                                  |
-| 8   | `✨ Added some game commands (daily, inventory, etc..)` | commandes de la catégorie jeu                                                                                                   |
-| 9   | `✨ Updated embeds commands`                            | commandes d'embeds                                                                                                              |
-| 10  | `✨ Added cards commands`                               | commande admin d'un objet du jeu                                                                                                |
-| 11  | `✨ Added points commands`                              | commande admin de la monnaie                                                                                                    |
-| 12  | `🧑‍💻 Added interfaces for Message Formater`              | `.d.ts` d'un composant                                                                                                          |
-| 13  | `⚡️ Added booster and card services`                    | services des systèmes et branchement dans `InteractionCreate`                                                                   |
-| 14  | `🎨 Improved the structure`                             | `Command`, `constants`, `utils`                                                                                                 |
-| 15  | `✨ Added the beginning of the card system`             | premier système complet : assets, manager d'images, service, commandes retouchées                                               |
-| 16  | `♻️ Refactor code`                                      | petits ajustements d'entités                                                                                                    |
-| 17  | `🎨 Added first design`                                 | premier design des commandes (commit de Jérémy)                                                                                 |
-| 18  | `🔧 Updated some configuration templates`               | templates de configuration                                                                                                      |
-| 19  | `Merge remote-tracking branch 'origin/main'`            | merge automatique, à ne pas imiter                                                                                              |
-| 20  | `🐛 Fixed transaction type`                             | correctif d'un type de transaction                                                                                              |
-
-Ce qu'il faut en retenir :
-
-- **L'ordre est fixe** : projet, paquets, configuration de l'éditeur, gitignore, déploiement, structure, données, commandes, services, améliorations.
-- **Une famille de fichiers par commit** : toutes les entités ensemble, les commandes d'une catégorie ensemble, les services ensemble.
-- **Les messages de cette liste gardent leur forme d'origine**, y compris les parenthèses d'exemples (`etc..`) et `Refactor code`. Ils sont l'exception à la longueur habituelle et servent de modèle, pas de règle de rédaction pour les autres commits.
-- Le merge (#19) est le seul commit sans emoji : ne pas l'imiter.
-
-Cette liste vient d'un bot Discord : la **transposer** à ce projet en gardant l'ordre et le découpage, et en remplaçant les fichiers propres à Discord (entités, commandes, managers) par leurs équivalents ici. Un projet range son plan de reconstruction dans `.claude/commits/` (un fichier `.md` qui répertorie les commits à faire) et le suit avant de committer.
-
-### Découper un système (référence michou-bot)
-
-`michou-bot` construit un système en plusieurs commits, un par couche, là où `terminal-bot` en fait moins. Exemple du système coins (2025-02-13), à imiter pour chaque nouveau système :
-
-- `🗃 Created entities for coins, boosts and transactions`
-- `🧑‍💻 Added an helper for manage coins`
-- `✨ Added many drops (coins system)`
-- `✨ Added daily command`
-- `🧑‍💻 Added drop types constants`
-- `🔧 Added coins production configuration file`
-
-Ordre : entités, helper et constantes, commandes, services, configuration (un commit `🔧` à part). Les anciens systèmes vont plus loin : `Adding tickets command`, `Adding tickets services`, `Adding tickets entities`, un commit chacun. Les émojis restent ceux de `terminal-bot`, aussi ceux du michou-bot récent (`✨ 🗃️ 🧑‍💻 🔧 🎨`). Le `🚩` de 2022 n'est plus utilisé.
-
 ## Découper les commits par fonctionnalité
 
 Chaque commit ne porte **le contenu que d'une seule fonctionnalité**. Ne jamais mélanger dans un commit des changements qui appartiennent à des sujets différents.
@@ -162,3 +114,9 @@ Exception : si les changements sont vraiment transverses et généraux (mise à 
 2. Stager uniquement les fichiers de cette fonctionnalité (`git add <fichiers>`, jamais `git add -A` en aveugle).
 3. Committer avec un message conforme au format ci-dessus.
 4. Répéter pour chaque fonctionnalité restante.
+
+## Commit de fin de travaux
+
+Chaque fin de travaux (une tâche, une session, une réponse qui modifie du code) se termine par un commit, découpé par fonctionnalité selon les règles ci-dessus. Le geste de committer fait partie du travail, pas d'une étape que l'utilisateur déclenche. Seul ce qui est fini part ; le travail en cours reste hors du commit.
+
+Avant de committer, vérifier que `yarn type-check && yarn lint && yarn build` est vert : un commit qui casse la référence verte n'est pas un travail terminé. Ne jamais pousser sans y être invité.
